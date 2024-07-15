@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/14 17:55:21 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/15 13:26:43 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,23 @@ typedef struct s_data	//the data structure
 	int		h_map;		// map height
 }	t_data;
 
-typedef struct s_mlx	//the mlx structure
+typedef struct s_img
 {
-	mlx_image_t		*img;	// the image
-	mlx_t			*mlx_p;	// the mlx pointer
-	t_ray			*ray;	// the ray structure
-	t_data			*dt;	// the data structure
-	t_player		*ply;	// the player structure
-}	t_mlx;
+	void	*pointer_to_img;
+	void	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+	int		width;
+	int		height;
+}	t_img;
+
+typedef struct	s_cub
+{
+	void	*mlx;
+	void	*win;
+	t_img	img;
+	t_img	img2[4];
+}	t_cub;
 
 #endif
