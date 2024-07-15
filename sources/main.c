@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/15 15:12:14 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:49:21 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,18 @@ int	check_format(char *av)
 	return (1);
 }
 
-int	get_info()
+int	get_info(int fd)
 {
-	
+	char	*line;
+	char	*tmp;
+
+	line = get_next_line(fd);
+	tmp = ft_strtrim(line);
+	while (tmp)
+	{
+		check_order(tmp);
+		
+	}
 }
 
 int	parser(char *av)
