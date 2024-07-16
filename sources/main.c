@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/16 14:30:23 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:54:23 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 
 int	err(char *str)
 {
+	static int i;
+
+	if (i)
+		return (1);
 	while (*str)
 		write(2, str++, 1);
+	i++;
 	return (1);
 }
 
@@ -55,7 +60,7 @@ int	start_the_game(void)
 	return (0);
 }
 
-int	check_format(char *av)
+int	check_format(char *av, char *format)
 {
 	if (av[0] && av[0] == '.')
 		av++;
@@ -64,7 +69,7 @@ int	check_format(char *av)
 	if (*av && *av == '.')
 	{
 		av++;
-		if (!ft_strncmp(av, "cub", 4))
+		if (!ft_strncmp(av, format, 4))
 			return (0);
 	}
 	return (1);
@@ -74,17 +79,20 @@ char	*get_path(char *line)
 {
 	char 	**tmp;
 	char	*tmp2;
+	int		test;
 
 	tmp = ft_split(line, ' ');
 	if (!tmp)
 		return (NULL);
 	tmp2 = ft_strdup(tmp[1]);
-    // while (*tmp)
-    // {
-    //     free(*tmp);
-    //     tmp++;
-    // }
     free(tmp[0]);
+	free(tmp);
+	if (check_format(tmp2, "xpm"))
+		return (free(tmp2), err("Error, not xpm file\n"), NULL);
+	test = open(tmp2, O_RDONLY);
+	if (test == -1)
+		return (err("Error, cannot access to the xpm file\n"), free(tmp2), NULL);
+	close (test);
 	return (tmp2);
 }
 
@@ -109,36 +117,75 @@ int fill_xpm(char *line, t_type_xpm type)
 
     new = (t_xpm *)malloc(sizeof(t_xpm));
     if (!new)
-        return (1);
+        return (0);
     new->type = type;
     new->val = get_path(line);
+	if (new->val == NULL)
+		return (0);
     new->next = NULL;
     add_xpm(&(data()->xpm), new);
-    return (0);
+    return (1);
 }
+
+t_rgb	*get_color(char *line)
+{
+	char	**tmp;
+	char	**tmp2;
+	t_rgb	*value;
+
+	value = (t_rgb *)malloc(sizeof(t_rgb));
+	if (!value)
+		return (NULL);
+	tmp = ft_split(line, ' ');
+	if (!tmp)
+		return (NULL);
+	tmp2 = ft_split(tmp[1], ',');
+	if (!tmp2)
+		return (NULL);
+	value->r = ft_atoi(tmp2[0]);
+	value->g = ft_atoi(tmp2[1]);
+	value->b = ft_atoi(tmp2[2]);
+    free(tmp[0]);
+    free(tmp);
+    free(tmp2[0]);
+    free(tmp2[1]);
+    free(tmp2[2]);
+    free(tmp2);
+	return (value);
+}
+
+int	fill_rgb(char *line, char id)
+{
+	if (data()->rgb == NULL)
+	{
+		data()->rgb = (t_color *)malloc(sizeof(t_color));
+		if (data()->rgb == NULL)
+			return (err("Malloc error\n"), 0);
+	}
+	if (id == 'c')
+		return (data()->rgb->c = get_color(line), 5);
+	else
+		return (data()->rgb->f = get_color(line), 6);
+	return (1);
+}
+
 
 int check_order(char *line)
 {
     static int i;
 
     if (i == 0 && !ft_strncmp(line, "NO", ft_strlen("NO")))
-        return (fill_xpm(line, E_NO), ++i);
+        return (++i, fill_xpm(line, E_NO));
     else if (i == 1 && !ft_strncmp(line, "SO", ft_strlen("SO")))
-        return (fill_xpm(line, E_SO), ++i);
+        return (++i, fill_xpm(line, E_SO));
     else if (i == 2 && !ft_strncmp(line, "WE", ft_strlen("WE")))
-        return (fill_xpm(line, E_WE), ++i);
+        return (++i, fill_xpm(line, E_WE));
     else if (i == 3 && !ft_strncmp(line, "EA", ft_strlen("EA")))
-        return (fill_xpm(line, E_EA), ++i);
+        return (++i, fill_xpm(line, E_EA), ++i);
     else if (i == 4 && line[0] == 'C')
-    {
-        // fill_rgb(line);
-        return (++i);
-    }
+        return (++i, fill_rgb(line, 'c'));
     else if (i == 5 && line[0] == 'F')
-    {
-        // fill_rgb(line);
-        return (++i);
-    }
+        return (++i, fill_rgb(line, 'f'));
     else if (!ft_strncmp(line, "", ft_strlen ("")))
         return (1);
 	else if (line[0] == 'F' || line[0] == 'C' || !ft_strncmp(line, "EA", ft_strlen("EA"))
@@ -183,7 +230,7 @@ int	parser(char *av)
 {
 	int	fd;
 
-	if (check_format(av))
+	if (check_format(av, "cub"))
 		return(err("Error, wrong file format\n"));
 	fd = open(av, O_RDONLY);
 	if (fd == -1)

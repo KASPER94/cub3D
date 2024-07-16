@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/16 14:26:31 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:35:51 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ typedef struct	s_rgb
 
 typedef struct	s_color
 {
-	t_rgb	c;
-	t_rgb	f;
+	t_rgb	*c;
+	t_rgb	*f;
 }	t_color;
 
 typedef struct	s_cub
@@ -100,7 +100,7 @@ typedef struct	s_cub
 	void	*mlx;
 	void	*win;
 	t_xpm	*xpm;
-	t_rgb	*rgb;
+	t_color	*rgb;
 	t_img	img;
 	t_img	img2[4];
 }	t_cub;
