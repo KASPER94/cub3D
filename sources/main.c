@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/15 15:49:21 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:07:53 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,109 @@ int	check_format(char *av)
 	return (1);
 }
 
-int	get_info(int fd)
+char	*get_path(char *line)
 {
-	char	*line;
-	char	*tmp;
+	char 	**tmp;
+	char	*tmp2;
 
-	line = get_next_line(fd);
-	tmp = ft_strtrim(line);
-	while (tmp)
+	tmp = ft_split(line, ' ');
+	if (!tmp)
+		return (NULL);
+	tmp2 = ft_strdup(tmp[1]);
+	while (**tmp)
 	{
-		check_order(tmp);
-		
+		free((*tmp)++);
 	}
+	return (tmp2);
 }
+
+int	fill_xpm(char *line, t_type_xpm type)
+{
+	t_xpm	*new;
+	t_xpm	**tmp_lst;
+
+	new = malloc(sizeof(t_xpm));
+	if (!new)
+		return (1);
+	tmp_lst = data()->xpm;
+	new->type = type;
+	new->val = get_path(line);
+	return (0);
+}
+
+int check_order(char *line)
+{
+    static int i;
+
+    if (i == 0 && !ft_strncmp(line, "NO", ft_strlen("NO")))
+    {
+        // fill_xpm(line);
+        return (++i);
+    }
+    else if (i == 1 && !ft_strncmp(line, "SO", ft_strlen("SO")))
+    {
+        // fill_xpm(line);
+        return (++i);
+    }
+    else if (i == 2 && !ft_strncmp(line, "WE", ft_strlen("WE")))
+    {
+        // fill_xpm(line);
+        return (++i);
+    }
+    else if (i == 3 && !ft_strncmp(line, "EA", ft_strlen("EA")))
+    {
+        // fill_xpm(line);
+        return (++i);
+    }
+    else if (i == 4 && line[0] == 'C')
+    {
+        // fill_rgb(line);
+        return (++i);
+    }
+    else if (i == 5 && line[0] == 'F')
+    {
+        // fill_rgb(line);
+        return (++i);
+    }
+    else if (!ft_strncmp(line, "", ft_strlen ("")))
+        return (1);
+	else if (line[0] == 'F' || line[0] == 'C' || !ft_strncmp(line, "EA", ft_strlen("EA"))
+		|| !ft_strncmp(line, "WE", ft_strlen("WE")) || !ft_strncmp(line, "SO", ft_strlen("SO"))
+		|| !ft_strncmp(line, "NO", ft_strlen("NO")))
+			return (0);
+	return (0);
+}
+
+int get_info(int fd)
+{
+    char *line;
+    char *tmp;
+	int	status;
+
+    line = get_next_line(fd);
+    while (line)
+    {
+        tmp = ft_strtrim(line, " \f\n\r\t\v");
+        status = check_order(tmp);
+		if (!status)
+        {
+            free(tmp);
+            free(line);
+            return (1);
+        }
+		else if (status == 6)
+        {
+            free(tmp);
+            free(line);
+            return (0);
+        }
+        free(tmp);
+        free(line);
+        line = get_next_line(fd);
+    }
+    return (1);
+}
+
 
 int	parser(char *av)
 {
@@ -95,8 +185,8 @@ int	parser(char *av)
 		return(err("Error, cannot open the map\n"));
 	if (get_info(fd))
 		return (err("Error, wrong information\n"));
-	if (get_map(fd))
-		return (err("Error, wrong map\n"));
+	// if (get_map(fd))
+	// 	return (err("Error, wrong map\n"));
 	return (0);
 }
 

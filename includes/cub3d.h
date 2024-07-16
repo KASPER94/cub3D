@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/15 15:54:28 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:05:23 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,19 @@ typedef struct s_img
 	int		height;
 }	t_img;
 
+typedef enum e_type_xpm
+{
+	E_NO,
+	E_SO,
+	E_WE,
+	E_EA
+}	t_type_xpm;
+
 typedef struct	s_xpm
 {
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
+	char			*val;
+	t_type_xpm		type;
+	struct s_xpm	*next;
 }	t_xpm;
 
 typedef struct	s_rgb
@@ -92,7 +99,7 @@ typedef struct	s_cub
 {
 	void	*mlx;
 	void	*win;
-	t_xpm	var;
+	t_xpm	xpm;
 	t_rgb	rgb;
 	t_img	img;
 	t_img	img2[4];
