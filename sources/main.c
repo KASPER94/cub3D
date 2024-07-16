@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/16 14:07:53 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:30:23 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,25 +79,42 @@ char	*get_path(char *line)
 	if (!tmp)
 		return (NULL);
 	tmp2 = ft_strdup(tmp[1]);
-	while (**tmp)
-	{
-		free((*tmp)++);
-	}
+    // while (*tmp)
+    // {
+    //     free(*tmp);
+    //     tmp++;
+    // }
+    free(tmp[0]);
 	return (tmp2);
 }
 
-int	fill_xpm(char *line, t_type_xpm type)
+void add_xpm(t_xpm **lst, t_xpm *new)
 {
-	t_xpm	*new;
-	t_xpm	**tmp_lst;
+    t_xpm *current;
 
-	new = malloc(sizeof(t_xpm));
-	if (!new)
-		return (1);
-	tmp_lst = data()->xpm;
-	new->type = type;
-	new->val = get_path(line);
-	return (0);
+    if (*lst == NULL)
+    {
+        *lst = new;
+        return;
+    }
+    current = *lst;
+    while (current->next != NULL)
+        current = current->next;
+    current->next = new;
+}
+
+int fill_xpm(char *line, t_type_xpm type)
+{
+    t_xpm *new;
+
+    new = (t_xpm *)malloc(sizeof(t_xpm));
+    if (!new)
+        return (1);
+    new->type = type;
+    new->val = get_path(line);
+    new->next = NULL;
+    add_xpm(&(data()->xpm), new);
+    return (0);
 }
 
 int check_order(char *line)
@@ -105,25 +122,13 @@ int check_order(char *line)
     static int i;
 
     if (i == 0 && !ft_strncmp(line, "NO", ft_strlen("NO")))
-    {
-        // fill_xpm(line);
-        return (++i);
-    }
+        return (fill_xpm(line, E_NO), ++i);
     else if (i == 1 && !ft_strncmp(line, "SO", ft_strlen("SO")))
-    {
-        // fill_xpm(line);
-        return (++i);
-    }
+        return (fill_xpm(line, E_SO), ++i);
     else if (i == 2 && !ft_strncmp(line, "WE", ft_strlen("WE")))
-    {
-        // fill_xpm(line);
-        return (++i);
-    }
+        return (fill_xpm(line, E_WE), ++i);
     else if (i == 3 && !ft_strncmp(line, "EA", ft_strlen("EA")))
-    {
-        // fill_xpm(line);
-        return (++i);
-    }
+        return (fill_xpm(line, E_EA), ++i);
     else if (i == 4 && line[0] == 'C')
     {
         // fill_rgb(line);
