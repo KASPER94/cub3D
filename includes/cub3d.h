@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/17 10:23:33 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:33:57 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@
 # define ROTATION_SPEED 0.045 // rotation speed
 # define PLAYER_SPEED 4 // player speed
 
-typedef struct s_player //the player structure
-{
-	int			plyr_x; // player x position in pixels
-	int			plyr_y; // player y position in pixels
-	double		angle; // player angle
-	float		fov_rd; // field of view in radians
-	int			rot; // rotation flag
-	int			l_r; // left right flag
-	int			u_d; // up down flag
-}	t_player;
+// typedef struct s_player //the player structure
+// {
+// 	int			plyr_x; // player x position in pixels
+// 	int			plyr_y; // player y position in pixels
+// 	double		angle; // player angle
+// 	float		fov_rd; // field of view in radians
+// 	int			rot; // rotation flag
+// 	int			l_r; // left right flag
+// 	int			u_d; // up down flag
+// }	t_player;
 
 typedef struct s_ray //the ray structure
 {
@@ -47,14 +47,11 @@ typedef struct s_ray //the ray structure
 	int			flag; // flag for the wall
 }	t_ray;
 
-typedef struct s_data	//the data structure
+typedef struct s_player
 {
-	char	**map2d;	// the map
-	int		p_x;		// player x position in the map
-	int		p_y;		// player y position in the map
-	int		w_map;		// map width
-	int		h_map;		// map height
-}	t_data;
+	int		p_x;
+	int		p_y;
+}	t_player;
 
 typedef struct s_img
 {
@@ -97,13 +94,14 @@ typedef struct	s_color
 
 typedef struct	s_cub
 {
-	void	*mlx;
-	void	*win;
-	t_xpm	*xpm;
-	t_color	*rgb;
-	char	**map;
-	t_img	img;
-	t_img	img2[4];
+	void		*mlx;
+	void		*win;
+	t_xpm		*xpm;
+	t_color		*rgb;
+	char		**map;
+	t_img		img;
+	t_img		img2[4];
+	t_player	*player;
 }	t_cub;
 
 #endif

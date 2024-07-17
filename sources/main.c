@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/17 11:37:48 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:04:22 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ int init(void)
 	data()->img = *img_ptr;
 	free(img_ptr);
 	data()->win = tmp;
+	data()->player = (t_player *)malloc(sizeof(t_player));
+	if (data()->player == NULL)
+		return (err("Malloc error for player\n"), 1);
 	return (0);
 }
 int	start_the_game(void)
@@ -256,10 +259,24 @@ char	**ft_realloc(char **map, int len)
 	return (free(map), new);
 }
 
-int	add_new_line(int arr_len, char *line)
+int	ft_arr_len(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+		i++;
+	return (i);
+}
+
+int	add_new_line(char *line)
 {
 	char	**tmp;
+	int		arr_len;
 
+	arr_len = ft_arr_len(data()->map);
+	if (!arr_len)
+		return (1);
 	tmp = ft_realloc(data()->map, arr_len + 2);
 	if (!tmp)
 		return (big_free(), 1);
@@ -272,14 +289,9 @@ int	add_new_line(int arr_len, char *line)
 
 int	fill_map(char *line)
 {
-	int		arr_len;
-
-	arr_len = ft_strlen(line);
-	if (!arr_len)
-		return (1);
 	if (!data()->map)
 	{
-		data()->map = malloc(sizeof(char **));
+		data()->map = malloc(sizeof(char *) * 2);
 		if (!data()->map)
 			return (1);
 		data()->map[0] = ft_strdup(line);
@@ -288,7 +300,7 @@ int	fill_map(char *line)
 		data()->map[1] = NULL;
 	}
 	else
-		if (add_new_line(arr_len, line))
+		if (add_new_line(line))
 			return (1);
 	return (0);
 }
@@ -311,6 +323,38 @@ int	get_map(int fd)
 	return (0);
 }
 
+int	check_border(int i, int j)
+{
+	
+}
+
+int	check_map(void)
+{
+	int	i;
+	int	j;
+	int	count;
+
+	i = -1;
+	count = 0;
+	while (data()->map[++i])
+	{
+		j = -1;
+		while (data()->map[i][++j])
+		{
+			if (!check_border(i, j))
+				return (0);
+			if (data()->map[i][j] == 'N' || data()->map[i][j] == 'S'
+				|| data()->map[i][j] == 'E' || data()->map[i][j] == 'W')
+			{
+				data()->player->p_x = j;
+				data()->player->p_y = i;
+				count++;
+			}
+		}
+	}
+	return (count);
+}
+
 int	parser(char *av)
 {
 	int	fd;
@@ -324,6 +368,8 @@ int	parser(char *av)
 		return (err("Error, wrong information\n"));
 	if (get_map(fd))
 		return (close(fd), err("Error, wrong map\n"));
+	if (!check_map())
+		return (close(fd), err("Error, the map is not well formated !"));
 	return (close(fd), 0);
 }
 
@@ -332,9 +378,9 @@ int main(int ac, char **av)
 	if (ac != 2)
 		return (err("Error, Map isn't correct\n"), 1);
 	(void)av;
-	if (parser(av[1]))
-		return (1);
 	if (init())
+		return (1);
+	if (parser(av[1]))
 		return (1);
 	mlx_loop_hook(data()->mlx, start_the_game, NULL);
 	mlx_loop(data()->mlx);
