@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/17 16:04:22 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:12:27 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,9 +323,35 @@ int	get_map(int fd)
 	return (0);
 }
 
-int	check_border(int i, int j)
+int	check_border(int i)
 {
-	
+	int	j;
+
+	j = -1;
+	if (i == 0)
+	{
+		while (data()->map[i][++j])
+			if (data()->map[i][j] == '0')
+				return (0);
+	}
+	return (1);
+}
+int	check_data_map(int i)
+{
+	int	j;
+
+	j = -1;
+	while (data()->map[i][++j])
+	{
+		if (!ft_strchr(" 10NSEW", data()->map[i][j]))
+			continue ;
+		else
+		{
+			ft_printf("--- %c ---\n", data()->map[i][j]);
+			return (0);
+		}
+	}
+	return (1);
 }
 
 int	check_map(void)
@@ -338,11 +364,11 @@ int	check_map(void)
 	count = 0;
 	while (data()->map[++i])
 	{
+		if (!check_border(i) || !check_data_map(i))
+			return (0);
 		j = -1;
 		while (data()->map[i][++j])
 		{
-			if (!check_border(i, j))
-				return (0);
 			if (data()->map[i][j] == 'N' || data()->map[i][j] == 'S'
 				|| data()->map[i][j] == 'E' || data()->map[i][j] == 'W')
 			{
