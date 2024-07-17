@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/16 15:54:23 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:37:48 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,17 +207,9 @@ int get_info(int fd)
         tmp = ft_strtrim(line, " \f\n\r\t\v");
         status = check_order(tmp);
 		if (!status)
-        {
-            free(tmp);
-            free(line);
-            return (1);
-        }
+            return (free(tmp), free(line), 1);
 		else if (status == 6)
-        {
-            free(tmp);
-            free(line);
-            return (0);
-        }
+            return (free(tmp), free(line), 0);
         free(tmp);
         free(line);
         line = get_next_line(fd);
@@ -225,6 +217,99 @@ int get_info(int fd)
     return (1);
 }
 
+void	free_memory(void ***str)
+{
+	int	i;
+
+	i = 0;
+	if (!*str)
+		return ;
+	while ((*str)[i])
+	{
+		free((*str)[i]);
+		i++;
+	}
+	free(*str);
+	*str = NULL;
+}
+
+void	big_free(void)
+{
+	free_memory((void ***)&data()->xpm);
+	free_memory((void ***)&data()->rgb);
+	free_memory((void ***)&data()->map);
+}
+
+char	**ft_realloc(char **map, int len)
+{
+	int		i;
+	char	**new;
+
+	i = -1;
+	new = malloc(sizeof(char *) * len);
+	if (!new)
+		return (NULL);
+	while (map[++i])
+		new[i] = map[i];
+	new[i] = NULL;
+	new[i + 1] = NULL;
+	return (free(map), new);
+}
+
+int	add_new_line(int arr_len, char *line)
+{
+	char	**tmp;
+
+	tmp = ft_realloc(data()->map, arr_len + 2);
+	if (!tmp)
+		return (big_free(), 1);
+	data()->map = tmp;
+	data()->map[arr_len] = ft_strdup(line);
+	if (!data()->map[arr_len])
+		return (big_free(), 1);
+	return (0);
+}
+
+int	fill_map(char *line)
+{
+	int		arr_len;
+
+	arr_len = ft_strlen(line);
+	if (!arr_len)
+		return (1);
+	if (!data()->map)
+	{
+		data()->map = malloc(sizeof(char **));
+		if (!data()->map)
+			return (1);
+		data()->map[0] = ft_strdup(line);
+		if (!data()->map[0])
+			return (1);
+		data()->map[1] = NULL;
+	}
+	else
+		if (add_new_line(arr_len, line))
+			return (1);
+	return (0);
+}
+
+int	get_map(int fd)
+{
+	char	*line;
+	char	*tmp;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		tmp = ft_strtrim(line, " \f\n\r\t\v");
+		if (ft_strlen(tmp) > 0)
+			if (fill_map(line))
+				return (1);
+		free(line);
+		line = get_next_line(fd);
+	}
+	return (0);
+}
 
 int	parser(char *av)
 {
@@ -234,18 +319,18 @@ int	parser(char *av)
 		return(err("Error, wrong file format\n"));
 	fd = open(av, O_RDONLY);
 	if (fd == -1)
-		return(err("Error, cannot open the map\n"));
+		return(close(fd), err("Error, cannot open the map\n"));
 	if (get_info(fd))
 		return (err("Error, wrong information\n"));
-	// if (get_map(fd))
-	// 	return (err("Error, wrong map\n"));
-	return (0);
+	if (get_map(fd))
+		return (close(fd), err("Error, wrong map\n"));
+	return (close(fd), 0);
 }
 
 int main(int ac, char **av)
 {
 	if (ac != 2)
-		return (err("Error : Map isn't correct\n"), 1);
+		return (err("Error, Map isn't correct\n"), 1);
 	(void)av;
 	if (parser(av[1]))
 		return (1);
