@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/17 19:12:27 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/17 23:28:02 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,7 +309,9 @@ int	get_map(int fd)
 {
 	char	*line;
 	char	*tmp;
+	int		i;
 
+	i = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -318,8 +320,10 @@ int	get_map(int fd)
 			if (fill_map(line))
 				return (1);
 		free(line);
+		i++;
 		line = get_next_line(fd);
 	}
+	data()->height = i;
 	return (0);
 }
 
@@ -328,11 +332,18 @@ int	check_border(int i)
 	int	j;
 
 	j = -1;
-	if (i == 0)
+	if (i == 0 || i == data()->height)
 	{
-		while (data()->map[i][++j])
-			if (data()->map[i][j] == '0')
+		while (data()->map[i][j] || data()->map[i][++j] != '\n')
+			if (data()->map[i][j] != '1' && data()->map[i][j] != ' ')
 				return (0);
+	}
+	else
+	{
+		while (data()->map[i][j] || data()->map[i][++j] != '\n')
+		{
+			
+		}
 	}
 	return (1);
 }
@@ -341,15 +352,10 @@ int	check_data_map(int i)
 	int	j;
 
 	j = -1;
-	while (data()->map[i][++j])
+	while (data()->map[i][j] || data()->map[i][++j] != '\n')
 	{
 		if (!ft_strchr(" 10NSEW", data()->map[i][j]))
-			continue ;
-		else
-		{
-			ft_printf("--- %c ---\n", data()->map[i][j]);
 			return (0);
-		}
 	}
 	return (1);
 }

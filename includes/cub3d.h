@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/17 15:33:57 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/17 23:23:27 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct	s_cub
 	t_xpm		*xpm;
 	t_color		*rgb;
 	char		**map;
+	int			height;
 	t_img		img;
 	t_img		img2[4];
 	t_player	*player;
