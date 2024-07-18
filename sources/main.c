@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/18 12:22:31 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:16:33 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -415,8 +415,7 @@ int	check_map(void)
 			if (data()->map[i][j] == 'N' || data()->map[i][j] == 'S'
 				|| data()->map[i][j] == 'E' || data()->map[i][j] == 'W')
 			{
-				data()->player->p_x = j;
-				data()->player->p_y = i;
+				init_vectors(i, j);
 				count++;
 			}
 		}

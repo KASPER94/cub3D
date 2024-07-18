@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/17 23:23:27 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:33:56 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_player
 {
 	int		p_x;
 	int		p_y;
+	char	dir;
 }	t_player;
 
 typedef struct s_img
@@ -92,6 +93,19 @@ typedef struct	s_color
 	t_rgb	*f;
 }	t_color;
 
+typedef struct s_var
+{
+	double	camera;
+	double	rayDirX;
+	double	rayDirY;
+	double	dirX;
+	double	dirY;
+	double	planeX;
+	double	planeY;
+	double	position_x;
+	double	position_y;
+}	t_var;
+
 typedef struct	s_cub
 {
 	void		*mlx;
@@ -103,6 +117,11 @@ typedef struct	s_cub
 	t_img		img;
 	t_img		img2[4];
 	t_player	*player;
+	t_var		var;
 }	t_cub;
+
+int		raycast_loop(void);
+void	init_vectors(int x, int y);
+t_cub	*data(void);
 
 #endif

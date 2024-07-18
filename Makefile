@@ -6,7 +6,7 @@
 #    By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/12 16:23:30 by peanut            #+#    #+#              #
-#    Updated: 2024/07/14 17:29:05 by skapersk         ###   ########.fr        #
+#    Updated: 2024/07/18 12:34:11 by skapersk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ LBFT= $(LIBFT_PATH)$(LIBFT_NAME)
 
 SRC_DIR = ./sources/
 SRC= main.c \
+	raycasting.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
