@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/18 14:33:56 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:23:10 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,28 @@ typedef struct s_var
 	double	planeY;
 	double	position_x;
 	double	position_y;
+	double	sideDistX;
+	double	sideDistY;
+	double	deltaDistX;
+	double	deltaDistY;
+	double	perpWallDist;
+	int		hit;
+	int		mapX;
+	int		mapY;
+	int 	stepX;
+	int 	stepY;
+	int		side;
+	int 	lineHeight;
+	int		drawStart;
+	int		drawEnd;
 }	t_var;
+
+typedef struct	s_test_color
+{
+	t_rgb	blue;
+	t_rgb	red;
+	t_rgb	green;
+}	t_test_color;
 
 typedef struct	s_cub
 {
@@ -118,6 +139,7 @@ typedef struct	s_cub
 	t_img		img2[4];
 	t_player	*player;
 	t_var		var;
+	t_test_color	*color;
 }	t_cub;
 
 int		raycast_loop(void);

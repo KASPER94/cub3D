@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/18 14:16:33 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:52:15 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -388,11 +388,12 @@ int	check_data_map(int i)
 {
 	int	j;
 
-	j = -1;
-	while (data()->map[i][j] && data()->map[i][++j] != '\n')
+	j = 0;
+	while (data()->map[i][j] && data()->map[i][j] != '\n')
 	{
 		if (!ft_strchr(" 10NSEW", data()->map[i][j]))
 			return (0);
+		j++;
 	}
 	return (1);
 }
@@ -452,6 +453,7 @@ int main(int ac, char **av)
 		return (1);
 	if (parser(av[1]))
 		return (1);
+	raycast_loop();
 	mlx_loop_hook(data()->mlx, start_the_game, NULL);
 	mlx_loop(data()->mlx);
 	return 0;
