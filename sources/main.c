@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/17 23:28:02 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/18 12:22:31 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,32 +327,69 @@ int	get_map(int fd)
 	return (0);
 }
 
+int	ft_find_edge(int i)
+{
+	int j;
+
+	j = 0;
+	while (data()->map[i][j] && data()->map[i][j] != '\n')
+		j++;
+	j--;
+	while (data()->map[i][j] == ' ')
+		j--;
+	return (j);
+}
+
+int	control_the_edge(int i, int j)
+{
+	int	count;
+	int	edge;
+
+	count = 0;
+	edge = ft_find_edge(i);
+	while (data()->map[i][j] && data()->map[i][j] != '\n')
+	{
+		if (data()->map[i][j] == ' ' && count == 0)
+			j++;
+		else
+		{
+			count++;
+			if (data()->map[i][j] != '1' && count == 1)
+				return (0);
+		}
+		j++;
+	}
+	if (data()->map[i][edge] != '1')
+		return (0);
+	return (1);
+}
+
 int	check_border(int i)
 {
 	int	j;
 
-	j = -1;
+	j = 0;
 	if (i == 0 || i == data()->height)
 	{
-		while (data()->map[i][j] || data()->map[i][++j] != '\n')
+		while (data()->map[i][j] && data()->map[i][j] != '\n')
+		{
 			if (data()->map[i][j] != '1' && data()->map[i][j] != ' ')
 				return (0);
-	}
-	else
-	{
-		while (data()->map[i][j] || data()->map[i][++j] != '\n')
-		{
-			
+			j++;
 		}
 	}
+	else
+		if (!control_the_edge(i, j))
+			return (0);
 	return (1);
 }
+
 int	check_data_map(int i)
 {
 	int	j;
 
 	j = -1;
-	while (data()->map[i][j] || data()->map[i][++j] != '\n')
+	while (data()->map[i][j] && data()->map[i][++j] != '\n')
 	{
 		if (!ft_strchr(" 10NSEW", data()->map[i][j]))
 			return (0);
@@ -384,6 +421,8 @@ int	check_map(void)
 			}
 		}
 	}
+	if (count > 1)
+		return (0);
 	return (count);
 }
 
