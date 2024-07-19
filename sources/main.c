@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/18 17:52:15 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/19 14:47:08 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,26 @@ t_cub	*data(void)
 	return (&data);
 }
 
+void init_data(void)
+{
+	t_cub *d;
+
+	d = data();
+    d->mlx = NULL;
+    d->win = NULL;
+    d->var = (t_var){0};
+    d->img = (t_img){0};
+    d->color = malloc(sizeof(t_color) * 3); // Allouer de la mémoire pour les couleurs
+    if (!d->color)
+    {
+        perror("Error allocating memory for colors");
+        exit(EXIT_FAILURE);
+    }
+    d->map = NULL;
+    d->width = 0;
+    d->height = 0;
+}
+
 int init(void)
 {
 	void *tmp;
@@ -49,17 +69,55 @@ int init(void)
 		return (err("Malloc error for player\n"), 1);
 	return (0);
 }
+
+void	draw_ceilling_floor(void)
+{
+    unsigned int	*dst;
+    unsigned int	i;
+    int				color;
+    int				color2;
+
+    color = (data()->color->yellow.r << 16 | data()->color->yellow.g << 8 | data()->color->yellow.b);
+    color2 = (data()->color->white.r << 16 | data()->color->white.g << 8 | data()->color->white.b);
+    
+    if (!data()->img.addr) {
+        fprintf(stderr, "Error: Image data buffer is NULL\n");
+        return;
+    }
+
+    dst = (unsigned int *)data()->img.addr; // Address of the image data buffer
+
+    if (dst == NULL) {
+        fprintf(stderr, "Error: Invalid image data address\n");
+        return;
+    }
+
+    i = HEIGHT * WIDTH / 2 + 1;
+    while (i-- > 0) {
+        *dst++ = color;
+    }
+
+    i = HEIGHT * WIDTH / 2 + 1;
+    while (i-- > 0) {
+        *dst++ = color2;
+    }
+}
+
+
 int	start_the_game(void)
 {
 	void	*img;
 	char	*addr;
 
+	set_color();
 	img = mlx_new_image(data()->mlx, WIDTH, HEIGHT);
 	data()->img.pointer_to_img = img;
 	addr = mlx_get_data_addr(data()->img.pointer_to_img, &data()->img.bpp, &data()->img.line_len, &data()->img.endian);
 	data()->img.addr = addr;
-	
+	draw_ceilling_floor();
+	raycast_loop();
 	mlx_put_image_to_window(data()->mlx, data()->win, img, 0, 0);
+	mlx_destroy_image(data()->mlx, data()->img.pointer_to_img);
 	return (0);
 }
 
@@ -451,11 +509,12 @@ int main(int ac, char **av)
 	(void)av;
 	if (init())
 		return (1);
+	// init_data();
 	if (parser(av[1]))
 		return (1);
-	raycast_loop();
 	mlx_loop_hook(data()->mlx, start_the_game, NULL);
 	mlx_loop(data()->mlx);
+	big_free();
 	return 0;
 }
 

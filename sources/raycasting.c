@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:33:01 by skapersk          #+#    #+#             */
-/*   Updated: 2024/07/18 17:55:29 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/19 14:46:40 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,19 @@ void	init_vectors(int x, int y)
 {
 	data()->var.position_x = x + 0.5;
 	data()->var.position_y = y + 0.5;
-	if (data()->map[y][x] == 'N')
+	if (data()->map[x][y] == 'N')
 		set_values(0, -1, 0.66, 0);
-	else if (data()->map[y][x] == 'S')
+	else if (data()->map[x][y] == 'S')
 		set_values(0, 1, -0.66, 0);
-	else if (data()->map[y][x] == 'E')
+	else if (data()->map[x][y] == 'E')
 		set_values(1, 0, 0, 0.66);
-	else if (data()->map[y][x] == 'W')
+	else if (data()->map[x][y] == 'W')
 		set_values(-1, 0, 0, -0.66);
 }
 
-void	find_ray_and_dir(int x)
+void	find_ray_and_dir(int x, int w)
 {
-	data()->var.camera = 2 * x / (double)WIDTH - 1;
+	data()->var.camera = 2 * x / (double)w - 1;
 	data()->var.rayDirX = data()->var.dirX + data()->var.planeX * data()->var.camera;
 	data()->var.rayDirY = data()->var.dirY + data()->var.planeY * data()->var.camera;
 }
@@ -126,7 +126,7 @@ void	dist_project_camera(void)
 	if (tmp.side == 0)
 		tmp.perpWallDist = (tmp.sideDistX - tmp.deltaDistX);
 	else
-		tmp.perpWallDist = (tmp.sideDistX - tmp.deltaDistX);
+		tmp.perpWallDist = (tmp.sideDistY - tmp.deltaDistY);
 }
 
 void	set_height_wall(void)
@@ -134,7 +134,7 @@ void	set_height_wall(void)
 	t_var	tmp;
 
 	tmp = data()->var;
-	tmp.lineHeight = (int)(data()->height / tmp.perpWallDist);
+	tmp.lineHeight = (int)(HEIGHT / tmp.perpWallDist);
 }
 
 void	find_lowest_and_high_pix(void)
@@ -142,16 +142,17 @@ void	find_lowest_and_high_pix(void)
 	t_var	tmp;
 
 	tmp = data()->var;
-	tmp.drawStart = -tmp.lineHeight / 2 + data()->height / 2;
+	tmp.drawStart = -tmp.lineHeight / 2 + HEIGHT / 2;
 	if (tmp.drawStart < 0)
 		tmp.drawStart = 0;
-	tmp.drawEnd = tmp.lineHeight / 2 + data()->height / 2;
-	if (tmp.drawEnd >= data()->height)
-		tmp.drawEnd = data()->height - 1;
+	tmp.drawEnd = tmp.lineHeight / 2 + HEIGHT / 2;
+	if (tmp.drawEnd >= HEIGHT)
+		tmp.drawEnd = HEIGHT - 1;
 }
 
 void	set_color(void)
 {
+	data()->color = malloc(sizeof(t_test_color));
 	data()->color->blue.r = 80;
 	data()->color->blue.g = 91;
 	data()->color->blue.b = 166;
@@ -161,46 +162,47 @@ void	set_color(void)
 	data()->color->green.r = 70;
 	data()->color->green.g = 148;
 	data()->color->green.b = 73;
+	    // Ceiling color
+    data()->color->white.r = 255;
+    data()->color->white.g = 255;
+    data()->color->white.b = 255;
 
+    // Wall color
+    data()->color->yellow.r = 255;
+    data()->color->yellow.g = 223;
+    data()->color->yellow.b = 0;
 }
 
-void init_image(void)
+void	mlx_place_pixel(int x, int y, int colour)
 {
-	t_img img;
+	char	*distance;
 
-	img = data()->img;
-
-    img.pointer_to_img = mlx_new_image(data()->mlx, WIDTH, HEIGHT);
-    img.addr = mlx_get_data_addr(img.pointer_to_img, &img.bpp, &img.line_len, &img.endian);
-}
-
-
-void my_mlx_pixel_put(t_img *img, int x, int y, int color)
-{
-    char *dst;
-
-    dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
-    *(unsigned int *)dst = color;
+	distance = data()->img.addr + \
+		(x * data()->img.line_len + y * (data()->img.bpp / 8));
+	*(unsigned int *)distance = colour;
 }
 
 void	draw_wall(int x)
 {
-    t_var tmp = data()->var;
-    int y;
-    int color;
+	int	y;
+	int	color;
 
-    // Choisissez la couleur en fonction de la direction du mur
-    if (tmp.side == 1)
-        color = 0xFF0000; // Rouge pour les murs verticaux
-    else
-        color = 0x00FF00; // Vert pour les murs horizontaux
-
-    y = tmp.drawStart;
-    while (y < tmp.drawEnd)
-    {
-        my_mlx_pixel_put(&data()->img, x, y, color);
-        y++;
-    }
+	if (data()->var.side == 1)
+	{
+        color = (data()->var.stepY == -1) ? (data()->color->red.r << 16 | data()->color->red.g << 8 | data()->color->red.b)
+                                  : (data()->color->green.r << 16 | data()->color->green.g << 8 | data()->color->green.b);
+	}
+	else
+	{
+        color = (data()->var.stepX == -1) ? (data()->color->blue.r << 16 | data()->color->blue.g << 8 | data()->color->blue.b)
+                                  : (data()->color->green.r << 16 | data()->color->green.g << 8 | data()->color->green.b);
+	}
+	y = data()->var.drawStart;
+	while (y < data()->var.drawEnd)
+	{
+		mlx_place_pixel(x, y, color);
+		y++;
+	}
 }
 
 int	raycast_loop(void)
@@ -212,7 +214,7 @@ int	raycast_loop(void)
 	i = 0;
 	while (x < WIDTH)
 	{
-		find_ray_and_dir(x);
+		find_ray_and_dir(x, WIDTH);
 		set_box();
 		set_len_ray();
 		set_step_and_ini_sideDist();
@@ -220,11 +222,8 @@ int	raycast_loop(void)
 		dist_project_camera();
 		set_height_wall();
 		find_lowest_and_high_pix();
-		// set_color();
 		draw_wall(x);
 		x++;
 	}
-	ft_printf("--- %p --- \n", data()->img.pointer_to_img);
-	mlx_put_image_to_window(data()->mlx, data()->win, data()->img.pointer_to_img, 0, 0);
 	return (i);
 }

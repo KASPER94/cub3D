@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/18 17:23:10 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/19 14:46:36 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ typedef struct	s_test_color
 	t_rgb	blue;
 	t_rgb	red;
 	t_rgb	green;
+	t_rgb	white;
+	t_rgb	yellow;
 }	t_test_color;
 
 typedef struct	s_cub
@@ -135,6 +137,7 @@ typedef struct	s_cub
 	t_color		*rgb;
 	char		**map;
 	int			height;
+	int			width;
 	t_img		img;
 	t_img		img2[4];
 	t_player	*player;
@@ -145,5 +148,6 @@ typedef struct	s_cub
 int		raycast_loop(void);
 void	init_vectors(int x, int y);
 t_cub	*data(void);
+void	set_color(void);
 
 #endif
