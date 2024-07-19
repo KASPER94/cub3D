@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/19 14:46:36 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/20 01:18:41 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,20 @@
 # define ROTATION_SPEED 0.045 // rotation speed
 # define PLAYER_SPEED 4 // player speed
 
-// typedef struct s_player //the player structure
-// {
-// 	int			plyr_x; // player x position in pixels
-// 	int			plyr_y; // player y position in pixels
-// 	double		angle; // player angle
-// 	float		fov_rd; // field of view in radians
-// 	int			rot; // rotation flag
-// 	int			l_r; // left right flag
-// 	int			u_d; // up down flag
-// }	t_player;
+# define PRESS		2
+# define RELEASE	3
 
-typedef struct s_ray //the ray structure
-{
-	double		ray_ngl; // ray angle
-	double		distance; // distance to the wall
-	int			flag; // flag for the wall
-}	t_ray;
+
+# define W 						122
+# define A 						115
+# define S 						115
+# define D 						2
+# define UP 					126
+# define DOWN 					125
+# define LEFT 					123
+# define RIGHT 					124
+# define ESC 		65307
+
 
 typedef struct s_player
 {
@@ -109,6 +106,8 @@ typedef struct s_var
 	double	deltaDistX;
 	double	deltaDistY;
 	double	perpWallDist;
+	double	move_speed;
+	double	frame_time;
 	int		hit;
 	int		mapX;
 	int		mapY;
@@ -129,6 +128,18 @@ typedef struct	s_test_color
 	t_rgb	yellow;
 }	t_test_color;
 
+typedef struct s_key
+{
+	int	w;
+	int	s;
+	int	a;
+	int	d;
+	int	right;
+	int	left;
+	int	p;
+	int	esc;
+}				t_key;
+
 typedef struct	s_cub
 {
 	void		*mlx;
@@ -143,11 +154,14 @@ typedef struct	s_cub
 	t_player	*player;
 	t_var		var;
 	t_test_color	*color;
+	t_key		key;
 }	t_cub;
 
 int		raycast_loop(void);
 void	init_vectors(int x, int y);
 t_cub	*data(void);
 void	set_color(void);
+void	player_move_forward(void);
+void player_move_backward(void);
 
 #endif

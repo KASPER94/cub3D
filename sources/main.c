@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/19 14:47:08 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/20 01:15:22 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,14 @@ int init(void)
 	data()->player = (t_player *)malloc(sizeof(t_player));
 	if (data()->player == NULL)
 		return (err("Malloc error for player\n"), 1);
+	data()->key.esc = 0;
+    data()->key.w = 0;
+    data()->key.s = 0;
+    data()->key.a = 0;
+    data()->key.d = 0;
+    data()->key.left = 0;
+    data()->key.right = 0;
+    data()->key.p = 1;
 	return (0);
 }
 
@@ -103,6 +111,24 @@ void	draw_ceilling_floor(void)
     }
 }
 
+void	hooks(void)
+{
+	if (data()->key.w == 1)
+	{
+		ft_printf("coucou");
+		player_move_forward();
+	}
+	if (data()->key.s == 1)
+		player_move_backward();
+	// if (data()->key.a == 1)
+	// 	player_move_left();
+	// if (data()->key.d == 1)
+	// 	player_move_right();
+	// if (data()->key.left == 1)
+	// 	player_rotate_left();
+	// if (data()->key.right == 1)
+	// 	player_rotate_right();
+}
 
 int	start_the_game(void)
 {
@@ -116,6 +142,9 @@ int	start_the_game(void)
 	data()->img.addr = addr;
 	draw_ceilling_floor();
 	raycast_loop();
+	hooks();
+	data()->var.frame_time = 16 / 1000.0;
+	data()->var.move_speed = data()->var.frame_time * 5.0;
 	mlx_put_image_to_window(data()->mlx, data()->win, img, 0, 0);
 	mlx_destroy_image(data()->mlx, data()->img.pointer_to_img);
 	return (0);
@@ -502,6 +531,67 @@ int	parser(char *av)
 	return (close(fd), 0);
 }
 
+int	close_win(void)
+{
+	int	x;
+
+	x = 0;
+	while (x < data()->height)
+	{
+		free(data()->map[x]);
+		x++;
+	}
+	free(data()->map);
+	mlx_destroy_window(data()->mlx, data()->win);
+	// mlx_destroy_image(data()->mlx, data()->img.pointer_to_img);
+	mlx_destroy_display(data()->mlx);
+	// free(data()->mlx);
+	exit(0);
+}
+
+int	key_press(int keycode)
+{
+	 printf("Key pressed: %d\n", keycode);
+	if (keycode == ESC)
+		return (close_win(), 0);
+	else if (keycode == W)
+		data()->key.w = 1;
+	else if (keycode == S)
+		data()->key.s = 1;
+	else if (keycode == A)
+		data()->key.a = 1;
+	else if (keycode == D)
+		data()->key.d = 1;
+	else if (keycode == LEFT)
+		data()->key.left = 1;
+	else if (keycode == RIGHT)
+		data()->key.right = 1;
+	return (0);
+}
+
+int key_release(int keycode)
+{
+    // Affiche le code de la touche relâchée
+    printf("Key released:\n");
+
+    // if (keycode == ESC)
+    //     data()->key.esc = 0;
+    if (keycode == W)
+        data()->key.w = 0;
+    else if (keycode == S)
+        data()->key.s = 0;
+    else if (keycode == A)
+        data()->key.a = 0;
+    else if (keycode == D)
+        data()->key.d = 0;
+    else if (keycode == LEFT)
+        data()->key.left = 0;
+    else if (keycode == RIGHT)
+        data()->key.right = 0;
+
+    return (0);
+}
+
 int main(int ac, char **av)
 {
 	if (ac != 2)
@@ -513,6 +603,9 @@ int main(int ac, char **av)
 	if (parser(av[1]))
 		return (1);
 	mlx_loop_hook(data()->mlx, start_the_game, NULL);
+	mlx_hook(data()->win, PRESS, (1L << 0), &key_press, NULL);
+	// mlx_hook(data()->win, ESC, (1L << 3), &close_win, NULL);
+	mlx_hook(data()->win, RELEASE, (1L << 1), &key_release, NULL);
 	mlx_loop(data()->mlx);
 	big_free();
 	return 0;
