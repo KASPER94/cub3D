@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/20 01:18:41 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/20 11:41:44 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@
 
 
 # define W 						122
-# define A 						115
+# define A 						113
 # define S 						115
-# define D 						2
+# define D 						100
 # define UP 					126
 # define DOWN 					125
 # define LEFT 					123
@@ -108,6 +108,7 @@ typedef struct s_var
 	double	perpWallDist;
 	double	move_speed;
 	double	frame_time;
+	double	rot_speed;
 	int		hit;
 	int		mapX;
 	int		mapY;
@@ -163,5 +164,8 @@ t_cub	*data(void);
 void	set_color(void);
 void	player_move_forward(void);
 void player_move_backward(void);
+void player_rot_right(void);
+void player_move_left(void);
+void player_move_right(void);
 
 #endif

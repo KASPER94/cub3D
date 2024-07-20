@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/20 01:15:22 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/20 11:42:00 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,10 @@ void	hooks(void)
 	}
 	if (data()->key.s == 1)
 		player_move_backward();
-	// if (data()->key.a == 1)
-	// 	player_move_left();
-	// if (data()->key.d == 1)
-	// 	player_move_right();
+	if (data()->key.a == 1)
+		player_move_left();
+	if (data()->key.d == 1)
+		player_move_right();
 	// if (data()->key.left == 1)
 	// 	player_rotate_left();
 	// if (data()->key.right == 1)
@@ -145,6 +145,7 @@ int	start_the_game(void)
 	hooks();
 	data()->var.frame_time = 16 / 1000.0;
 	data()->var.move_speed = data()->var.frame_time * 5.0;
+	data()->var.rot_speed = data()->var.frame_time * 3.0;
 	mlx_put_image_to_window(data()->mlx, data()->win, img, 0, 0);
 	mlx_destroy_image(data()->mlx, data()->img.pointer_to_img);
 	return (0);
