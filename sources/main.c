@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/21 00:25:59 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/21 00:39:07 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,34 +390,39 @@ int	fill_map(char *line)
 	return (0);
 }
 
-int	check_logic_fits(char *line)
+int check_logic_fits(char *line)
 {
-	static int	i;
+    static int i;
+    int x = 0;
 
-	if (data()->map[i])
-	{
-
-	}
-	return (0)
+    if (data()->map && data()->map[i])
+    {
+        while (line[x] && (line[x] != '1'))
+            x++;
+        if (data()->map[i][x] == '1' || (data()->map[i][x - 1] && data()->map[i][x - 1] == '1') || (data()->map[i][x + 1] && data()->map[i][x + 1] == '1'))
+            return (0);
+        i++;
+    }
+    return (1);
 }
 
-int	get_width(char *line)
+int get_width(char *line)
 {
-	int max_width;
-	int	i;
+    int max_width = 0;
+    int i = 0;
 
-	max_width = 0;
-	while (line[i])
-	{
-		max_width = i;
-		i++;
-	}
-	if (max_width > data()->width)
-		data()->width = max_width;
-	if (!check_logic_fits(line))
-		return (0);
-	return (1)
+    while (line[i])
+    {
+        max_width = i;
+        i++;
+    }
+    if (max_width > data()->width)
+        data()->width = max_width;
+    // if (!check_logic_fits(line))
+    //     return (0);
+    return (1);
 }
+
 
 int	get_map(int fd)
 {
@@ -433,7 +438,7 @@ int	get_map(int fd)
 		if (ft_strlen(tmp) > 0)
 			if (fill_map(line))
 				return (1);
-		if (!get_width(line, i))
+		if (!get_width(line))
 			return (1);
 		free(line);
 		i++;
