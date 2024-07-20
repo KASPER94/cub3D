@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/20 11:41:44 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/21 00:21:35 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@
 # define D 						100
 # define UP 					126
 # define DOWN 					125
-# define LEFT 					123
-# define RIGHT 					124
+# define LEFT 					65361
+# define RIGHT 					65363
 # define ESC 		65307
 
 
@@ -89,6 +89,12 @@ typedef struct	s_color
 	t_rgb	*c;
 	t_rgb	*f;
 }	t_color;
+
+typedef struct	s_map
+{
+	int	r;
+	int	l;
+}	t_map;
 
 typedef struct s_var
 {
@@ -143,19 +149,22 @@ typedef struct s_key
 
 typedef struct	s_cub
 {
-	void		*mlx;
-	void		*win;
-	t_xpm		*xpm;
-	t_color		*rgb;
-	char		**map;
-	int			height;
-	int			width;
-	t_img		img;
-	t_img		img2[4];
-	t_player	*player;
-	t_var		var;
+	void			*mlx;
+	void			*win;
+	t_xpm			*xpm;
+	t_color			*rgb;
+	char			**map;
+	int				height;
+	int				width;
+	t_img			img;
+	t_img			img2[4];
+	t_player		*player;
+	t_var			var;
 	t_test_color	*color;
-	t_key		key;
+	t_key			key;
+	int				map_height;
+	int				map_width;
+	t_map			edge;
 }	t_cub;
 
 int		raycast_loop(void);
@@ -163,9 +172,10 @@ void	init_vectors(int x, int y);
 t_cub	*data(void);
 void	set_color(void);
 void	player_move_forward(void);
-void player_move_backward(void);
-void player_rot_right(void);
-void player_move_left(void);
-void player_move_right(void);
+void 	player_move_backward(void);
+void 	player_rot_right(void);
+void 	player_move_left(void);
+void 	player_move_right(void);
+void 	player_rot_left(void);
 
 #endif

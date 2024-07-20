@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/20 11:42:00 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/21 00:25:59 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,20 +114,17 @@ void	draw_ceilling_floor(void)
 void	hooks(void)
 {
 	if (data()->key.w == 1)
-	{
-		ft_printf("coucou");
 		player_move_forward();
-	}
 	if (data()->key.s == 1)
 		player_move_backward();
 	if (data()->key.a == 1)
 		player_move_left();
 	if (data()->key.d == 1)
 		player_move_right();
-	// if (data()->key.left == 1)
-	// 	player_rotate_left();
-	// if (data()->key.right == 1)
-	// 	player_rotate_right();
+	if (data()->key.left == 1)
+		player_rot_left();
+	if (data()->key.right == 1)
+		player_rot_right();
 }
 
 int	start_the_game(void)
@@ -393,6 +390,35 @@ int	fill_map(char *line)
 	return (0);
 }
 
+int	check_logic_fits(char *line)
+{
+	static int	i;
+
+	if (data()->map[i])
+	{
+
+	}
+	return (0)
+}
+
+int	get_width(char *line)
+{
+	int max_width;
+	int	i;
+
+	max_width = 0;
+	while (line[i])
+	{
+		max_width = i;
+		i++;
+	}
+	if (max_width > data()->width)
+		data()->width = max_width;
+	if (!check_logic_fits(line))
+		return (0);
+	return (1)
+}
+
 int	get_map(int fd)
 {
 	char	*line;
@@ -407,6 +433,8 @@ int	get_map(int fd)
 		if (ft_strlen(tmp) > 0)
 			if (fill_map(line))
 				return (1);
+		if (!get_width(line, i))
+			return (1);
 		free(line);
 		i++;
 		line = get_next_line(fd);
@@ -425,6 +453,7 @@ int	ft_find_edge(int i)
 	j--;
 	while (data()->map[i][j] == ' ')
 		j--;
+	data()->edge.r = j;
 	return (j);
 }
 
@@ -442,6 +471,7 @@ int	control_the_edge(int i, int j)
 		else
 		{
 			count++;
+			data()->edge.l = j;
 			if (data()->map[i][j] != '1' && count == 1)
 				return (0);
 		}
@@ -552,7 +582,6 @@ int	close_win(void)
 
 int	key_press(int keycode)
 {
-	 printf("Key pressed: %d\n", keycode);
 	if (keycode == ESC)
 		return (close_win(), 0);
 	else if (keycode == W)
@@ -572,11 +601,6 @@ int	key_press(int keycode)
 
 int key_release(int keycode)
 {
-    // Affiche le code de la touche relâchée
-    printf("Key released:\n");
-
-    // if (keycode == ESC)
-    //     data()->key.esc = 0;
     if (keycode == W)
         data()->key.w = 0;
     else if (keycode == S)
@@ -589,7 +613,6 @@ int key_release(int keycode)
         data()->key.left = 0;
     else if (keycode == RIGHT)
         data()->key.right = 0;
-
     return (0);
 }
 

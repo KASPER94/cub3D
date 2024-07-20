@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:33:01 by skapersk          #+#    #+#             */
-/*   Updated: 2024/07/19 15:11:09 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/20 23:59:44 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ void	set_values(double direction_x, double direction_y, double pla_x, double pla
 
 void	init_vectors(int x, int y)
 {
-	data()->var.position_x = x + 0.5;
-	data()->var.position_y = y + 0.5;
-	if (data()->map[x][y] == 'N')
+    data()->var.position_x = x + 0.5;
+    data()->var.position_y = y + 0.5;
+    if (data()->map[x][y] == 'N')
 		set_values(0, -1, 0.66, 0);
-	else if (data()->map[x][y] == 'S')
+    else if (data()->map[x][y] == 'S')
 		set_values(0, 1, -0.66, 0);
-	else if (data()->map[x][y] == 'E')
+    else if (data()->map[x][y] == 'E')
 		set_values(1, 0, 0, 0.66);
-	else if (data()->map[x][y] == 'W')
+    else if (data()->map[x][y] == 'W')
 		set_values(-1, 0, 0, -0.66);
 }
 
@@ -57,8 +57,14 @@ void set_len_ray(void)
 	t_var	tmp;
 
 	tmp = data()->var;
-	tmp.deltaDistX = (tmp.rayDirX == 0) ? 1e30 : fabs(1 / tmp.rayDirX);
-	tmp.deltaDistY = (tmp.rayDirY == 0) ? 1e30 : fabs(1 / tmp.rayDirY);
+	if (tmp.rayDirX == 0)
+		tmp.deltaDistX = 1e30;
+	else
+		tmp.deltaDistX = fabs(1 / tmp.rayDirX);
+	if (tmp.rayDirY == 0)
+		tmp.deltaDistY = 1e30;
+	else
+		tmp.deltaDistY = fabs(1 / tmp.rayDirY);
 	data()->var = tmp;
 }
 
@@ -92,27 +98,29 @@ void	set_step_and_ini_sideDist(void)
 
 void	DDA(void)
 {
-	t_var	tmp;
-
-	tmp = data()->var;
-	while (tmp.hit == 0)
+	while (data()->var.hit == 0)
 	{
-		if (tmp.sideDistX < tmp.sideDistY)
+		// printf("DDA step: sideDistX=%f, sideDistY=%f, mapX=%d, mapY=%d\n",
+        //     data()->var.sideDistX, data()->var.sideDistY, data()->var.mapX, data()->var.mapY);
+		if (data()->var.sideDistX < data()->var.sideDistY)
 		{
-			tmp.sideDistX += tmp.deltaDistX;
-			tmp.mapX += tmp.stepX;
-			tmp.side = 0;
+			data()->var.sideDistX += data()->var.deltaDistX;
+			data()->var.mapX += data()->var.stepX;
+			data()->var.side = 0;
 		}
 		else
 		{
-			tmp.sideDistY += tmp.deltaDistY;
-			tmp.mapY += tmp.stepY;
-			tmp.side = 1;
+			data()->var.sideDistY += data()->var.deltaDistY;
+			data()->var.mapY += data()->var.stepY;
+			data()->var.side = 1;
 		}
-		if (data()->map[tmp.mapX][tmp.mapY] == '1')
-			tmp.hit = 1;
+		if (data()->map[data()->var.mapX][data()->var.mapY] == '1')
+		{
+            // fprintf(stderr, "Error: map coordinates out of bounds (mapX=%d, mapY=%d)\n",
+            //     data()->var.mapX, data()->var.mapY);
+			data()->var.hit = 1;
+		}
 	}
-	data()->var = tmp;
 }
 
 void	dist_project_camera(void)
