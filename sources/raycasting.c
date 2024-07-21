@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:33:01 by skapersk          #+#    #+#             */
-/*   Updated: 2024/07/20 23:59:44 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:50:25 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,6 @@ void	DDA(void)
 {
 	while (data()->var.hit == 0)
 	{
-		// printf("DDA step: sideDistX=%f, sideDistY=%f, mapX=%d, mapY=%d\n",
-        //     data()->var.sideDistX, data()->var.sideDistY, data()->var.mapX, data()->var.mapY);
 		if (data()->var.sideDistX < data()->var.sideDistY)
 		{
 			data()->var.sideDistX += data()->var.deltaDistX;
@@ -114,12 +112,12 @@ void	DDA(void)
 			data()->var.mapY += data()->var.stepY;
 			data()->var.side = 1;
 		}
-		if (data()->map[data()->var.mapX][data()->var.mapY] == '1')
-		{
-            // fprintf(stderr, "Error: map coordinates out of bounds (mapX=%d, mapY=%d)\n",
-            //     data()->var.mapX, data()->var.mapY);
+		if (data()->var.mapY < 0.25 || data()->var.mapX < 0.25
+			|| data()->var.mapY > data()->width - 1.25
+			|| data()->var.mapX > data()->height - 0.25)
+			break ;
+		else if (data()->map[data()->var.mapX][data()->var.mapY] > '0')
 			data()->var.hit = 1;
-		}
 	}
 }
 

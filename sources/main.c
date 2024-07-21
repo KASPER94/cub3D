@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/21 00:39:07 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/21 12:05:02 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void init_data(void)
     d->height = 0;
 }
 
-int init(void)
+int	init_win(void)
 {
 	void *tmp;
 	t_img *img_ptr;
@@ -64,6 +64,11 @@ int init(void)
 	data()->img = *img_ptr;
 	free(img_ptr);
 	data()->win = tmp;
+	return (0);
+}
+
+int init(void)
+{
 	data()->player = (t_player *)malloc(sizeof(t_player));
 	if (data()->player == NULL)
 		return (err("Malloc error for player\n"), 1);
@@ -579,9 +584,7 @@ int	close_win(void)
 	}
 	free(data()->map);
 	mlx_destroy_window(data()->mlx, data()->win);
-	// mlx_destroy_image(data()->mlx, data()->img.pointer_to_img);
 	mlx_destroy_display(data()->mlx);
-	// free(data()->mlx);
 	exit(0);
 }
 
@@ -628,35 +631,14 @@ int main(int ac, char **av)
 	(void)av;
 	if (init())
 		return (1);
-	// init_data();
 	if (parser(av[1]))
+		return (1);
+	if (init_win())
 		return (1);
 	mlx_loop_hook(data()->mlx, start_the_game, NULL);
 	mlx_hook(data()->win, PRESS, (1L << 0), &key_press, NULL);
-	// mlx_hook(data()->win, ESC, (1L << 3), &close_win, NULL);
 	mlx_hook(data()->win, RELEASE, (1L << 1), &key_release, NULL);
 	mlx_loop(data()->mlx);
 	big_free();
 	return 0;
 }
-
-// int main(void)
-// {
-//     void    *mlx;
-//     void    *mlx_win;
-//     void	*img;
-// 	char	*relative_path = "./assets/Trip3.xpm";
-// 	int		img_width;
-// 	int		img_height;
-
-//     mlx = mlx_init();
-//     mlx_win = mlx_new_window(mlx, 1920, 1000, "cub3D");
-//     img = mlx_xpm_file_to_image(mlx, relative_path, &img_width, &img_height);
-//     if (img == NULL)
-//     {
-//         fprintf(stderr, "Erreur : Impossible de charger l'image %s\n", relative_path);
-//         return (1);
-//     }
-//     mlx_put_image_to_window(mlx, mlx_win, img, 0, 0);
-//     mlx_loop(mlx);
-// }
