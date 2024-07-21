@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/21 12:05:02 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/21 21:38:22 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,9 +256,9 @@ int	fill_rgb(char *line, char id)
 			return (err("Malloc error\n"), 0);
 	}
 	if (id == 'c')
-		return (data()->rgb->c = get_color(line), 5);
+		return (data()->rgb->c = get_color(line), 1);
 	else
-		return (data()->rgb->f = get_color(line), 6);
+		return (data()->rgb->f = get_color(line), 1);
 	return (1);
 }
 
@@ -267,18 +267,18 @@ int check_order(char *line)
 {
     static int i;
 
-    if (i == 0 && !ft_strncmp(line, "NO", ft_strlen("NO")))
-        return (++i, fill_xpm(line, E_NO));
-    else if (i == 1 && !ft_strncmp(line, "SO", ft_strlen("SO")))
-        return (++i, fill_xpm(line, E_SO));
-    else if (i == 2 && !ft_strncmp(line, "WE", ft_strlen("WE")))
-        return (++i, fill_xpm(line, E_WE));
-    else if (i == 3 && !ft_strncmp(line, "EA", ft_strlen("EA")))
-        return (++i, fill_xpm(line, E_EA), ++i);
-    else if (i == 4 && line[0] == 'C')
-        return (++i, fill_rgb(line, 'c'));
-    else if (i == 5 && line[0] == 'F')
-        return (++i, fill_rgb(line, 'f'));
+    if (!ft_strncmp(line, "NO", ft_strlen("NO")))
+        return (fill_xpm(line, E_NO), ++i);
+    else if (!ft_strncmp(line, "SO", ft_strlen("SO")))
+        return (fill_xpm(line, E_SO), ++i);
+    else if (!ft_strncmp(line, "WE", ft_strlen("WE")))
+        return (fill_xpm(line, E_WE), ++i);
+    else if (!ft_strncmp(line, "EA", ft_strlen("EA")))
+        return (fill_xpm(line, E_EA), ++i);
+    else if (line[0] == 'C')
+        return (fill_rgb(line, 'c'), ++i);
+    else if (line[0] == 'F')
+        return (fill_rgb(line, 'f'), ++i);
     else if (!ft_strncmp(line, "", ft_strlen ("")))
         return (1);
 	else if (line[0] == 'F' || line[0] == 'C' || !ft_strncmp(line, "EA", ft_strlen("EA"))
@@ -577,7 +577,7 @@ int	close_win(void)
 	int	x;
 
 	x = 0;
-	while (x < data()->height)
+	while (x < data()->height - 1)
 	{
 		free(data()->map[x]);
 		x++;
