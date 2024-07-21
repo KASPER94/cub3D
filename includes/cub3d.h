@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/21 00:21:35 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/21 22:17:48 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define PRESS		2
 # define RELEASE	3
 
+# define TEXTURE_HEIGHT 			64
+# define TEXTURE_WIDTH 				64
 
 # define W 						122
 # define A 						113
@@ -158,6 +160,7 @@ typedef struct	s_cub
 	int				width;
 	t_img			img;
 	t_img			img2[4];
+	int			textures[4][TEXTURE_HEIGHT * TEXTURE_WIDTH];
 	t_player		*player;
 	t_var			var;
 	t_test_color	*color;

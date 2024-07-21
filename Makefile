@@ -6,7 +6,7 @@
 #    By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/12 16:23:30 by peanut            #+#    #+#              #
-#    Updated: 2024/07/19 23:51:20 by skapersk         ###   ########.fr        #
+#    Updated: 2024/07/21 21:42:21 by skapersk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC_DIR = ./sources/
 SRC= main.c \
 	raycasting.c \
 	mouvements.c \
+	textures.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 

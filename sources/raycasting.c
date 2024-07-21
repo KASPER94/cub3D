@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:33:01 by skapersk          #+#    #+#             */
-/*   Updated: 2024/07/21 11:50:25 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/21 22:19:41 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,7 @@ int	raycast_loop(void)
 		dist_project_camera();
 		set_height_wall();
 		find_lowest_and_high_pix();
+		// draw_vertical_texture_stripe(x);
 		draw_wall(x);
 		x++;
 	}
