@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/21 21:38:22 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/22 11:59:12 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	draw_ceilling_floor(void)
 
     color = (data()->color->yellow.r << 16 | data()->color->yellow.g << 8 | data()->color->yellow.b);
     color2 = (data()->color->white.r << 16 | data()->color->white.g << 8 | data()->color->white.b);
-    
+
     if (!data()->img.addr) {
         fprintf(stderr, "Error: Image data buffer is NULL\n");
         return;
@@ -146,8 +146,8 @@ int	start_the_game(void)
 	raycast_loop();
 	hooks();
 	data()->var.frame_time = 16 / 1000.0;
-	data()->var.move_speed = data()->var.frame_time * 5.0;
-	data()->var.rot_speed = data()->var.frame_time * 3.0;
+	data()->var.move_speed = data()->var.frame_time * 2.5;
+	data()->var.rot_speed = data()->var.frame_time * 1.5;
 	mlx_put_image_to_window(data()->mlx, data()->win, img, 0, 0);
 	mlx_destroy_image(data()->mlx, data()->img.pointer_to_img);
 	return (0);
@@ -178,7 +178,7 @@ char	*get_path(char *line)
 	if (!tmp)
 		return (NULL);
 	tmp2 = ft_strdup(tmp[1]);
-    free(tmp[0]);
+	free(tmp[0]);
 	free(tmp);
 	if (check_format(tmp2, "xpm"))
 		return (free(tmp2), err("Error, not xpm file\n"), NULL);
@@ -635,6 +635,7 @@ int main(int ac, char **av)
 		return (1);
 	if (init_win())
 		return (1);
+	init_textures();
 	mlx_loop_hook(data()->mlx, start_the_game, NULL);
 	mlx_hook(data()->win, PRESS, (1L << 0), &key_press, NULL);
 	mlx_hook(data()->win, RELEASE, (1L << 1), &key_release, NULL);

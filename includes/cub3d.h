@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/21 22:17:48 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:14:50 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <unistd.h>
 # include <math.h>
 # include <fcntl.h>
-// # include <limits.h>
 # include "../minilibx/mlx.h"
 # include <stdio.h>
 # include "../libft/INCLUDES/libft.h"
@@ -35,8 +34,14 @@
 # define TEXTURE_HEIGHT 			64
 # define TEXTURE_WIDTH 				64
 
-# define W 						122
-# define A 						113
+//french keyboard
+// # define W 						122
+// # define A 						113
+// # define S 						115
+// # define D 						100
+
+# define W 						119
+# define A						97
 # define S 						115
 # define D 						100
 # define UP 					126
@@ -72,27 +77,27 @@ typedef enum e_type_xpm
 	E_EA
 }	t_type_xpm;
 
-typedef struct	s_xpm
+typedef struct s_xpm
 {
 	char			*val;
 	t_type_xpm		type;
 	struct s_xpm	*next;
 }	t_xpm;
 
-typedef struct	s_rgb
+typedef struct s_rgb
 {
 	int	r;
 	int	g;
 	int	b;
 }	t_rgb;
 
-typedef struct	s_color
+typedef struct s_color
 {
 	t_rgb	*c;
 	t_rgb	*f;
 }	t_color;
 
-typedef struct	s_map
+typedef struct s_map
 {
 	int	r;
 	int	l;
@@ -117,6 +122,7 @@ typedef struct s_var
 	double	move_speed;
 	double	frame_time;
 	double	rot_speed;
+	int		wallX;
 	int		hit;
 	int		mapX;
 	int		mapY;
@@ -126,6 +132,10 @@ typedef struct s_var
 	int 	lineHeight;
 	int		drawStart;
 	int		drawEnd;
+	int		texture_number;
+	int		texture_y;
+	int		texture_x;
+	int		color;
 }	t_var;
 
 typedef struct	s_test_color
@@ -149,7 +159,7 @@ typedef struct s_key
 	int	esc;
 }				t_key;
 
-typedef struct	s_cub
+typedef struct s_cub
 {
 	void			*mlx;
 	void			*win;
@@ -160,7 +170,7 @@ typedef struct	s_cub
 	int				width;
 	t_img			img;
 	t_img			img2[4];
-	int			textures[4][TEXTURE_HEIGHT * TEXTURE_WIDTH];
+	int				textures[4][TEXTURE_HEIGHT * TEXTURE_WIDTH];
 	t_player		*player;
 	t_var			var;
 	t_test_color	*color;
@@ -175,10 +185,11 @@ void	init_vectors(int x, int y);
 t_cub	*data(void);
 void	set_color(void);
 void	player_move_forward(void);
-void 	player_move_backward(void);
-void 	player_rot_right(void);
-void 	player_move_left(void);
-void 	player_move_right(void);
-void 	player_rot_left(void);
+void	player_move_backward(void);
+void	player_rot_right(void);
+void	player_move_left(void);
+void	player_move_right(void);
+int		init_textures(void);
+void	player_rot_left(void);
 
 #endif

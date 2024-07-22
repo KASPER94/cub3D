@@ -6,11 +6,29 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:33:01 by skapersk          #+#    #+#             */
-/*   Updated: 2024/07/21 22:19:41 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:30:47 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	set_texture(void)
+{
+	if (data()->var.side == 0)
+	{
+		if (data()->var.mapY > data()->var.position_y)
+			data()->var.texture_number = 1;
+		else
+			data()->var.texture_number = 3;
+	}
+	else
+	{
+		if (data()->var.mapX > data()->var.position_x)
+			data()->var.texture_number = 2;
+		else
+			data()->var.texture_number = 0;
+	}
+}
 
 void	set_values(double direction_x, double direction_y, double pla_x, double pla_y)
 {
@@ -22,15 +40,15 @@ void	set_values(double direction_x, double direction_y, double pla_x, double pla
 
 void	init_vectors(int x, int y)
 {
-    data()->var.position_x = x + 0.5;
-    data()->var.position_y = y + 0.5;
-    if (data()->map[x][y] == 'N')
+	data()->var.position_x = x + 0.5;
+	data()->var.position_y = y + 0.5;
+	if (data()->map[x][y] == 'N')
 		set_values(0, -1, 0.66, 0);
-    else if (data()->map[x][y] == 'S')
+	else if (data()->map[x][y] == 'S')
 		set_values(0, 1, -0.66, 0);
-    else if (data()->map[x][y] == 'E')
+	else if (data()->map[x][y] == 'E')
 		set_values(1, 0, 0, 0.66);
-    else if (data()->map[x][y] == 'W')
+	else if (data()->map[x][y] == 'W')
 		set_values(-1, 0, 0, -0.66);
 }
 
@@ -117,7 +135,10 @@ void	DDA(void)
 			|| data()->var.mapX > data()->height - 0.25)
 			break ;
 		else if (data()->map[data()->var.mapX][data()->var.mapY] > '0')
+		{
 			data()->var.hit = 1;
+			set_texture();
+		}
 	}
 }
 
@@ -207,6 +228,28 @@ void	draw_wall(int x)
 	}
 }
 
+void	draw_vertical_texture_stripe(int x)
+{
+	double	step;
+	double	textures_position;
+	int		y;
+
+	step = 1.0 * TEXTURE_HEIGHT / data()->var.lineHeight;
+	textures_position = (data()->var.drawStart - HEIGHT / 2 + data()->var.lineHeight / 2) * step;
+	y = data()->var.drawStart;
+	while (y < data()->var.drawEnd)
+	{
+		data()->var.texture_y = (int)textures_position & (TEXTURE_HEIGHT - 1);
+		textures_position += step;
+		data()->var.color = data()->textures[data()->var.texture_number][TEXTURE_HEIGHT * data()->var.texture_y + data()->var.texture_x];
+		if (data()->var.side == 1)
+			data()->var.color = (data()->var.color >> 1) & 8355711;
+		mlx_place_pixel(x, y, data()->var.color);
+		y++;
+	}
+}
+
+
 int	raycast_loop(void)
 {
 	int	x;
@@ -222,8 +265,8 @@ int	raycast_loop(void)
 		dist_project_camera();
 		set_height_wall();
 		find_lowest_and_high_pix();
-		// draw_vertical_texture_stripe(x);
-		draw_wall(x);
+		draw_vertical_texture_stripe(x);
+		// draw_wall(x);
 		x++;
 	}
 	return (0);
