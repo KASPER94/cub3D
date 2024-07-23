@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/22 14:14:50 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:23:04 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ typedef struct s_var
 	double	move_speed;
 	double	frame_time;
 	double	rot_speed;
-	int		wallX;
+	int		wall;
 	int		hit;
 	int		mapX;
 	int		mapY;
@@ -136,6 +136,7 @@ typedef struct s_var
 	int		texture_y;
 	int		texture_x;
 	int		color;
+	int		tex;
 }	t_var;
 
 typedef struct	s_test_color

@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:33:01 by skapersk          #+#    #+#             */
-/*   Updated: 2024/07/22 14:30:47 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:46:25 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ void	init_vectors(int x, int y)
 void	find_ray_and_dir(int x, int w)
 {
 	data()->var.camera = 2 * x / (double)w - 1;
-	data()->var.rayDirX = data()->var.dirX + data()->var.planeX * data()->var.camera;
-	data()->var.rayDirY = data()->var.dirY + data()->var.planeY * data()->var.camera;
+	data()->var.rayDirX = data()->var.dirX
+	+ data()->var.planeX * data()->var.camera;
+	data()->var.rayDirY = data()->var.dirY
+	+ data()->var.planeY * data()->var.camera;
 }
 
 void	set_box(void)
@@ -177,6 +179,33 @@ void	find_lowest_and_high_pix(void)
 	data()->var = tmp;
 }
 
+void	calcul_wall_value(void)
+{
+	if (data()->var.side == 0)
+	{
+		data()->var.wall = data()->var.position_y
+		+ data()->var.perpWallDist * data()->var.rayDirY;
+	}
+	else
+	{
+		data()->var.wall = data()->var.position_x
+		+ data()->var.perpWallDist * data()->var.rayDirX;
+	}
+	// data()->var.wall -=
+}
+
+void	coor_text(void)
+{
+	int	tex;
+
+	tex =(int)(data()->var.wall * (double)TEXTURE_WIDTH);
+	if (data()->var.side == 0 && data()->var.rayDirX > 0)
+		tex = TEXTURE_WIDTH - data()->var.texture_x - 1;
+	if (data()->var.side == 1 && data()->var.rayDirY < 0)
+		tex = TEXTURE_WIDTH - data()->var.texture_x - 1;
+	data()->var.texture_x = tex;
+}
+
 void	set_color(void)
 {
 	data()->color = malloc(sizeof(t_test_color));
@@ -228,11 +257,64 @@ void	draw_wall(int x)
 	}
 }
 
+void	my_floor(int x)
+{
+	int	color;
+	int	y;
+
+	color = (data()->rgb->f->r << 16 | data()->rgb->f->g << 8 | data()->rgb->f->b);
+	y = data()->var.drawStart;
+	while (y < HEIGHT - 1)
+	{
+		mlx_place_pixel(x, y, color);
+		y++;
+	}
+}
+
+void	my_cell(int x)
+{
+	int	color;
+	int	y;
+
+	color = (data()->rgb->c->r << 16 | data()->rgb->c->g << 8 | data()->rgb->c->b);
+	y = 0;
+	while (y < data()->var.drawEnd)
+	{
+		mlx_place_pixel(x, y, color);
+		y++;
+	}
+}
+
 void	draw_vertical_texture_stripe(int x)
 {
 	double	step;
 	double	textures_position;
 	int		y;
+
+	int	wall;
+
+
+	if (data()->var.side == 1)
+	{
+		wall = (data()->var.stepY == -1) ? 0 : 1;
+	}
+	else
+	{
+		wall = (data()->var.stepX == -1) ? 2 : 3;
+	}
+	y = data()->var.drawStart;
+	step = 1.0 * TEXTURE_HEIGHT / data()->var.lineHeight;
+	textures_position = (data()->var.drawStart - HEIGHT / 2 + data()->var.lineHeight / 2) * step;
+	my_floor(x);
+	my_cell(x);
+	while (y < data()->var.drawEnd)
+	{
+		data()->var.texture_y = (int)textures_position & (TEXTURE_HEIGHT - 1);
+		mlx_place_pixel(x, y, data()->textures[wall][TEXTURE_HEIGHT * data()->var.texture_y + data()->var.texture_x]);
+		y++;
+	}
+
+/*
 
 	step = 1.0 * TEXTURE_HEIGHT / data()->var.lineHeight;
 	textures_position = (data()->var.drawStart - HEIGHT / 2 + data()->var.lineHeight / 2) * step;
@@ -246,7 +328,7 @@ void	draw_vertical_texture_stripe(int x)
 			data()->var.color = (data()->var.color >> 1) & 8355711;
 		mlx_place_pixel(x, y, data()->var.color);
 		y++;
-	}
+	}*/
 }
 
 
@@ -265,6 +347,8 @@ int	raycast_loop(void)
 		dist_project_camera();
 		set_height_wall();
 		find_lowest_and_high_pix();
+		calcul_wall_value();
+		coor_text();
 		draw_vertical_texture_stripe(x);
 		// draw_wall(x);
 		x++;

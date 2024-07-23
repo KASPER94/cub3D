@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/22 11:59:12 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:41:38 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int	start_the_game(void)
 	data()->img.pointer_to_img = img;
 	addr = mlx_get_data_addr(data()->img.pointer_to_img, &data()->img.bpp, &data()->img.line_len, &data()->img.endian);
 	data()->img.addr = addr;
-	draw_ceilling_floor();
+	// draw_ceilling_floor();
 	raycast_loop();
 	hooks();
 	data()->var.frame_time = 16 / 1000.0;
