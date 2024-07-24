@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:33:01 by skapersk          #+#    #+#             */
-/*   Updated: 2024/07/24 16:51:35 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:32:45 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,9 +211,9 @@ void	coor_text(void)
 		data()->var.wall = data()->var.position_x + data()->var.perpWallDist *  data()->var.rayDirX;
 	data()->var.wall -= floor(data()->var.wall);
 	data()->var.texture_x = (int)(data()->var.wall * (double)TEXTURE_WIDTH);
-	if (data()->var.side == 0 && data()->var.rayDirX > 0)
+	if (data()->var.side == 0 )
 		data()->var.texture_x = TEXTURE_WIDTH - data()->var.texture_x - 1;
-	if (data()->var.side == 1 && data()->var.rayDirY < 0)
+	if (data()->var.side == 1 )
 		data()->var.texture_x = TEXTURE_WIDTH - data()->var.texture_x - 1;
 
 	// int	tex;
@@ -445,14 +445,15 @@ void temp(int x) {
     my_cell(x);
 
 	// Calcul du step pour l'incrémentation de la position dans la texture
-	step = 1.0 * tex.height / data()->var.lineHeight;
+	step = 1.0 * TEXTURE_HEIGHT / data()->var.lineHeight;
 	// Position initiale de la texture
 	texture_position = (data()->var.drawStart - HEIGHT / 2 + data()->var.lineHeight / 2) * step;
 
     y = data()->var.drawStart;
     while (y < data()->var.drawEnd) {
-		x_tex = (double)x / WIDTH * tex.width;
+		x_tex = (double)x / data()->var.texture_x * TEXTURE_WIDTH;
 		y_tex = (int)texture_position & (tex.height - 1);
+
 		texture_position += step;
 		clr = (*(int *)(addr + (4 * tex.width * y_tex) + 4 * x_tex));
 
