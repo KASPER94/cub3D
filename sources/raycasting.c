@@ -6,10 +6,11 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:33:01 by skapersk          #+#    #+#             */
-/*   Updated: 2024/07/24 00:34:24 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:51:35 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "cub3d.h"
 
 void	set_texture(void)
@@ -80,11 +81,11 @@ void set_len_ray(void)
 	if (tmp.rayDirX == 0)
 		tmp.deltaDistX = 1e30;
 	else
-		tmp.deltaDistX = fabs(1 / tmp.rayDirX);
+		tmp.deltaDistX = sqrt(1 + (tmp.rayDirY * tmp.rayDirY) / (tmp.rayDirX * tmp.rayDirX));
 	if (tmp.rayDirY == 0)
 		tmp.deltaDistY = 1e30;
 	else
-		tmp.deltaDistY = fabs(1 / tmp.rayDirY);
+		tmp.deltaDistY = sqrt(1 + (tmp.rayDirX * tmp.rayDirX) / (tmp.rayDirY * tmp.rayDirY));
 	data()->var = tmp;
 }
 
@@ -327,6 +328,7 @@ void draw_vertical_texture_stripe(int x)
     double textures_position;
     int y;
 
+
 	calcul_wall_value();
     // Calcul du step pour l'incrémentation de la position dans la texture
     step = 1.0 * TEXTURE_HEIGHT / data()->var.lineHeight;
@@ -340,7 +342,7 @@ void draw_vertical_texture_stripe(int x)
         textures_position += step;
 
         // Placement du pixel avec la couleur de la texture
-        int color = data()->textures[data()->var.wall][TEXTURE_HEIGHT * data()->var.texture_y + data()->var.texture_x];
+        int color = (*(int *)(data()->img2[data()->var.wall].addr + (4 * data()->img2[1].width * data()->var.texture_y) + 4 * data()->var.texture_x));
         if (data()->var.side == 1) {
             color = (color >> 1) & 8355711; // Appliquer une ombre pour les côtés
         }
@@ -371,7 +373,7 @@ void draw_vertical_texture_stripe(int x)
 // 	step = 1.0 * TEXTURE_HEIGHT / data()->var.lineHeight;
 // 	textures_position = (data()->var.drawStart - HEIGHT / 2 + data()->var.lineHeight / 2) * step;
 // 	my_floor(x);
-// 	my_cell(x);
+// 	my_cell(x);4 * data()->img2[1].width * y_tex
 // 	while (y < data()->var.drawEnd)
 // 	{
 // 		data()->var.texture_y = (int)textures_position & (TEXTURE_HEIGHT - 1);
@@ -397,6 +399,69 @@ void draw_vertical_texture_stripe(int x)
 // }
 
 
+
+
+
+// void temp(int x) {
+// 	int y = 0;
+
+// 	t_img	tex;
+//     void *addr;
+// 	tex = data()->img2[1];
+// 	addr = tex.addr;
+// 	int x_tex;
+// 	int y_tex;
+// 	int clr;
+// 	my_floor(x);
+//     my_cell(x);
+//     y = data()->var.drawStart;
+// 	printf("%d\n", data()->var.mapX);
+//     while (y < data()->var.drawEnd) {
+// 		x_tex = (double)x / 1900.0 * tex.width;
+// 		y_tex = (double)y / data()->var.drawEnd * tex.height;
+// 		// printf("%f\n", x_tex);
+// 		// printf("%f\n\n", y / 200.0);
+// 		clr = (*(int *)(addr + (4 * tex.width * y_tex) + 4 * x_tex));
+
+// 		mlx_place_pixel(x, y, clr);
+// 		y++;
+// 	}
+// }
+
+void temp(int x) {
+	int y = 0;
+
+	t_img tex;
+    void *addr;
+	tex = data()->img2[data()->var.texture_number];
+	addr = tex.addr;
+	int x_tex;
+	int y_tex;
+	int clr;
+	double step;
+	double texture_position;
+
+	my_floor(x);
+    my_cell(x);
+
+	// Calcul du step pour l'incrémentation de la position dans la texture
+	step = 1.0 * tex.height / data()->var.lineHeight;
+	// Position initiale de la texture
+	texture_position = (data()->var.drawStart - HEIGHT / 2 + data()->var.lineHeight / 2) * step;
+
+    y = data()->var.drawStart;
+    while (y < data()->var.drawEnd) {
+		x_tex = (double)x / WIDTH * tex.width;
+		y_tex = (int)texture_position & (tex.height - 1);
+		texture_position += step;
+		clr = (*(int *)(addr + (4 * tex.width * y_tex) + 4 * x_tex));
+
+		mlx_place_pixel(x, y, clr);
+		y++;
+	}
+}
+
+
 int	raycast_loop(void)
 {
 	int	x;
@@ -413,8 +478,9 @@ int	raycast_loop(void)
 		set_height_wall();
 		find_lowest_and_high_pix();
 		coor_text();
-		draw_vertical_texture_stripe(x);
+		// draw_vertical_texture_stripe(x);
 		// draw_wall(x);
+		temp(x);
 		x++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/23 14:41:38 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/24 14:58:53 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ int	init_win(void)
 	if (img_ptr == NULL)
 		return (err("Malloc error\n"), 1);
 	data()->img = *img_ptr;
+	free(img_ptr);
+	img_ptr = (t_img *)malloc(sizeof(t_img));
+	if (img_ptr == NULL)
+	return (err("Malloc error\n"), 1);
+	data()->txt = *img_ptr;
 	free(img_ptr);
 	data()->win = tmp;
 	return (0);
@@ -635,7 +640,8 @@ int main(int ac, char **av)
 		return (1);
 	if (init_win())
 		return (1);
-	init_textures();
+	if (init_textures())
+		return (1);
 	mlx_loop_hook(data()->mlx, start_the_game, NULL);
 	mlx_hook(data()->win, PRESS, (1L << 0), &key_press, NULL);
 	mlx_hook(data()->win, RELEASE, (1L << 1), &key_release, NULL);

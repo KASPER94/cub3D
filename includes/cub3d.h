@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/24 00:20:36 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/24 13:24:52 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ typedef struct s_cub
 	int				width;
 	t_img			img;
 	t_img			img2[4];
+	t_img			txt;
 	int				textures[4][TEXTURE_HEIGHT * TEXTURE_WIDTH];
 	t_player		*player;
 	t_var			var;
