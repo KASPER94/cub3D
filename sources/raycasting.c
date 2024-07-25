@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:33:01 by skapersk          #+#    #+#             */
-/*   Updated: 2024/07/24 17:32:45 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/25 12:06:21 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,8 @@ void	set_step_and_ini_sideDist(void)
 
 void	DDA(void)
 {
+	double cell_size = data()->var.perpWallDist / sqrt(pow((data()->var.mapX - data()->var.position_x), 2) + pow((data()->var.mapY - data()->var.position_y), 2));
+	data()->var.test = cell_size;
 	while (data()->var.hit == 0)
 	{
 		if (data()->var.sideDistX < data()->var.sideDistY)
@@ -211,9 +213,9 @@ void	coor_text(void)
 		data()->var.wall = data()->var.position_x + data()->var.perpWallDist *  data()->var.rayDirX;
 	data()->var.wall -= floor(data()->var.wall);
 	data()->var.texture_x = (int)(data()->var.wall * (double)TEXTURE_WIDTH);
-	if (data()->var.side == 0 )
+	if (data()->var.side == 0 && data()->var.rayDirX > 0)
 		data()->var.texture_x = TEXTURE_WIDTH - data()->var.texture_x - 1;
-	if (data()->var.side == 1 )
+	if (data()->var.side == 1 && data()->var.rayDirY < 0)
 		data()->var.texture_x = TEXTURE_WIDTH - data()->var.texture_x - 1;
 
 	// int	tex;
@@ -322,34 +324,34 @@ void	my_cell(int x)
 	}
 }
 
-void draw_vertical_texture_stripe(int x)
-{
-    double step;
-    double textures_position;
-    int y;
+// void draw_vertical_texture_stripe(int x)
+// {
+//     double step;
+//     double textures_position;
+//     int y;
 
 
-	calcul_wall_value();
-    // Calcul du step pour l'incrémentation de la position dans la texture
-    step = 1.0 * TEXTURE_HEIGHT / data()->var.lineHeight;
-    textures_position = (data()->var.drawStart - HEIGHT / 2 + data()->var.lineHeight / 2) * step;
-    my_floor(x);
-    my_cell(x);
-    y = data()->var.drawStart;
-    while (y < data()->var.drawEnd) {
-        // Calcul de la coordonnée y de la texture
-        data()->var.texture_y = (int)textures_position & (TEXTURE_HEIGHT - 1);
-        textures_position += step;
+// 	calcul_wall_value();
+//     // Calcul du step pour l'incrémentation de la position dans la texture
+//     step = 1.0 * TEXTURE_HEIGHT / data()->var.lineHeight;
+//     textures_position = (data()->var.drawStart - HEIGHT / 2 + data()->var.lineHeight / 2) * step;
+//     my_floor(x);
+//     my_cell(x);
+//     y = data()->var.drawStart;
+//     while (y < data()->var.drawEnd) {
+//         // Calcul de la coordonnée y de la texture
+//         data()->var.texture_y = (int)textures_position & (TEXTURE_HEIGHT - 1);
+//         textures_position += step;
 
-        // Placement du pixel avec la couleur de la texture
-        int color = (*(int *)(data()->img2[data()->var.wall].addr + (4 * data()->img2[1].width * data()->var.texture_y) + 4 * data()->var.texture_x));
-        if (data()->var.side == 1) {
-            color = (color >> 1) & 8355711; // Appliquer une ombre pour les côtés
-        }
-        mlx_place_pixel(x, y, color);
-        y++;
-    }
-}
+//         // Placement du pixel avec la couleur de la texture
+//         int color = (*(int *)(data()->img2[data()->var.wall].addr + (4 * data()->img2[1].width * data()->var.texture_y) + 4 * data()->var.texture_x));
+//         if (data()->var.side == 1) {
+//             color = (color >> 1) & 8355711; // Appliquer une ombre pour les côtés
+//         }
+//         mlx_place_pixel(x, y, color);
+//         y++;
+//     }
+// }
 
 
 // void	draw_vertical_texture_stripe(int x)
@@ -451,7 +453,7 @@ void temp(int x) {
 
     y = data()->var.drawStart;
     while (y < data()->var.drawEnd) {
-		x_tex = (double)x / data()->var.texture_x * TEXTURE_WIDTH;
+		x_tex = data()->var.texture_x ;
 		y_tex = (int)texture_position & (tex.height - 1);
 
 		texture_position += step;

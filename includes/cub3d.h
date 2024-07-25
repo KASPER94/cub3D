@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/24 13:24:52 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/25 12:03:52 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ typedef struct s_var
 	double	move_speed;
 	double	frame_time;
 	double	rot_speed;
-	int		wall;
+	double	test;
+	double	wall;
 	int		hit;
 	int		mapX;
 	int		mapY;
