@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:33:01 by skapersk          #+#    #+#             */
-/*   Updated: 2024/07/25 12:06:21 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/25 13:49:48 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 
 void	set_texture(void)
 {
-	if (data()->var.side == 0)
+	if (data()->var.side == 1)
 	{
-		if (data()->var.mapY > data()->var.position_y)
+		if (data()->var.stepY == -1)
 			data()->var.texture_number = 1;
 		else
 			data()->var.texture_number = 3;
 	}
 	else
 	{
-		if (data()->var.mapX > data()->var.position_x)
+		if (data()->var.stepX == -1)
 			data()->var.texture_number = 2;
 		else
 			data()->var.texture_number = 0;
@@ -81,11 +81,11 @@ void set_len_ray(void)
 	if (tmp.rayDirX == 0)
 		tmp.deltaDistX = 1e30;
 	else
-		tmp.deltaDistX = sqrt(1 + (tmp.rayDirY * tmp.rayDirY) / (tmp.rayDirX * tmp.rayDirX));
+		tmp.deltaDistX = fabs(1 / data()->var.rayDirX);
 	if (tmp.rayDirY == 0)
 		tmp.deltaDistY = 1e30;
 	else
-		tmp.deltaDistY = sqrt(1 + (tmp.rayDirX * tmp.rayDirX) / (tmp.rayDirY * tmp.rayDirY));
+		tmp.deltaDistY = fabs(1 / data()->var.rayDirY);
 	data()->var = tmp;
 }
 
@@ -142,7 +142,6 @@ void	DDA(void)
 		else if (data()->map[data()->var.mapX][data()->var.mapY] > '0')
 		{
 			data()->var.hit = 1;
-			set_texture();
 		}
 	}
 }
@@ -445,7 +444,6 @@ void temp(int x) {
 
 	my_floor(x);
     my_cell(x);
-
 	// Calcul du step pour l'incrémentation de la position dans la texture
 	step = 1.0 * TEXTURE_HEIGHT / data()->var.lineHeight;
 	// Position initiale de la texture
@@ -453,9 +451,9 @@ void temp(int x) {
 
     y = data()->var.drawStart;
     while (y < data()->var.drawEnd) {
+		set_texture();
 		x_tex = data()->var.texture_x ;
 		y_tex = (int)texture_position & (tex.height - 1);
-
 		texture_position += step;
 		clr = (*(int *)(addr + (4 * tex.width * y_tex) + 4 * x_tex));
 
