@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/25 11:53:22 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/07/26 13:12:42 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	err(char *str)
 {
-	static int i;
+	static int	i;
 
 	if (i)
 		return (1);
@@ -31,30 +31,30 @@ t_cub	*data(void)
 	return (&data);
 }
 
-void init_data(void)
+void	init_data(void)
 {
-	t_cub *d;
+	t_cub	*d;
 
 	d = data();
-    d->mlx = NULL;
-    d->win = NULL;
-    d->var = (t_var){0};
-    d->img = (t_img){0};
-    d->color = malloc(sizeof(t_color) * 3); // Allouer de la mémoire pour les couleurs
-    if (!d->color)
-    {
-        perror("Error allocating memory for colors");
-        exit(EXIT_FAILURE);
-    }
-    d->map = NULL;
-    d->width = 0;
-    d->height = 0;
+	d->mlx = NULL;
+	d->win = NULL;
+	d->var = (t_var){0};
+	d->img = (t_img){0};
+	d->color = malloc(sizeof(t_color) * 3);
+	if (!d->color)
+	{
+		perror("Error allocating memory for colors");
+		exit(EXIT_FAILURE);
+	}
+	d->map = NULL;
+	d->width = 0;
+	d->height = 0;
 }
 
 int	init_win(void)
 {
-	void *tmp;
-	t_img *img_ptr;
+	void	*tmp;
+	t_img	*img_ptr;
 
 	data()->mlx = mlx_init();
 	tmp = mlx_new_window(data()->mlx, WIDTH, HEIGHT, "cub3D");
@@ -65,60 +65,27 @@ int	init_win(void)
 	free(img_ptr);
 	img_ptr = (t_img *)malloc(sizeof(t_img));
 	if (img_ptr == NULL)
-	return (err("Malloc error\n"), 1);
+		return (err("Malloc error\n"), 1);
 	data()->txt = *img_ptr;
 	free(img_ptr);
 	data()->win = tmp;
 	return (0);
 }
 
-int init(void)
+int	init(void)
 {
 	data()->player = (t_player *)malloc(sizeof(t_player));
 	if (data()->player == NULL)
 		return (err("Malloc error for player\n"), 1);
 	data()->key.esc = 0;
-    data()->key.w = 0;
-    data()->key.s = 0;
-    data()->key.a = 0;
-    data()->key.d = 0;
-    data()->key.left = 0;
-    data()->key.right = 0;
-    data()->key.p = 1;
+	data()->key.w = 0;
+	data()->key.s = 0;
+	data()->key.a = 0;
+	data()->key.d = 0;
+	data()->key.left = 0;
+	data()->key.right = 0;
+	data()->key.p = 1;
 	return (0);
-}
-
-void	draw_ceilling_floor(void)
-{
-    unsigned int	*dst;
-    unsigned int	i;
-    int				color;
-    int				color2;
-
-    color = (data()->color->yellow.r << 16 | data()->color->yellow.g << 8 | data()->color->yellow.b);
-    color2 = (data()->color->white.r << 16 | data()->color->white.g << 8 | data()->color->white.b);
-
-    if (!data()->img.addr) {
-        fprintf(stderr, "Error: Image data buffer is NULL\n");
-        return;
-    }
-
-    dst = (unsigned int *)data()->img.addr; // Address of the image data buffer
-
-    if (dst == NULL) {
-        fprintf(stderr, "Error: Invalid image data address\n");
-        return;
-    }
-
-    i = HEIGHT * WIDTH / 2 + 1;
-    while (i-- > 0) {
-        *dst++ = color;
-    }
-
-    i = HEIGHT * WIDTH / 2 + 1;
-    while (i-- > 0) {
-        *dst++ = color2;
-    }
 }
 
 void	hooks(void)
@@ -145,9 +112,9 @@ int	start_the_game(void)
 	set_color();
 	img = mlx_new_image(data()->mlx, WIDTH, HEIGHT);
 	data()->img.pointer_to_img = img;
-	addr = mlx_get_data_addr(data()->img.pointer_to_img, &data()->img.bpp, &data()->img.line_len, &data()->img.endian);
+	addr = mlx_get_data_addr(data()->img.pointer_to_img,
+			&data()->img.bpp, &data()->img.line_len, &data()->img.endian);
 	data()->img.addr = addr;
-	// draw_ceilling_floor();
 	raycast_loop();
 	hooks();
 	data()->var.frame_time = 16 / 1000.0;
@@ -175,7 +142,7 @@ int	check_format(char *av, char *format)
 
 char	*get_path(char *line)
 {
-	char 	**tmp;
+	char	**tmp;
 	char	*tmp2;
 	int		test;
 
@@ -194,35 +161,47 @@ char	*get_path(char *line)
 	return (tmp2);
 }
 
-void add_xpm(t_xpm **lst, t_xpm *new)
+void	add_xpm(t_xpm **lst, t_xpm *new)
 {
-    t_xpm *current;
+	t_xpm	*current;
 
-    if (*lst == NULL)
-    {
-        *lst = new;
-        return;
-    }
-    current = *lst;
-    while (current->next != NULL)
-        current = current->next;
-    current->next = new;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	current = *lst;
+	while (current->next != NULL)
+		current = current->next;
+	current->next = new;
 }
 
-int fill_xpm(char *line, t_type_xpm type)
+int	fill_xpm(char *line, t_type_xpm type)
 {
-    t_xpm *new;
+	t_xpm	*new;
 
-    new = (t_xpm *)malloc(sizeof(t_xpm));
-    if (!new)
-        return (0);
-    new->type = type;
-    new->val = get_path(line);
+	new = (t_xpm *)malloc(sizeof(t_xpm));
+	if (!new)
+		return (0);
+	new->type = type;
+	new->val = get_path(line);
 	if (new->val == NULL)
 		return (0);
-    new->next = NULL;
-    add_xpm(&(data()->xpm), new);
-    return (1);
+	new->next = NULL;
+	add_xpm(&(data()->xpm), new);
+	return (1);
+}
+
+int	check_len(char **tmp)
+{
+	int	i;
+
+	i = 0;
+	while (tmp[i])
+		i++;
+	if (i != 3)
+		return (0);
+	return (i);
 }
 
 t_rgb	*get_color(char *line)
@@ -238,17 +217,17 @@ t_rgb	*get_color(char *line)
 	if (!tmp)
 		return (NULL);
 	tmp2 = ft_split(tmp[1], ',');
-	if (!tmp2)
+	if (!tmp2 || !check_len(tmp2))
 		return (NULL);
 	value->r = ft_atoi(tmp2[0]);
 	value->g = ft_atoi(tmp2[1]);
 	value->b = ft_atoi(tmp2[2]);
-    free(tmp[0]);
-    free(tmp);
-    free(tmp2[0]);
-    free(tmp2[1]);
-    free(tmp2[2]);
-    free(tmp2);
+	free(tmp[0]);
+	free(tmp);
+	free(tmp2[0]);
+	free(tmp2[1]);
+	free(tmp2[2]);
+	free(tmp2);
 	return (value);
 }
 
@@ -261,58 +240,68 @@ int	fill_rgb(char *line, char id)
 			return (err("Malloc error\n"), 0);
 	}
 	if (id == 'c')
-		return (data()->rgb->c = get_color(line), 1);
+	{
+		data()->rgb->c = get_color(line);
+		if (data()->rgb->c == NULL)
+			return (0);
+	}
 	else
-		return (data()->rgb->f = get_color(line), 1);
+	{
+		data()->rgb->f = get_color(line);
+		if (data()->rgb->f == NULL)
+			return (0);
+	}
 	return (1);
 }
 
 
-int check_order(char *line)
+int	check_order(char *line)
 {
-    static int i;
+	static int	i;
 
-    if (!ft_strncmp(line, "NO", ft_strlen("NO")))
-        return (fill_xpm(line, E_NO), ++i);
-    else if (!ft_strncmp(line, "SO", ft_strlen("SO")))
-        return (fill_xpm(line, E_SO), ++i);
-    else if (!ft_strncmp(line, "WE", ft_strlen("WE")))
-        return (fill_xpm(line, E_WE), ++i);
-    else if (!ft_strncmp(line, "EA", ft_strlen("EA")))
-        return (fill_xpm(line, E_EA), ++i);
-    else if (line[0] == 'C')
-        return (fill_rgb(line, 'c'), ++i);
-    else if (line[0] == 'F')
-        return (fill_rgb(line, 'f'), ++i);
-    else if (!ft_strncmp(line, "", ft_strlen ("")))
-        return (1);
-	else if (line[0] == 'F' || line[0] == 'C' || !ft_strncmp(line, "EA", ft_strlen("EA"))
-		|| !ft_strncmp(line, "WE", ft_strlen("WE")) || !ft_strncmp(line, "SO", ft_strlen("SO"))
+	if (!ft_strncmp(line, "NO", ft_strlen("NO")))
+		return (fill_xpm(line, E_NO), ++i);
+	else if (!ft_strncmp(line, "SO", ft_strlen("SO")))
+		return (fill_xpm(line, E_SO), ++i);
+	else if (!ft_strncmp(line, "WE", ft_strlen("WE")))
+		return (fill_xpm(line, E_WE), ++i);
+	else if (!ft_strncmp(line, "EA", ft_strlen("EA")))
+		return (fill_xpm(line, E_EA), ++i);
+	else if (line[0] == 'C' && fill_rgb(line, 'c'))
+		return (++i);
+	else if (line[0] == 'F' && fill_rgb(line, 'f'))
+		return (++i);
+	else if (!ft_strncmp(line, "", ft_strlen ("")))
+		return (1);
+	else if (line[0] == 'F' || line[0] == 'C'
+		|| !ft_strncmp(line, "EA", ft_strlen("EA"))
+		|| !ft_strncmp(line, "WE", ft_strlen("WE"))
+		|| !ft_strncmp(line, "SO", ft_strlen("SO"))
 		|| !ft_strncmp(line, "NO", ft_strlen("NO")))
-			return (0);
+		return (0);
 	return (0);
 }
 
 int get_info(int fd)
 {
-    char *line;
-    char *tmp;
-	int	status;
+	char	*line;
+	char	*tmp;
+	int		status;
 
-    line = get_next_line(fd);
-    while (line)
-    {
-        tmp = ft_strtrim(line, " \f\n\r\t\v");
-        status = check_order(tmp);
+	line = get_next_line(fd);
+	while (line)
+	{
+		tmp = ft_strtrim(line, " \f\n\r\t\v");
+		status = check_order(tmp);
 		if (!status)
-            return (free(tmp), free(line), 1);
+			return (free(tmp), free(line), 1);
 		else if (status == 6)
-            return (free(tmp), free(line), 0);
-        free(tmp);
-        free(line);
-        line = get_next_line(fd);
-    }
-    return (1);
+			return (free(tmp), free(line), 0);
+		free(tmp);
+		free(line);
+		line = get_next_line(fd);
+	}
+	return (1);
 }
 
 void	free_memory(void ***str)
@@ -400,20 +389,20 @@ int	fill_map(char *line)
 	return (0);
 }
 
-int check_logic_fits(char *line)
+int	check_logic_fits(char *line)
 {
-    static int i;
-    int x = 0;
+	static int	i;
+	int			x = 0;
 
-    if (data()->map && data()->map[i])
-    {
-        while (line[x] && (line[x] != '1'))
-            x++;
-        if (data()->map[i][x] == '1' || (data()->map[i][x - 1] && data()->map[i][x - 1] == '1') || (data()->map[i][x + 1] && data()->map[i][x + 1] == '1'))
-            return (0);
-        i++;
-    }
-    return (1);
+	if (data()->map && data()->map[i])
+	{
+		while (line[x] && (line[x] != '1'))
+			x++;
+		if (data()->map[i][x] == '1' || (data()->map[i][x - 1] && data()->map[i][x - 1] == '1') || (data()->map[i][x + 1] && data()->map[i][x + 1] == '1'))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int get_width(char *line)
@@ -471,6 +460,19 @@ int	ft_find_edge(int i)
 	data()->edge.r = j;
 	return (j);
 }
+int	check_inner(int i, int edge)
+{
+	int	start;
+
+	start = data()->edge.l;
+	while (data()->map[i][start] < data()->map[i][edge])
+	{
+		if (!ft_strchr("10NSEW", data()->map[i][start]))
+			return (ft_printf("%s\n ", data()->map[i]), 0);
+		start++;
+	}
+	return (1);
+}
 
 int	control_the_edge(int i, int j)
 {
@@ -487,6 +489,8 @@ int	control_the_edge(int i, int j)
 		{
 			count++;
 			data()->edge.l = j;
+			if (!check_inner(i, edge))
+				return (0);
 			if (data()->map[i][j] != '1' && count == 1)
 				return (0);
 		}
