@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+         #
+#    By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/12 16:23:30 by peanut            #+#    #+#              #
-#    Updated: 2024/07/21 21:42:21 by skapersk         ###   ########.fr        #
+#    Updated: 2024/08/08 13:48:25 by cdeville         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=cub3d
 
-CC=cc 
+CC=cc
 
 CFLAGS= -Wall -Werror -Wextra -D BUFFER_SIZE=100
 
@@ -29,10 +29,17 @@ LIBFT_PATH= $(LIBFT_DIR)
 LBFT= $(LIBFT_PATH)$(LIBFT_NAME)
 
 SRC_DIR = ./sources/
-SRC= main.c \
-	raycasting.c \
-	mouvements.c \
-	textures.c \
+SRC =	check_map.c \
+		error.c \
+		events.c \
+		init.c \
+		main.c \
+		mouvements.c \
+		parse_get_info.c \
+		parse_get_map.c \
+		parse.c \
+		raycasting.c \
+		textures.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 

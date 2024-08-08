@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/07/25 12:03:52 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/08/08 13:48:11 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,5 +194,48 @@ void	player_move_left(void);
 void	player_move_right(void);
 int		init_textures(void);
 void	player_rot_left(void);
+
+// main.c
+
+int		fill_rgb(char *line, char id);
+int		ft_arr_len(char **array);
+char	**ft_realloc(char **map, int len);
+void	big_free(void);
+int		close_win(void);
+
+// check_map.c
+
+int		check_map(void);
+
+// error.c
+
+int		err(char *str);
+
+// events.c
+
+int		key_press(int keycode);
+int		key_release(int keycode);
+
+// init.c
+
+int		init(void);
+int		init_win(void);
+void	init_data(void);
+t_cub	*data(void);
+
+// mouvements.c
+
+// parse_get_info.c
+
+int		get_info(int fd);
+
+//parse_get_map.c
+
+int		get_map(int fd);
+
+// parse.c
+
+int		parser(char *filename);
+int		check_format(char *filename, char *format);
 
 #endif
