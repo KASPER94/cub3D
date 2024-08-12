@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:20:33 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/08 12:20:53 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:21:03 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int	check_map(void)
 				|| data()->map[i][j] == 'E' || data()->map[i][j] == 'W')
 			{
 				init_vectors(i, j);
+				data()->map[i][j] = 0;
 				count++;
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/08 14:09:14 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/12 11:26:34 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,68 +47,6 @@ int	start_the_game(void)
 	mlx_put_image_to_window(data()->mlx, data()->win, img, 0, 0);
 	mlx_destroy_image(data()->mlx, data()->img.pointer_to_img);
 	return (0);
-}
-
-int	check_len(char **tmp)
-{
-	int	i;
-
-	i = 0;
-	while (tmp[i])
-		i++;
-	if (i != 3)
-		return (0);
-	return (i);
-}
-
-t_rgb	*get_color(char *line)
-{
-	char	**tmp;
-	char	**tmp2;
-	t_rgb	*value;
-
-	value = (t_rgb *)malloc(sizeof(t_rgb));
-	if (!value)
-		return (NULL);
-	tmp = ft_split(line, ' ');
-	if (!tmp)
-		return (NULL);
-	tmp2 = ft_split(tmp[1], ',');
-	if (!tmp2 || !check_len(tmp2))
-		return (NULL);
-	value->r = ft_atoi(tmp2[0]);
-	value->g = ft_atoi(tmp2[1]);
-	value->b = ft_atoi(tmp2[2]);
-	free(tmp[0]);
-	free(tmp);
-	free(tmp2[0]);
-	free(tmp2[1]);
-	free(tmp2[2]);
-	free(tmp2);
-	return (value);
-}
-
-int	fill_rgb(char *line, char id)
-{
-	if (data()->rgb == NULL)
-	{
-		data()->rgb = (t_color *)malloc(sizeof(t_color));
-		if (data()->rgb == NULL)
-			return (err("Malloc error\n"), 0);
-	}
-	if (id == 'c')
-	{
-		data()->rgb->c = get_color(line);
-		if (data()->rgb->c == NULL)
-			return (0);
-	}
-	else
-	{
-		data()->rgb->f = get_color(line);
-		if (data()->rgb->f == NULL)
-			return (0);
-	}
-	return (1);
 }
 
 void	free_memory(void ***str)

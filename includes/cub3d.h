@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/08 13:48:11 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/12 11:48:28 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,12 @@ int		close_win(void);
 
 int		check_map(void);
 
+// color.c
+
+int		fill_rgb(char *line, char id);
+t_rgb	*get_color(char *line);
+int		check_len(char **tmp);
+
 // error.c
 
 int		err(char *str);
@@ -228,6 +234,7 @@ t_cub	*data(void);
 // parse_get_info.c
 
 int		get_info(int fd);
+int		split_len(char **split);
 
 //parse_get_map.c
 
