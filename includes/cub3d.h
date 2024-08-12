@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/12 11:48:28 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/12 16:41:39 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,7 @@ t_cub	*data(void);
 
 int		get_info(int fd);
 int		split_len(char **split);
+t_bool	line_is_empty(char *line);
 
 //parse_get_map.c
 

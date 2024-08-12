@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:14:16 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/08 12:16:47 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/12 16:52:02 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,18 @@ int	get_width(char *line)
 	return (1);
 }
 
+char	*skip_empty(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	while (line && line_is_empty(line) == TRUE)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+	return (line);
+}
 
 int	get_map(int fd)
 {
@@ -94,13 +106,15 @@ int	get_map(int fd)
 	int		i;
 
 	i = 0;
-	line = get_next_line(fd);
+	line = skip_empty(fd);
+	if (line == NULL)
+		return (1);
 	while (line)
 	{
-		tmp = ft_strtrim(line, " \f\n\r\t\v");
-		if (ft_strlen(tmp) > 0)
-			if (fill_map(line))
-				return (1);
+		if (line_is_empty(line))
+			return (free(line), 1);
+		if (fill_map(line))
+			return (1);
 		if (!get_width(line))
 			return (1);
 		free(line);
@@ -110,3 +124,27 @@ int	get_map(int fd)
 	data()->height = i;
 	return (0);
 }
+
+// int	get_map(int fd)
+// {
+// 	char	*line;
+// 	char	*tmp;
+// 	int		i;
+
+// 	i = 0;
+// 	line = get_next_line(fd);
+// 	while (line)
+// 	{
+// 		tmp = ft_strtrim(line, " \f\n\r\t\v");
+// 		if (ft_strlen(tmp) > 0)
+// 			if (fill_map(line))
+// 				return (1);
+// 		if (!get_width(line))
+// 			return (1);
+// 		free(line);
+// 		i++;
+// 		line = get_next_line(fd);
+// 	}
+// 	data()->height = i;
+// 	return (0);
+// }
