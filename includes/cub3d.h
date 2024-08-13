@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/12 16:41:39 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:19:29 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,13 @@ typedef struct s_player
 	int		p_y;
 	char	dir;
 }	t_player;
+
+typedef struct s_coordinate
+{
+	int		x;
+	int		y;
+	t_bool	visited;
+}	t_coordinate;
 
 typedef struct s_img
 {
@@ -205,7 +212,8 @@ int		close_win(void);
 
 // check_map.c
 
-int		check_map(void);
+int				check_map(void);
+t_coordinate	init_coordinate(int x, int y);
 
 // color.c
 
@@ -245,5 +253,9 @@ int		get_map(int fd);
 
 int		parser(char *filename);
 int		check_format(char *filename, char *format);
+
+// path_checker.c
+
+int		path_checker(t_coordinate start);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/12 11:26:34 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/13 09:46:19 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,13 @@ int main(int ac, char **av)
 		return (1);
 	if (parser(av[1]))
 		return (1);
+	// bien free
 	if (init_win())
 		return (1);
+	// bien free
 	if (init_textures())
 		return (1);
+	// bien free
 	mlx_loop_hook(data()->mlx, start_the_game, NULL);
 	mlx_hook(data()->win, PRESS, (1L << 0), &key_press, NULL);
 	mlx_hook(data()->win, RELEASE, (1L << 1), &key_release, NULL);
