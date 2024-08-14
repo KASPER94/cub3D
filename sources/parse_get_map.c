@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:14:16 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/12 16:52:02 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:58:30 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,23 @@ int	add_new_line(char *line)
 
 int	fill_map(char *line)
 {
+	char	*tmp;
+
+	tmp = ft_strtrim(line, "\n");
+	if (tmp == NULL)
+		return (1);
 	if (!data()->map)
 	{
 		data()->map = malloc(sizeof(char *) * 2);
 		if (!data()->map)
 			return (1);
-		data()->map[0] = ft_strdup(line);
+		data()->map[0] = ft_strdup(tmp);
 		if (!data()->map[0])
 			return (1);
 		data()->map[1] = NULL;
 	}
 	else
-		if (add_new_line(line))
+		if (add_new_line(tmp))
 			return (1);
 	return (0);
 }
@@ -99,10 +104,24 @@ char	*skip_empty(int fd)
 	return (line);
 }
 
+int	check_end(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		if (line_is_empty(line) == FALSE)
+			return (free(line), 1);
+		free (line);
+		line = get_next_line(fd);
+	}
+	return (0);
+}
+
 int	get_map(int fd)
 {
 	char	*line;
-	char	*tmp;
 	int		i;
 
 	i = 0;
@@ -112,7 +131,10 @@ int	get_map(int fd)
 	while (line)
 	{
 		if (line_is_empty(line))
-			return (free(line), 1);
+		{
+			free(line);
+			break ;
+		}
 		if (fill_map(line))
 			return (1);
 		if (!get_width(line))
@@ -122,7 +144,7 @@ int	get_map(int fd)
 		line = get_next_line(fd);
 	}
 	data()->height = i;
-	return (0);
+	return (check_end(fd));
 }
 
 // int	get_map(int fd)

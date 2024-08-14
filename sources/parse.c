@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:06:46 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/08 13:41:50 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:23:38 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,23 @@ int	check_format(char *filename, char *format)
 	return (FALSE);
 }
 
+// util
+
+void	print_map(void)
+{
+	char	**map;
+	int		i;
+
+	i = 0;
+	map = data()->map;
+	while (map[i])
+	{
+		ft_printf(map[i]);
+		ft_printf("\n");
+		i++;
+	}
+}
+
 int	parser(char *filename)
 {
 	int	fd;
@@ -57,7 +74,9 @@ int	parser(char *filename)
 		return (err("Error, wrong information\n"));
 	if (get_map(fd))
 		return (close(fd), err("Error, wrong map\n"));
-	if (!check_map())
+	// print_map();
+	// util
+	if (check_map())
 		return (close(fd), err("Error, the map is not well formated !"));
 	return (close(fd), 0);
 }

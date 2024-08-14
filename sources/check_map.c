@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:20:33 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/13 16:49:01 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/14 12:01:01 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,16 +144,16 @@ t_coordinate	find_starting_point(void)
 	map = data()->map;
 	starting_point = init_coordinate(-1, -1);
 	actual = init_coordinate(0, 0);
-	while (actual.y <= data()->map_height)
+	while (actual.x < data()->height)
 	{
-		actual.x = 0;
-		while (actual.x <= data()->map_width)
+		actual.y = 0;
+		while (actual.y < data()->width && map[actual.x][actual.y])
 		{
 			if (check_point(map, actual, &starting_point))
 				return (starting_point);
-			actual.x++;
+			(actual.y)++;
 		}
-		actual.y++;
+		(actual.x)++;
 	}
 	return (starting_point);
 }
@@ -169,6 +169,7 @@ int	check_map(void)
 	data()->map[start.x][start.y] = 0;
 	if (path_checker(start))
 		return (1);
+	return (0);
 }
 
 // int	check_map(void)
