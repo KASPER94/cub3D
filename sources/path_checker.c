@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 13:16:29 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/14 15:23:25 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:30:10 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,19 +159,23 @@ int	path_checker(t_coordinate start)
 	//est-ce que t_coordinate a besoin d'etre malloc pour etre mis dans
 	t_list	*queue;
 	t_list	*visited;
+	t_list	*head;
 
 	queue = NULL;
 	visited = NULL;
 	if (add_to_list(start, &queue))
 		return (1);
+	head = queue;
 	while (queue)
 	{
 		if (add_to_list((*(t_coordinate *)queue->content), &visited))
-			return (ft_lstclear(&queue, &free), 1);
+			return (ft_lstclear(&head, &free), 1);
 		// ft_printf("x: %d, y: %d\n", ((t_coordinate *)(queue->content))->x, ((t_coordinate *)(queue->content))->y);
-		if (check_neighb((*(t_coordinate *)queue->content), &visited, &queue))
+		if (check_neighb((*(t_coordinate *)queue->content), &visited, &head))
 			return (1);
 		queue = queue->next;
 	}
+	ft_lstclear(&head, &free);
+	ft_lstclear(&visited, &free);
 	return (0);
 }

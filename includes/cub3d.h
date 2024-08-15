@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/13 16:19:29 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/15 11:23:09 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,6 +237,11 @@ int		init_win(void);
 void	init_data(void);
 t_cub	*data(void);
 
+// movements_rot.c
+
+void	player_rot_left(void);
+void	player_rot_right(void);
+
 // mouvements.c
 
 // parse_get_info.c
@@ -244,6 +249,7 @@ t_cub	*data(void);
 int		get_info(int fd);
 int		split_len(char **split);
 t_bool	line_is_empty(char *line);
+void	destroy_xpm(void);
 
 //parse_get_map.c
 

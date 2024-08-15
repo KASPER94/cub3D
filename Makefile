@@ -6,7 +6,7 @@
 #    By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/12 16:23:30 by peanut            #+#    #+#              #
-#    Updated: 2024/08/13 13:17:58 by cdeville         ###   ########.fr        #
+#    Updated: 2024/08/15 11:22:48 by cdeville         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ SRC =	check_map.c \
 		events.c \
 		init.c \
 		main.c \
-		mouvements.c \
+		movements.c \
+		movements_rot.c \
 		parse_get_info.c \
 		parse_get_map.c \
 		parse.c \

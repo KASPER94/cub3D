@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:13:26 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/14 10:07:29 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/15 11:13:11 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*get_path(char *path)
 {
 	int		test;
+	char	*dup;
 
 	if (check_format(path, "xpm"))
 		return (err("Error, not xpm file\n"), NULL);
@@ -22,7 +23,10 @@ char	*get_path(char *path)
 	if (test == -1)
 		return (err("Error, cannot access to the xpm file\n"), NULL);
 	close (test);
-	return (path);
+	dup = ft_strdup(path);
+	if (dup == NULL)
+		return (perror(""), NULL);
+	return (dup);
 }
 
 void	add_xpm(t_xpm **lst, t_xpm *new)
@@ -38,6 +42,21 @@ void	add_xpm(t_xpm **lst, t_xpm *new)
 	while (current->next != NULL)
 		current = current->next;
 	current->next = new;
+}
+
+void	destroy_xpm(void)
+{
+	t_xpm	*list;
+	t_xpm	*next;
+
+	list = data()->xpm;
+	while (list)
+	{
+		next = list->next;
+		free(list->val);
+		free(list);
+		list = next;
+	}
 }
 
 int	fill_xpm(char *path, t_type_xpm type)
@@ -194,7 +213,8 @@ int	get_info(int fd)
 		if (check_order(split) != 0)
 			return (free_split(split), 1);
 		if (check_parameters())
-			return (0);
+			return (free_split(split), 0);
+		free_split(split);
 		line = get_next_line(fd);
 	}
 	return (1);
