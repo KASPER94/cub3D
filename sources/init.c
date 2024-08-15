@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:46:25 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/08 13:46:55 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/15 16:44:47 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ int	init(void)
 	data()->key.left = 0;
 	data()->key.right = 0;
 	data()->key.p = 1;
+	data()->var.run = 1;
 	return (0);
 }

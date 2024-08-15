@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:43:33 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/15 12:41:32 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/15 16:47:14 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	key_press(int keycode)
 		data()->key.left = 1;
 	else if (keycode == RIGHT)
 		data()->key.right = 1;
+	else if (keycode == XK_Shift_L)
+		data()->key.run = 1;
 	return (0);
 }
 
@@ -45,11 +47,23 @@ int	key_release(int keycode)
 		data()->key.left = 0;
 	else if (keycode == RIGHT)
 		data()->key.right = 0;
+	else if (keycode == XK_Shift_L)
+		data()->key.run = -1;
 	return (0);
 }
 
 void	hooks(void)
 {
+	if (data()->key.run == 1)
+	{
+		data()->key.run = 0;
+		data()->var.run = 2;
+	}
+	if (data()->key.run == -1)
+	{
+		data()->key.run = 0;
+		data()->var.run = 1;
+	}
 	if (data()->key.w == 1)
 		player_move_forward();
 	if (data()->key.s == 1)

@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/15 13:19:06 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/15 16:47:43 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,16 @@
 # include "../minilibx/mlx.h"
 # include <stdio.h>
 # include "../libft/INCLUDES/libft.h"
+# include <X11/keysym.h>
+# include <sys/time.h>
 
-# define WIDTH 1900 // screen width
-# define HEIGHT 1000 // screen height
+// # define WIDTH 1900 // screen width
+// # define HEIGHT 1000 // screen height
+# define WIDTH 900 // screen width
+# define HEIGHT 500 // screen height
 # define TILE_SIZE 30 // tile size
 # define FOV 60 // field of view
-# define ROTATION_SPEED 0.045 // rotation speed
+# define ROTATION_SPEED 0.30 // rotation speed
 # define PLAYER_SPEED 4 // player speed
 
 # define PRESS		2
@@ -128,6 +132,7 @@ typedef struct s_var
 	double	perpWallDist;
 	double	move_speed;
 	double	frame_time;
+	double	old_time;
 	double	rot_speed;
 	double	test;
 	double	wall;
@@ -145,6 +150,7 @@ typedef struct s_var
 	int		texture_x;
 	int		color;
 	int		tex;
+	double	run;
 }	t_var;
 
 typedef struct	s_test_color
@@ -166,6 +172,7 @@ typedef struct s_key
 	int	left;
 	int	p;
 	int	esc;
+	int	run;
 }				t_key;
 
 typedef struct s_cub

@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:06:46 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/15 12:44:24 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/15 14:02:08 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ int	check_format(char *filename, char *format)
 
 	i = 0;
 	if (filename == NULL || format == NULL)
-		return (FALSE);
+		return (1);
 	while (filename[i])
 	{
 		if (filename[i] == '.'
-			&& !ft_strncmp(&filename[i], format, ft_strlen(format + 1)))
-			return (TRUE);
+			&& !ft_strncmp(&filename[i + 1], format, ft_strlen(format + 1)))
+			return (0);
 		i++;
 	}
-	return (FALSE);
+	return (1);
 }
 
 // util
