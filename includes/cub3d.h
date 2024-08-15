@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/15 11:23:09 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/15 12:07:36 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,12 @@ int		close_win(void);
 
 int				check_map(void);
 t_coordinate	init_coordinate(int x, int y);
+
+// clean.c
+
+void	free_memory(void ***str);
+void	big_free(void);
+
 
 // color.c
 

@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/15 11:16:08 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/15 12:13:33 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,30 +47,6 @@ int	start_the_game(void)
 	mlx_put_image_to_window(data()->mlx, data()->win, img, 0, 0);
 	mlx_destroy_image(data()->mlx, data()->img.pointer_to_img);
 	return (0);
-}
-
-void	free_memory(void ***str)
-{
-	int	i;
-
-	i = 0;
-	if (!*str)
-		return ;
-	while ((*str)[i])
-	{
-		free((*str)[i]);
-		i++;
-	}
-	free(*str);
-	*str = NULL;
-}
-
-void	big_free(void)
-{
-	destroy_xpm();
-	free_memory((void ***)&data()->xpm);
-	free_memory((void ***)&data()->rgb);
-	free_memory((void ***)&data()->map);
 }
 
 char	**ft_realloc(char **map, int len)
@@ -133,6 +109,7 @@ int main(int ac, char **av)
 	mlx_loop_hook(data()->mlx, start_the_game, NULL);
 	mlx_hook(data()->win, PRESS, (1L << 0), &key_press, NULL);
 	mlx_hook(data()->win, RELEASE, (1L << 1), &key_release, NULL);
+	mlx_hook(data()->win, 17, 0, close_win, NULL);
 	mlx_loop(data()->mlx);
 	big_free();
 	return (0);
