@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/15 12:07:36 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:19:06 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,9 @@ t_coordinate	init_coordinate(int x, int y);
 void	free_memory(void ***str);
 void	big_free(void);
 
+// color_utils.c
+
+int		check_colors(char **colors);
 
 // color.c
 
@@ -235,6 +238,7 @@ int		err(char *str);
 
 int		key_press(int keycode);
 int		key_release(int keycode);
+void	hooks(void);
 
 // init.c
 
@@ -266,8 +270,26 @@ int		get_map(int fd);
 int		parser(char *filename);
 int		check_format(char *filename, char *format);
 
+// path_checker_utils.c
+
+t_bool	not_surrounded(t_coordinate p, char	**map);
+t_bool	has_been_visited(t_coordinate p, t_list *visited);
+
+
 // path_checker.c
 
 int		path_checker(t_coordinate start);
+
+// utils.c
+
+char	**ft_realloc(char **map, int len);
+int		ft_arr_len(char **array);
+int		split_len(char **split);
+t_bool	line_is_empty(char *line);
+t_bool	is_space(int c);
+
+// xpm.c
+
+int		fill_xpm(char *path, t_type_xpm type);
 
 #endif

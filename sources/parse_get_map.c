@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:14:16 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/15 10:57:55 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/15 12:43:27 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,25 +53,6 @@ int	fill_map(char *line)
 		if (add_new_line(tmp))
 			return (1);
 	return (0);
-}
-
-int	check_logic_fits(char *line)
-{
-	static int	i;
-	int			x;
-
-	x = 0;
-	if (data()->map && data()->map[i])
-	{
-		while (line[x] && (line[x] != '1'))
-			x++;
-		if (data()->map[i][x] == '1'
-			|| (data()->map[i][x - 1] && data()->map[i][x - 1] == '1')
-			|| (data()->map[i][x + 1] && data()->map[i][x + 1] == '1'))
-			return (0);
-		i++;
-	}
-	return (1);
 }
 
 int	get_width(char *line)

@@ -6,26 +6,11 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:06:46 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/14 15:23:38 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/15 12:44:24 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
-
-// int	check_format(char *filename, char *format)
-// {
-// 	if (filename[0] && filename[0] == '.')
-// 		filename++;
-// 	while (*filename && *filename != '.')
-// 		filename++;
-// 	if (*filename && *filename == '.')
-// 	{
-// 		filename++;
-// 		if (!ft_strncmp(filename, format, 4))
-// 			return (0);
-// 	}
-// 	return (1);
-// }
 
 int	check_format(char *filename, char *format)
 {

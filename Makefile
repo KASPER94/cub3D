@@ -6,7 +6,7 @@
 #    By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/12 16:23:30 by peanut            #+#    #+#              #
-#    Updated: 2024/08/15 12:06:54 by cdeville         ###   ########.fr        #
+#    Updated: 2024/08/15 12:49:11 by cdeville         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ LBFT= $(LIBFT_PATH)$(LIBFT_NAME)
 SRC_DIR = ./sources/
 SRC =	check_map.c \
 		clean.c \
+		color_utils.c \
 		color.c \
 		error.c \
 		events.c \
@@ -41,9 +42,12 @@ SRC =	check_map.c \
 		parse_get_info.c \
 		parse_get_map.c \
 		parse.c \
+		path_checker_utils.c \
 		path_checker.c \
 		raycasting.c \
 		textures.c \
+		utils.c \
+		xpm.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
