@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/15 16:44:47 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/20 17:52:37 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,51 @@ int	start_the_game(void)
 	return (0);
 }
 
+// int	mouse_event(int x, int y, void *param)
+// {
+// 	// double	*add_x;
+// 	// if (data()->mouse)
+// 	// 	return (0);
+// 	// data()->mouse = 1;
+// 	// data()->mouse_pan_x =  (double)(x - WIDTH / 2) / (WIDTH / 2);
+// 	// // data()->mouse_pan_x = x;
+// 	// printf("y = %d\n", y);
+// 	// data()->mouse_pan_y = (HEIGHT / 2) / (double)(y - HEIGHT / 2) * 0.0001;
+// 	// mlx_mouse_move(data()->mlx, data()->win, WIDTH / 2, HEIGHT / 2);
+// 	// mlx_mouse_move(data()->mlx, data()->win, WIDTH, 0);
+// 	// (void)param;
+// 	// (void)x;
+// 	// add_x = (double *)param;
+// 	// if (*add_x)
+// 	// 	return (0);
+// 	if (data()->mouse)
+// 		return (0);
+// 	data()->mouse = 1;
+// 	data()->mouse_pan_x = (double)(x - WIDTH / 2) / (WIDTH / 2);
+// 	// *add_x =  (double)(x - WIDTH / 2) / (WIDTH / 2);
+// 	// // data()->mouse_pan_x = x;
+// 	printf("x = %d\nPan x = %f\n", x, data()->mouse_pan_x );
+// 	(void)y;
+// 	// data->mouse_pan_x = (HEIGHT / 2) / (double)(y - HEIGHT / 2) * 0.0001;
+// 	// mlx_mouse_move(data()->mlx, data()->win, WIDTH / 2, HEIGHT / 2);
+// 	// // mlx_mouse_move(data()->mlx, data()->win, WIDTH, 0);
+// 	// (void)y;
+// 	(void)param;
+// 	return (0);
+// }
+
+int	mouse_event(int x, int y, void *param)
+{
+	t_cub	*data;
+
+	data = param;
+	data->mouse_pan_x = (x -(WIDTH / 2.0)) / (WIDTH / 2.0) * M_PI  * data->var.frame_time * (MOUSE_SENSI * 10);
+	// printf("pan x = %f\n", data->mouse_pan_x);
+	(void)param;
+	(void)y;
+	return (0);
+}
+
 int	close_win(void)
 {
 	int	x;
@@ -82,7 +127,9 @@ int	main(int ac, char **av)
 		return (1);
 	if (init_textures())
 		return (1);
+	mlx_mouse_hide(data()->mlx, data()->win);
 	mlx_loop_hook(data()->mlx, start_the_game, NULL);
+	mlx_hook(data()->win, 6, (1L << 6), &mouse_event, (data()));
 	mlx_hook(data()->win, PRESS, (1L << 0), &key_press, NULL);
 	mlx_hook(data()->win, RELEASE, (1L << 1), &key_release, NULL);
 	mlx_hook(data()->win, 17, 0, close_win, NULL);

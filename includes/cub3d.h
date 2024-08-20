@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/15 16:47:43 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/20 17:55:23 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@
 
 // # define WIDTH 1900 // screen width
 // # define HEIGHT 1000 // screen height
-# define WIDTH 900 // screen width
-# define HEIGHT 500 // screen height
+# define WIDTH 960 // screen width
+# define HEIGHT 540 // screen height
 # define TILE_SIZE 30 // tile size
 # define FOV 60 // field of view
 # define ROTATION_SPEED 0.30 // rotation speed
 # define PLAYER_SPEED 4 // player speed
+# define MOUSE_SENSI 2.5 // mouse sensitivity
 
 # define PRESS		2
 # define RELEASE	3
@@ -195,6 +196,9 @@ typedef struct s_cub
 	int				map_height;
 	int				map_width;
 	t_map			edge;
+	int				mouse;
+	double			mouse_pan_x;
+	double			mouse_pan_y;
 }	t_cub;
 
 int		raycast_loop(void);

@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:43:33 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/15 16:47:14 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/20 17:53:36 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	hooks(void)
 	if (data()->key.run == 1)
 	{
 		data()->key.run = 0;
-		data()->var.run = 2;
+		data()->var.run = 1.5;
 	}
 	if (data()->key.run == -1)
 	{
@@ -72,8 +72,8 @@ void	hooks(void)
 		player_move_left();
 	if (data()->key.d == 1)
 		player_move_right();
-	if (data()->key.left == 1)
+	if (data()->key.left == 1 || data()->mouse_pan_x < 0)
 		player_rot_left();
-	if (data()->key.right == 1)
+	if (data()->key.right == 1 || (data()->mouse_pan_x > 0))
 		player_rot_right();
 }
