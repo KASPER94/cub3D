@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:41:46 by skapersk          #+#    #+#             */
-/*   Updated: 2024/07/24 14:41:17 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:16:28 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,13 @@ int	init_textures(void)
 	int		i;
 	void	*tmp;
 	int		*addr;
+	t_xpm	*current;
 
 	i = 0;
+	current = data()->xpm;
 	while (i < 4)
 	{
-		tmp = mlx_xpm_file_to_image(data()->mlx, data()->xpm->val,
+		tmp = mlx_xpm_file_to_image(data()->mlx, current->val,
 				&(data()->img2[i].width), &(data()->img2[i].height));
 		if (!tmp)
 			return (1);
@@ -74,7 +76,7 @@ int	init_textures(void)
 		data()->img2[i].addr = addr;
 		// fill_img2_with_textures(i);
 		// mlx_destroy_image(data()->mlx, data()->img2[i].pointer_to_img);
-		data()->xpm = data()->xpm->next;
+		current = current->next;
 		i++;
 	}
 	return (0);

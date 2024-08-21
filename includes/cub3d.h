@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/20 17:55:23 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/21 14:26:29 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,14 @@ int		fill_rgb(char *line, char id);
 t_rgb	*get_color(char *line);
 int		check_len(char **tmp);
 
+// draw.c
+
+void	set_color(void);
+void	mlx_place_pixel(int x, int y, int color);
+void	draw_wall(int x);
+void	my_floor(int x);
+void	my_cell(int x);
+
 // error.c
 
 int		err(char *str);
@@ -290,6 +298,15 @@ t_bool	has_been_visited(t_coordinate p, t_list *visited);
 // path_checker.c
 
 int		path_checker(t_coordinate start);
+
+// set_display.c
+
+void	set_texture(void);
+void	set_values(double direction_x,
+			double direction_y, double pla_x, double pla_y);
+void	set_box(void);
+void	set_len_ray(void);
+void	set_step_and_ini_side_dist(void);
 
 // utils.c
 

@@ -6,7 +6,7 @@
 #    By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/12 16:23:30 by peanut            #+#    #+#              #
-#    Updated: 2024/08/15 12:49:11 by cdeville         ###   ########.fr        #
+#    Updated: 2024/08/21 14:26:47 by cdeville         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC =	check_map.c \
 		clean.c \
 		color_utils.c \
 		color.c \
+		draw.c	\
 		error.c \
 		events.c \
 		init.c \
@@ -45,6 +46,7 @@ SRC =	check_map.c \
 		path_checker_utils.c \
 		path_checker.c \
 		raycasting.c \
+		set_display.c \
 		textures.c \
 		utils.c \
 		xpm.c \

@@ -3,41 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:33:01 by skapersk          #+#    #+#             */
-/*   Updated: 2024/07/25 13:49:48 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/08/21 14:24:42 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+// #include <stdio.h>
 #include "cub3d.h"
-
-void	set_texture(void)
-{
-	if (data()->var.side == 1)
-	{
-		if (data()->var.stepY == -1)
-			data()->var.texture_number = 1;
-		else
-			data()->var.texture_number = 3;
-	}
-	else
-	{
-		if (data()->var.stepX == -1)
-			data()->var.texture_number = 2;
-		else
-			data()->var.texture_number = 0;
-	}
-}
-
-void	set_values(double direction_x, double direction_y, double pla_x, double pla_y)
-{
-	data()->var.dirX = direction_x;
-	data()->var.dirY = direction_y;
-	data()->var.planeX = pla_x;
-	data()->var.planeY = pla_y;
-}
 
 void	init_vectors(int x, int y)
 {
@@ -60,61 +34,6 @@ void	find_ray_and_dir(int x, int w)
 	+ data()->var.planeX * data()->var.camera;
 	data()->var.rayDirY = data()->var.dirY
 	+ data()->var.planeY * data()->var.camera;
-}
-
-void	set_box(void)
-{
-	t_var	tmp;
-
-	tmp = data()->var;
-	tmp.mapX = (int)tmp.position_x;
-	tmp.mapY = (int)tmp.position_y;
-	tmp.hit = 0;
-	data()->var = tmp;
-}
-
-void set_len_ray(void)
-{
-	t_var	tmp;
-
-	tmp = data()->var;
-	if (tmp.rayDirX == 0)
-		tmp.deltaDistX = 1e30;
-	else
-		tmp.deltaDistX = fabs(1 / data()->var.rayDirX);
-	if (tmp.rayDirY == 0)
-		tmp.deltaDistY = 1e30;
-	else
-		tmp.deltaDistY = fabs(1 / data()->var.rayDirY);
-	data()->var = tmp;
-}
-
-void	set_step_and_ini_sideDist(void)
-{
-	t_var	tmp;
-
-	tmp = data()->var;
-	if (tmp.rayDirX < 0)
-	{
-		tmp.stepX = -1;
-		tmp.sideDistX = (tmp.position_x - tmp.mapX) * tmp.deltaDistX;
-	}
-	else
-	{
-		tmp.stepX = 1;
-		tmp.sideDistX = (tmp.mapX + 1.0 - tmp.position_x) * tmp.deltaDistX;
-	}
-	if (tmp.rayDirY < 0)
-	{
-		tmp.stepY = -1;
-		tmp.sideDistY = (tmp.position_y - tmp.mapY) * tmp.deltaDistY;
-	}
-	else
-	{
-		tmp.stepY = 1;
-		tmp.sideDistY = (tmp.mapY + 1.0 - tmp.position_y) * tmp.deltaDistY;
-	}
-	data()->var = tmp;
 }
 
 void	DDA(void)
@@ -185,12 +104,12 @@ void	calcul_wall_value(void)
 {
 	if (data()->var.side == 1)
 	{
-        data()->var.wall = (data()->var.stepY == -1) ? 0 : 1;
-    }
+		data()->var.wall = (data()->var.stepY == -1) ? 0 : 1;
+	}
 	else
 	{
-        data()->var.wall = (data()->var.stepX == -1) ? 2 : 3;
-    }
+		data()->var.wall = (data()->var.stepX == -1) ? 2 : 3;
+	}
 	// if (data()->var.side == 0)
 	// {
 	// 	data()->var.wall = data()->var.position_y
@@ -243,85 +162,6 @@ void	coor_text(void)
 // 		tex = TEXTURE_WIDTH - data()->var.texture_x - 1;
 // 	data()->var.texture_x = tex;
 // }
-
-void	set_color(void)
-{
-	data()->color = malloc(sizeof(t_test_color));
-	data()->color->blue.r = 80;
-	data()->color->blue.g = 91;
-	data()->color->blue.b = 166;
-	data()->color->red.r = 175;
-	data()->color->red.g = 54;
-	data()->color->red.b = 60;
-	data()->color->green.r = 70;
-	data()->color->green.g = 148;
-	data()->color->green.b = 73;
-	data()->color->white.r = 255;
-	data()->color->white.g = 255;
-	data()->color->white.b = 255;
-	data()->color->yellow.r = 255;
-	data()->color->yellow.g = 223;
-	data()->color->yellow.b = 0;
-}
-
-void	mlx_place_pixel(int x, int y, int color)
-{
-	char	*distance;
-
-	distance = data()->img.addr + (y * data()->img.line_len + x * (data()->img.bpp / 8));
-	*(unsigned int *)distance = color;
-}
-
-void	draw_wall(int x)
-{
-	int	y;
-	int	color;
-
-	if (data()->var.side == 1)
-	{
-		color = (data()->var.stepY == -1) ? (data()->color->red.r << 16 | data()->color->red.g << 8 | data()->color->red.b)
-										: (data()->color->green.r << 16 | data()->color->green.g << 8 | data()->color->green.b);
-	}
-	else
-	{
-		color = (data()->var.stepX == -1) ? (data()->color->blue.r << 16 | data()->color->blue.g << 8 | data()->color->blue.b)
-										: (data()->color->green.r << 16 | data()->color->green.g << 8 | data()->color->green.b);
-	}
-	y = data()->var.drawStart;
-	while (y < data()->var.drawEnd)
-	{
-		mlx_place_pixel(x, y, color);
-		y++;
-	}
-}
-
-void	my_floor(int x)
-{
-	int	color;
-	int	y;
-
-	color = (data()->rgb->f->r << 16 | data()->rgb->f->g << 8 | data()->rgb->f->b);
-	y = data()->var.drawStart;
-	while (y < HEIGHT - 1)
-	{
-		mlx_place_pixel(x, y, color);
-		y++;
-	}
-}
-
-void	my_cell(int x)
-{
-	int	color;
-	int	y;
-
-	color = (data()->rgb->c->r << 16 | data()->rgb->c->g << 8 | data()->rgb->c->b);
-	y = 0;
-	while (y < data()->var.drawEnd)
-	{
-		mlx_place_pixel(x, y, color);
-		y++;
-	}
-}
 
 // void draw_vertical_texture_stripe(int x)
 // {
@@ -429,11 +269,12 @@ void	my_cell(int x)
 // 	}
 // }
 
-void temp(int x) {
+void temp(int x)
+{
 	int y = 0;
 
 	t_img tex;
-    void *addr;
+	void *addr;
 	tex = data()->img2[data()->var.texture_number];
 	addr = tex.addr;
 	int x_tex;
@@ -443,14 +284,14 @@ void temp(int x) {
 	double texture_position;
 
 	my_floor(x);
-    my_cell(x);
+	my_cell(x);
 	// Calcul du step pour l'incrémentation de la position dans la texture
 	step = 1.0 * TEXTURE_HEIGHT / data()->var.lineHeight;
 	// Position initiale de la texture
 	texture_position = (data()->var.drawStart - HEIGHT / 2 + data()->var.lineHeight / 2) * step;
 
-    y = data()->var.drawStart;
-    while (y < data()->var.drawEnd) {
+	y = data()->var.drawStart;
+	while (y < data()->var.drawEnd) {
 		set_texture();
 		x_tex = data()->var.texture_x ;
 		y_tex = (int)texture_position & (tex.height - 1);
@@ -473,7 +314,7 @@ int	raycast_loop(void)
 		find_ray_and_dir(x, WIDTH);
 		set_box();
 		set_len_ray();
-		set_step_and_ini_sideDist();
+		set_step_and_ini_side_dist();
 		DDA();
 		dist_project_camera();
 		set_height_wall();

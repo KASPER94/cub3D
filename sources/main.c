@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/20 17:52:37 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:24:41 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ long	get_time(void)
 
 void	handle_time(void)
 {
-	data()->var.frame_time = ((double)get_time() / 1000.0) - data()->var.old_time;
+	data()->var.frame_time = ((double)get_time() / 1000.0)
+		- data()->var.old_time;
 	data()->var.old_time = get_time() / 1000.0;
 }
 
@@ -35,7 +36,6 @@ int	start_the_game(void)
 	void	*img;
 	char	*addr;
 
-	set_color();
 	img = mlx_new_image(data()->mlx, WIDTH, HEIGHT);
 	data()->img.pointer_to_img = img;
 	addr = mlx_get_data_addr(data()->img.pointer_to_img,
@@ -43,8 +43,6 @@ int	start_the_game(void)
 	data()->img.addr = addr;
 	raycast_loop();
 	handle_time();
-	// data()->var.frame_time = 16 / 1000.0;
-	// data()->var.run = 1;
 	hooks();
 	data()->var.move_speed = data()->var.frame_time * 2.5 * data()->var.run;
 	data()->var.rot_speed = data()->var.frame_time * 2.5;
@@ -91,8 +89,8 @@ int	mouse_event(int x, int y, void *param)
 	t_cub	*data;
 
 	data = param;
-	data->mouse_pan_x = (x -(WIDTH / 2.0)) / (WIDTH / 2.0) * M_PI  * data->var.frame_time * (MOUSE_SENSI * 10);
-	// printf("pan x = %f\n", data->mouse_pan_x);
+	data->mouse_pan_x = (x -(WIDTH / 2.0)) / (WIDTH / 2.0)
+		* M_PI  * data->var.frame_time * (MOUSE_SENSI * 10);
 	(void)param;
 	(void)y;
 	return (0);
@@ -100,17 +98,28 @@ int	mouse_event(int x, int y, void *param)
 
 int	close_win(void)
 {
+	int	i;
 	int	x;
 
+	i = 0;
 	x = 0;
-	while (x < data()->height - 1)
+	while (x < data()->height)
 	{
 		free(data()->map[x]);
 		x++;
 	}
 	free(data()->map);
+	free(data()->player);
+	destroy_xpm();
+	while (i < 4)
+		mlx_destroy_image(data()->mlx, data()->img2[i++].pointer_to_img);
 	mlx_destroy_window(data()->mlx, data()->win);
 	mlx_destroy_display(data()->mlx);
+	free(data()->mlx);
+	free(data()->color);
+	free(data()->rgb->c);
+	free(data()->rgb->f);
+	free(data()->rgb);
 	exit(0);
 }
 

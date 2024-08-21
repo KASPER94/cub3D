@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:46:25 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/20 17:48:24 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:07:26 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	init_win(void)
 
 int	init(void)
 {
+	set_color();
 	data()->player = (t_player *)malloc(sizeof(t_player));
 	if (data()->player == NULL)
 		return (err("Malloc error for player\n"), 1);

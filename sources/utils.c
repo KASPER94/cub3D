@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:36:09 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/15 12:41:58 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/21 14:30:51 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ t_bool	line_is_empty(char *line)
 			return (TRUE);
 		i++;
 	}
-	// if (!line[i])
-	// 	return (TRUE);
 	return (FALSE);
 }
 
