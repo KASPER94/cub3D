@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:06:46 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/21 13:12:24 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/21 18:03:33 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	parser(char *filename)
 	if (fd == -1)
 		return (perror("Error, cannot open the map\n"), 1);
 	if (get_info(fd))
-		return (err("Error, wrong information\n"));
+		return (close(fd), err("Error, wrong information\n"));
 	if (get_map(fd))
 		return (close(fd), err("Error, wrong map\n"));
 	if (check_map())
