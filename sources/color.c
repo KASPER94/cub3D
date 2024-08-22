@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 11:26:44 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/15 12:34:11 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 12:05:22 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,16 @@ t_rgb	*get_color(char *word)
 
 int	fill_rgb(char *line, char id)
 {
-	if (data()->rgb == NULL)
-	{
-		data()->rgb = (t_color *)malloc(sizeof(t_color));
-		if (data()->rgb == NULL)
-			return (err("Malloc error\n"), 0);
-		data()->rgb->c = NULL;
-		data()->rgb->f = NULL;
-	}
 	if (id == 'c')
 	{
-		data()->rgb->c = get_color(line);
-		if (data()->rgb->c == NULL)
+		data()->rgb.c = get_color(line);
+		if (data()->rgb.c == NULL)
 			return (0);
 	}
 	else
 	{
-		data()->rgb->f = get_color(line);
-		if (data()->rgb->f == NULL)
+		data()->rgb.f = get_color(line);
+		if (data()->rgb.f == NULL)
 			return (0);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/21 14:26:29 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 12:05:42 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ typedef struct s_cub
 	void			*mlx;
 	void			*win;
 	t_xpm			*xpm;
-	t_color			*rgb;
+	t_color			rgb;
 	char			**map;
 	int				height;
 	int				width;
@@ -191,7 +191,7 @@ typedef struct s_cub
 	int				textures[4][TEXTURE_HEIGHT * TEXTURE_WIDTH];
 	t_player		*player;
 	t_var			var;
-	t_test_color	*color;
+	t_test_color	color;
 	t_key			key;
 	int				map_height;
 	int				map_width;

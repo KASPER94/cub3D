@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:06:12 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/21 17:27:32 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 12:06:02 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,5 @@ void	big_free(void)
 {
 	destroy_xpm();
 	// free_memory((void ***)&data()->xpm);
-	free_memory((void ***)&data()->rgb);
 	free_memory((void ***)&data()->map);
 }

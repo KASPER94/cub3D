@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:13:26 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/15 12:39:22 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 12:08:11 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	check_parameters(void)
 
 	count = 0;
 	current = data()->xpm;
-	if (data()->rgb == NULL || data()->rgb->c == NULL || data()->rgb->f == NULL)
+	if (data()->rgb.c == NULL || data()->rgb.f == NULL)
 		return (0);
 	while (current)
 	{

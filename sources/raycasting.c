@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:33:01 by skapersk          #+#    #+#             */
-/*   Updated: 2024/08/21 14:24:42 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 12:02:54 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -482,24 +482,24 @@ int	raycast_loop(void)
 // void	set_color(void)
 // {
 // 	data()->color = malloc(sizeof(t_test_color));
-// 	data()->color->blue.r = 80;
-// 	data()->color->blue.g = 91;
-// 	data()->color->blue.b = 166;
-// 	data()->color->red.r = 175;
-// 	data()->color->red.g = 54;
-// 	data()->color->red.b = 60;
-// 	data()->color->green.r = 70;
-// 	data()->color->green.g = 148;
-// 	data()->color->green.b = 73;
+// 	data()->color.blue.r = 80;
+// 	data()->color.blue.g = 91;
+// 	data()->color.blue.b = 166;
+// 	data()->color.red.r = 175;
+// 	data()->color.red.g = 54;
+// 	data()->color.red.b = 60;
+// 	data()->color.green.r = 70;
+// 	data()->color.green.g = 148;
+// 	data()->color.green.b = 73;
 // 	    // Ceiling color
-//     data()->color->white.r = 255;
-//     data()->color->white.g = 255;
-//     data()->color->white.b = 255;
+//     data()->color.white.r = 255;
+//     data()->color.white.g = 255;
+//     data()->color.white.b = 255;
 
 //     // Wall color
-//     data()->color->yellow.r = 255;
-//     data()->color->yellow.g = 223;
-//     data()->color->yellow.b = 0;
+//     data()->color.yellow.r = 255;
+//     data()->color.yellow.g = 223;
+//     data()->color.yellow.b = 0;
 // }
 
 // void	mlx_place_pixel(int x, int y, int colour)
@@ -517,13 +517,13 @@ int	raycast_loop(void)
 
 // 	if (data()->var.side == 1)
 // 	{
-//         color = (data()->var.stepY == -1) ? (data()->color->red.r << 16 | data()->color->red.g << 8 | data()->color->red.b)
-//                                   : (data()->color->green.r << 16 | data()->color->green.g << 8 | data()->color->green.b);
+//         color = (data()->var.stepY == -1) ? (data()->color.red.r << 16 | data()->color.red.g << 8 | data()->color.red.b)
+//                                   : (data()->color.green.r << 16 | data()->color.green.g << 8 | data()->color.green.b);
 // 	}
 // 	else
 // 	{
-//         color = (data()->var.stepX == -1) ? (data()->color->blue.r << 16 | data()->color->blue.g << 8 | data()->color->blue.b)
-//                                   : (data()->color->green.r << 16 | data()->color->green.g << 8 | data()->color->green.b);
+//         color = (data()->var.stepX == -1) ? (data()->color.blue.r << 16 | data()->color.blue.g << 8 | data()->color.blue.b)
+//                                   : (data()->color.green.r << 16 | data()->color.green.g << 8 | data()->color.green.b);
 // 	}
 // 	y = data()->var.drawStart;
 // 	// ft_printf("%d --- %d\n", y, data()->var.drawEnd);

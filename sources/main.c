@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/22 11:35:51 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 12:07:52 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,8 @@ int	close_win(void)
 	mlx_destroy_window(data()->mlx, data()->win);
 	mlx_destroy_display(data()->mlx);
 	free(data()->mlx);
-	free(data()->color);
-	free(data()->rgb->c);
-	free(data()->rgb->f);
-	free(data()->rgb);
+	free(data()->rgb.c);
+	free(data()->rgb.f);
 	exit(0);
 }
 
@@ -141,6 +139,5 @@ int	main(int ac, char **av)
 	mlx_hook(data()->win, RELEASE, (1L << 1), &key_release, NULL);
 	mlx_hook(data()->win, 17, 0, close_win, NULL);
 	mlx_loop(data()->mlx);
-	big_free();
 	return (0);
 }
