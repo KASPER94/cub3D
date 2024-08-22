@@ -6,11 +6,18 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 11:26:44 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/22 13:34:19 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:45:10 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
+
+t_bool	out_of_range(int number)
+{
+	if (number < 0 || number > 255)
+		return (TRUE);
+	return (FALSE);
+}
 
 t_rgb	*get_color(char *word)
 {
@@ -28,6 +35,9 @@ t_rgb	*get_color(char *word)
 	value->r = ft_atoi(colors[0]);
 	value->g = ft_atoi(colors[1]);
 	value->b = ft_atoi(colors[2]);
+	if (out_of_range(value->r ) || out_of_range(value->g)
+		|| out_of_range(value->b))
+		return (free_split(colors), free(value), NULL);
 	free_split(colors);
 	return (value);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colors.utils.c                                     :+:      :+:    :+:   */
+/*   color_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:28:55 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/15 12:29:28 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:41:18 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,19 @@ static int	isnum(int c)
 t_bool	is_int(char *arg)
 {
 	int		i;
+	int		count;
 
 	i = 0;
 	while (ft_isspace(arg[i]))
 		i++;
 	if (arg[i] == '-' || arg[i] == '+')
 	i++;
+	count = i;
 	while (isnum(arg[i]))
 		i++;
 	if (arg[i])
+		return (FALSE);
+	if (i - count > 10)
 		return (FALSE);
 	return (TRUE);
 }
