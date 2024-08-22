@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:06:46 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/21 18:03:33 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 11:45:45 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	parser(char *filename)
 	if (get_map(fd))
 		return (close(fd), err("Error, wrong map\n"));
 	if (check_map())
-		return (close(fd), err("Error, the map is not well formated !"));
+		return (close(fd), free_split(data()->map),
+			err("Error, the map is not well formated !"));
 	return (close(fd), 0);
 }

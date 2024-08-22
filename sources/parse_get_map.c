@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:14:16 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/15 12:43:27 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 11:42:27 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ int	add_new_line(char *line)
 		return (1);
 	tmp = ft_realloc(data()->map, arr_len + 2);
 	if (!tmp)
-		return (big_free(), 1);
+		return (1);
 	data()->map = tmp;
 	data()->map[arr_len] = ft_strdup(line);
 	free(line);
 	if (!data()->map[arr_len])
-		return (big_free(), 1);
+		return (1);
 	return (0);
 }
 
@@ -51,7 +51,7 @@ int	fill_map(char *line)
 	}
 	else
 		if (add_new_line(tmp))
-			return (1);
+			return (free(tmp), free_split(data()->map), 1);
 	return (0);
 }
 
@@ -119,9 +119,9 @@ int	get_map(int fd)
 			break ;
 		}
 		if (fill_map(line))
-			return (1);
+			return (free(line), 1);
 		if (!get_width(line))
-			return (1);
+			return (free(line), 1);
 		free(line);
 		i++;
 		line = get_next_line(fd);

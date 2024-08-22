@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/21 17:24:41 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 11:35:51 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ int	close_win(void)
 		x++;
 	}
 	free(data()->map);
-	free(data()->player);
 	destroy_xpm();
 	while (i < 4)
 		mlx_destroy_image(data()->mlx, data()->img2[i++].pointer_to_img);
@@ -128,8 +127,7 @@ int	main(int ac, char **av)
 	// leaks
 	if (ac != 2)
 		return (err("Error, Map isn't correct\n"), 1);
-	if (init())
-		return (1);
+	init();
 	if (parser(av[1]))
 		return (1);
 	if (init_win())
