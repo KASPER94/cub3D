@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 11:26:44 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/22 12:05:22 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 13:34:19 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_rgb	*get_color(char *word)
 	if (!colors)
 		return (NULL);
 	if (!check_colors(colors))
-		return (free_split(colors), NULL);
+		return (free_split(colors), free(value), NULL);
 	value->r = ft_atoi(colors[0]);
 	value->g = ft_atoi(colors[1]);
 	value->b = ft_atoi(colors[2]);
@@ -38,13 +38,13 @@ int	fill_rgb(char *line, char id)
 	{
 		data()->rgb.c = get_color(line);
 		if (data()->rgb.c == NULL)
-			return (0);
+			return (1);
 	}
 	else
 	{
 		data()->rgb.f = get_color(line);
 		if (data()->rgb.f == NULL)
-			return (0);
+			return (1);
 	}
-	return (1);
+	return (0);
 }

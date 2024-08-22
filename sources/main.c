@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/22 12:07:52 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 13:29:44 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,20 @@ int	close_win(void)
 	exit(0);
 }
 
+void	destroy_colors(void)
+{
+	if (data()->rgb.c)
+	{
+		free(data()->rgb.c);
+		data()->rgb.c = NULL;
+	}
+	if (data()->rgb.f)
+	{
+		free(data()->rgb.f);
+		data()->rgb.f = NULL;
+	}
+}
+
 int	main(int ac, char **av)
 {
 	// leaks
@@ -127,7 +141,7 @@ int	main(int ac, char **av)
 		return (err("Error, Map isn't correct\n"), 1);
 	init();
 	if (parser(av[1]))
-		return (1);
+		return (destroy_xpm(), destroy_colors(), 1);
 	if (init_win())
 		return (1);
 	if (init_textures())

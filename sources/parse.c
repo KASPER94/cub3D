@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:06:46 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/22 11:45:45 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 13:51:08 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,18 @@ void	print_map(void)
 	}
 }
 
+void	read_all(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+}
+
 int	parser(char *filename)
 {
 	int	fd;
@@ -56,11 +68,12 @@ int	parser(char *filename)
 	if (fd == -1)
 		return (perror("Error, cannot open the map\n"), 1);
 	if (get_info(fd))
-		return (close(fd), err("Error, wrong information\n"));
+		return (read_all(fd), close(fd), err("Error, wrong information\n"));
 	if (get_map(fd))
-		return (close(fd), err("Error, wrong map\n"));
+		return (read_all(fd), free_split(data()->map),
+			close(fd), err("Error, wrong map\n"));
 	if (check_map())
-		return (close(fd), free_split(data()->map),
+		return (read_all(fd), close(fd), free_split(data()->map),
 			err("Error, the map is not well formated !"));
 	return (close(fd), 0);
 }
