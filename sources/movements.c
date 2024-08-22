@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 23:50:56 by skapersk          #+#    #+#             */
-/*   Updated: 2024/08/21 17:59:05 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:04:13 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	player_move_left(void)
 	new_x = (int)(data()->var.position_x + data()->var.dirY
 			* data()->var.move_speed);
 	new_y = (int)(data()->var.position_y - data()->var.dirX
-			* data()->var.move_speed );
+			* data()->var.move_speed);
 	if (data()->map[new_x][(int)data()->var.position_y] != '1')
 		data()->var.position_x += data()->var.dirY * data()->var.move_speed;
 	if (data()->map[(int)data()->var.position_x][new_y] != '1')

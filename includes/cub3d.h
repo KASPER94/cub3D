@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/22 12:05:42 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:02:29 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,8 +218,7 @@ void	player_rot_left(void);
 int		fill_rgb(char *line, char id);
 int		ft_arr_len(char **array);
 char	**ft_realloc(char **map, int len);
-void	big_free(void);
-int		close_win(void);
+int		clean_exit(void);
 
 // check_map.c
 
@@ -228,8 +227,11 @@ t_coordinate	init_coordinate(int x, int y);
 
 // clean.c
 
-void	free_memory(void ***str);
-void	big_free(void);
+void	destroy_xpm(void);
+void	destroy_map(void);
+void	destroy_imgs(void);
+void	destroy_colors(void);
+
 
 // color_utils.c
 

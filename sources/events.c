@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:43:33 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/20 17:53:36 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 14:53:01 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	key_press(int keycode)
 {
 	if (keycode == ESC)
-		return (close_win(), 0);
+		return (clean_exit(), 0);
 	else if (keycode == W)
 		data()->key.w = 1;
 	else if (keycode == S)

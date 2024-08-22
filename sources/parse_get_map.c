@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:14:16 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/22 11:42:27 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 14:59:20 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	fill_map(char *line)
 	}
 	else
 		if (add_new_line(tmp))
-			return (free(tmp), free_split(data()->map), 1);
+			return (free(tmp), 1);
 	return (0);
 }
 

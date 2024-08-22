@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/22 13:29:44 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:01:34 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,62 +96,45 @@ int	mouse_event(int x, int y, void *param)
 	return (0);
 }
 
-int	close_win(void)
+int	clean_exit(void)
 {
-	int	i;
-	int	x;
-
-	i = 0;
-	x = 0;
-	while (x < data()->height)
-	{
-		free(data()->map[x]);
-		x++;
-	}
-	free(data()->map);
+	destroy_map();
 	destroy_xpm();
-	while (i < 4)
-		mlx_destroy_image(data()->mlx, data()->img2[i++].pointer_to_img);
-	mlx_destroy_window(data()->mlx, data()->win);
-	mlx_destroy_display(data()->mlx);
-	free(data()->mlx);
-	free(data()->rgb.c);
-	free(data()->rgb.f);
+	destroy_imgs();
+	if (data()->win && data()->mlx)
+	{
+		mlx_destroy_window(data()->mlx, data()->win);
+		data()->win = NULL;
+	}
+	if (data()->mlx)
+	{
+		mlx_destroy_display(data()->mlx);
+		free(data()->mlx);
+		data()->mlx = NULL;
+	}
+	destroy_colors();
 	exit(0);
-}
-
-void	destroy_colors(void)
-{
-	if (data()->rgb.c)
-	{
-		free(data()->rgb.c);
-		data()->rgb.c = NULL;
-	}
-	if (data()->rgb.f)
-	{
-		free(data()->rgb.f);
-		data()->rgb.f = NULL;
-	}
 }
 
 int	main(int ac, char **av)
 {
 	// leaks
+	//need to check MACRO values and color value
 	if (ac != 2)
 		return (err("Error, Map isn't correct\n"), 1);
 	init();
 	if (parser(av[1]))
-		return (destroy_xpm(), destroy_colors(), 1);
+		return (clean_exit(), 1);
 	if (init_win())
-		return (1);
+		return (clean_exit(), 1);
 	if (init_textures())
-		return (1);
+		return (clean_exit(), 1);
 	mlx_mouse_hide(data()->mlx, data()->win);
 	mlx_loop_hook(data()->mlx, start_the_game, NULL);
 	mlx_hook(data()->win, 6, (1L << 6), &mouse_event, (data()));
 	mlx_hook(data()->win, PRESS, (1L << 0), &key_press, NULL);
 	mlx_hook(data()->win, RELEASE, (1L << 1), &key_release, NULL);
-	mlx_hook(data()->win, 17, 0, close_win, NULL);
+	mlx_hook(data()->win, 17, 0, clean_exit, NULL);
 	mlx_loop(data()->mlx);
 	return (0);
 }
