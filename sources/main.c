@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/22 15:57:25 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/23 13:26:11 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,8 @@ int	main(int ac, char **av)
 {
 	if (ac != 2)
 		return (err("Error, Map isn't correct\n"), 1);
-	init();
+	if (init())
+		return (1);
 	if (parser(av[1]))
 		return (clean_exit(), 1);
 	if (init_win())
