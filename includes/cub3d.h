@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/22 15:54:29 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/23 11:50:34 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 
 // # define WIDTH 1900 // screen width
 // # define HEIGHT 1000 // screen height
-# define WIDTH 1900 // screen width
-# define HEIGHT 1000 // screen height
+# define WIDTH 960 // screen width
+# define HEIGHT 540 // screen height
 # define TILE_SIZE 30 // tile size
 # define FOV 60 // field of view
 # define ROTATION_SPEED 0.30 // rotation speed

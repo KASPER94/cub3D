@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/22 15:01:34 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:57:25 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,6 @@ int	clean_exit(void)
 
 int	main(int ac, char **av)
 {
-	// leaks
-	//need to check MACRO values and color value
 	if (ac != 2)
 		return (err("Error, Map isn't correct\n"), 1);
 	init();
