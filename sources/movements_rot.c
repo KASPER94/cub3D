@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movements_rot.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:20:19 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/21 12:59:38 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/27 14:36:12 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	player_rot_left(void)
 	double	old_planex;
 	double	rotation_value;
 
-	old_dirx = data()->var.dirX;
-	old_planex = data()->var.planeX;
+	old_dirx = data()->var.dir_x;
+	old_planex = data()->var.plane_x;
 	if (data()->mouse_pan_x)
 	{
 		rotation_value = data()->mouse_pan_x;
@@ -34,14 +34,14 @@ void	player_rot_left(void)
 	}
 	else
 		rotation_value = -data()->var.rot_speed;
-	data()->var.dirX = data()->var.dirX * cos(rotation_value)
-	- data()->var.dirY * sin(rotation_value);
-	data()->var.dirY = old_dirx * sin(rotation_value)
-	+ data()->var.dirY * cos(rotation_value);
-	data()->var.planeX = data()->var.planeX * cos(rotation_value)
-	- data()->var.planeY * sin(rotation_value);
-	data()->var.planeY = old_planex * sin(rotation_value)
-	+ data()->var.planeY * cos(rotation_value);
+	data()->var.dir_x = data()->var.dir_x * cos(rotation_value)
+	- data()->var.dir_y * sin(rotation_value);
+	data()->var.dir_y = old_dirx * sin(rotation_value)
+	+ data()->var.dir_y * cos(rotation_value);
+	data()->var.plane_x = data()->var.plane_x * cos(rotation_value)
+	- data()->var.plane_y * sin(rotation_value);
+	data()->var.plane_y = old_planex * sin(rotation_value)
+	+ data()->var.plane_y * cos(rotation_value);
 }
 
 void	player_rot_right(void)
@@ -50,8 +50,8 @@ void	player_rot_right(void)
 	double	old_planey;
 	double	rotation_value;
 
-	old_diry = data()->var.dirY;
-	old_planey = data()->var.planeY;
+	old_diry = data()->var.dir_y;
+	old_planey = data()->var.plane_y;
 	if (data()->mouse_pan_x)
 	{
 		rotation_value = -data()->mouse_pan_x;
@@ -60,12 +60,12 @@ void	player_rot_right(void)
 	}
 	else
 		rotation_value = -data()->var.rot_speed;
-	data()->var.dirY = data()->var.dirY * cos(rotation_value)
-	- data()->var.dirX * sin(rotation_value);
-	data()->var.dirX = old_diry * sin(rotation_value)
-	+ data()->var.dirX * cos(rotation_value);
-	data()->var.planeY = data()->var.planeY * cos(rotation_value)
-	- data()->var.planeX * sin(rotation_value);
-	data()->var.planeX = old_planey * sin(rotation_value)
-	+ data()->var.planeX * cos(rotation_value);
+	data()->var.dir_y = data()->var.dir_y * cos(rotation_value)
+	- data()->var.dir_x * sin(rotation_value);
+	data()->var.dir_x = old_diry * sin(rotation_value)
+	+ data()->var.dir_x * cos(rotation_value);
+	data()->var.plane_y = data()->var.plane_y * cos(rotation_value)
+	- data()->var.plane_x * sin(rotation_value);
+	data()->var.plane_x = old_planey * sin(rotation_value)
+	+ data()->var.plane_x * cos(rotation_value);
 }

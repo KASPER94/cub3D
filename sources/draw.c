@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:19:03 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/22 12:05:10 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/27 14:51:11 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	draw_wall(int x)
 
 	if (data()->var.side == 1)
 	{
-		if (data()->var.stepY == -1)
+		if (data()->var.step_y == -1)
 			color = (data()->color.red.r << 16
 					| data()->color.red.g << 8 | data()->color.red.b);
 		else
@@ -57,15 +57,15 @@ void	draw_wall(int x)
 	}
 	else
 	{
-		if (data()->var.stepX == -1)
+		if (data()->var.step_x == -1)
 			color = (data()->color.blue.r << 16
 					| data()->color.blue.g << 8 | data()->color.blue.b);
 		else
 			color = (data()->color.green.r << 16
 					| data()->color.green.g << 8 | data()->color.green.b);
 	}
-	y = data()->var.drawStart;
-	while (y < data()->var.drawEnd)
+	y = data()->var.draw_start;
+	while (y < data()->var.draw_end)
 		mlx_place_pixel(x, y++, color);
 }
 
@@ -76,7 +76,7 @@ void	my_floor(int x)
 
 	color = (data()->rgb.f->r << 16 | data()->rgb.f->g << 8
 			| data()->rgb.f->b);
-	y = data()->var.drawStart;
+	y = data()->var.draw_start;
 	while (y < HEIGHT - 1)
 	{
 		mlx_place_pixel(x, y, color);
@@ -92,7 +92,7 @@ void	my_cell(int x)
 	color = (data()->rgb.c->r << 16 | data()->rgb.c->g << 8
 			| data()->rgb.c->b);
 	y = 0;
-	while (y < data()->var.drawEnd)
+	while (y < data()->var.draw_end)
 	{
 		mlx_place_pixel(x, y, color);
 		y++;

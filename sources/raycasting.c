@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:33:01 by skapersk          #+#    #+#             */
-/*   Updated: 2024/08/23 10:14:38 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/08/27 14:32:11 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,33 +29,33 @@ void	init_vectors(int x, int y)
 void	find_ray_and_dir(int x, int w)
 {
 	data()->var.camera = 2 * x / (double)w - 1;
-	data()->var.rayDirX = data()->var.dirX
-	+ data()->var.planeX * data()->var.camera;
-	data()->var.rayDirY = data()->var.dirY
-	+ data()->var.planeY * data()->var.camera;
+	data()->var.ray_dir_x = data()->var.dir_x
+	+ data()->var.plane_x * data()->var.camera;
+	data()->var.ray_dir_y = data()->var.dir_y
+	+ data()->var.plane_y * data()->var.camera;
 }
 
 void	DDA(void)
 {
 	while (data()->var.hit == 0)
 	{
-		if (data()->var.sideDistX < data()->var.sideDistY)
+		if (data()->var.side_dist_x < data()->var.side_dist_y)
 		{
-			data()->var.sideDistX += data()->var.deltaDistX;
-			data()->var.mapX += data()->var.stepX;
+			data()->var.side_dist_x += data()->var.delta_dist_x;
+			data()->var.map_x += data()->var.step_x;
 			data()->var.side = 0;
 		}
 		else
 		{
-			data()->var.sideDistY += data()->var.deltaDistY;
-			data()->var.mapY += data()->var.stepY;
+			data()->var.side_dist_y += data()->var.delta_dist_y;
+			data()->var.map_y += data()->var.step_y;
 			data()->var.side = 1;
 		}
-		if (data()->var.mapY < 0.25 || data()->var.mapX < 0.25
-			|| data()->var.mapY > data()->width - 0.25
-			|| data()->var.mapX > data()->height - 1.25)
+		if (data()->var.map_y < 0.25 || data()->var.map_x < 0.25
+			|| data()->var.map_y > data()->width - 0.25
+			|| data()->var.map_x > data()->height - 1.25)
 			data()->var.hit = 1;
-		if (data()->map[data()->var.mapX][data()->var.mapY] == '1')
+		if (data()->map[data()->var.map_x][data()->var.map_y] == '1')
 			data()->var.hit = 1;
 	}
 }
@@ -66,9 +66,9 @@ void	dist_project_camera(void)
 
 	tmp = data()->var;
 	if (tmp.side == 0)
-		tmp.perpWallDist = (tmp.sideDistX - tmp.deltaDistX);
+		tmp.perp_wall_dist = (tmp.side_dist_x - tmp.delta_dist_x);
 	else
-		tmp.perpWallDist = (tmp.sideDistY - tmp.deltaDistY);
+		tmp.perp_wall_dist = (tmp.side_dist_y - tmp.delta_dist_y);
 	data()->var = tmp;
 }
 
@@ -77,7 +77,7 @@ void	set_height_wall(void)
 	t_var	tmp;
 
 	tmp = data()->var;
-	tmp.lineHeight = (int)(HEIGHT / tmp.perpWallDist);
+	tmp.line_height = (int)(HEIGHT / tmp.perp_wall_dist);
 	data()->var = tmp;
 }
 
@@ -86,26 +86,28 @@ void	find_lowest_and_high_pix(void)
 	t_var	tmp;
 
 	tmp = data()->var;
-	tmp.drawStart = -tmp.lineHeight / 2 + HEIGHT / 2;
-	if (tmp.drawStart < 0)
-		tmp.drawStart = 0;
-	tmp.drawEnd = tmp.lineHeight / 2 + HEIGHT / 2;
-	if (tmp.drawEnd >= HEIGHT)
-		tmp.drawEnd = HEIGHT - 1;
+	tmp.draw_start = -tmp.line_height / 2 + HEIGHT / 2;
+	if (tmp.draw_start < 0)
+		tmp.draw_start = 0;
+	tmp.draw_end = tmp.line_height / 2 + HEIGHT / 2;
+	if (tmp.draw_end >= HEIGHT)
+		tmp.draw_end = HEIGHT - 1;
 	data()->var = tmp;
 }
 
 void	coor_text(void)
 {
 	if (data()->var.side == 0)
-		data()->var.wall = data()->var.position_y + data()->var.perpWallDist *  data()->var.rayDirY;
+		data()->var.wall = data()->var.position_y
+		+ data()->var.perp_wall_dist * data()->var.ray_dir_y;
 	else
-		data()->var.wall = data()->var.position_x + data()->var.perpWallDist *  data()->var.rayDirX;
+		data()->var.wall = data()->var.position_x
+		+ data()->var.perp_wall_dist * data()->var.ray_dir_x;
 	data()->var.wall -= floor(data()->var.wall);
 	data()->var.texture_x = (int)(data()->var.wall * (double)TEXTURE_WIDTH);
-	if (data()->var.side == 0 && data()->var.rayDirX > 0)
+	if (data()->var.side == 0 && data()->var.ray_dir_x > 0)
 		data()->var.texture_x = TEXTURE_WIDTH - data()->var.texture_x - 1;
-	if (data()->var.side == 1 && data()->var.rayDirY < 0)
+	if (data()->var.side == 1 && data()->var.ray_dir_y < 0)
 		data()->var.texture_x = TEXTURE_WIDTH - data()->var.texture_x - 1;
 }
 
@@ -126,12 +128,12 @@ void temp(int x)
 	my_floor(x);
 	my_cell(x);
 	// Calcul du step pour l'incrémentation de la position dans la texture
-	step = 1.0 * TEXTURE_HEIGHT / data()->var.lineHeight;
+	step = 1.0 * TEXTURE_HEIGHT / data()->var.line_height;
 	// Position initiale de la texture
-	texture_position = (data()->var.drawStart - HEIGHT / 2 + data()->var.lineHeight / 2) * step;
+	texture_position = (data()->var.draw_start - HEIGHT / 2 + data()->var.line_height / 2) * step;
 
-	y = data()->var.drawStart;
-	while (y < data()->var.drawEnd) {
+	y = data()->var.draw_start;
+	while (y < data()->var.draw_end) {
 		set_texture();
 		x_tex = data()->var.texture_x ;
 		y_tex = (int)texture_position & (tex.height - 1);

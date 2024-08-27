@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/23 13:36:47 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/27 14:32:29 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@
 # include <X11/keysym.h>
 # include <sys/time.h>
 
-// # define WIDTH 1900 // screen width
-// # define HEIGHT 1000 // screen height
-# define WIDTH 960 // screen width
-# define HEIGHT 540 // screen height
+# define WIDTH 1900 // screen width
+# define HEIGHT 1000 // screen height
 # define TILE_SIZE 30 // tile size
 # define FOV 60 // field of view
 # define ROTATION_SPEED 0.30 // rotation speed
@@ -118,19 +116,19 @@ typedef struct s_map
 typedef struct s_var
 {
 	double	camera;
-	double	rayDirX;
-	double	rayDirY;
-	double	dirX;
-	double	dirY;
-	double	planeX;
-	double	planeY;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
 	double	position_x;
 	double	position_y;
-	double	sideDistX;
-	double	sideDistY;
-	double	deltaDistX;
-	double	deltaDistY;
-	double	perpWallDist;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	perp_wall_dist;
 	double	move_speed;
 	double	frame_time;
 	double	old_time;
@@ -138,14 +136,14 @@ typedef struct s_var
 	double	test;
 	double	wall;
 	int		hit;
-	int		mapX;
-	int		mapY;
-	int 	stepX;
-	int 	stepY;
+	int		map_x;
+	int		map_y;
+	int 	step_x;
+	int 	step_y;
 	int		side;
-	int 	lineHeight;
-	int		drawStart;
-	int		drawEnd;
+	int 	line_height;
+	int		draw_start;
+	int		draw_end;
 	int		texture_number;
 	int		texture_y;
 	int		texture_x;
