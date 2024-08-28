@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:33:01 by skapersk          #+#    #+#             */
-/*   Updated: 2024/08/28 11:43:29 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:36:43 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	init_vectors(int x, int y)
 {
 	data()->var.position_x = x + 0.5;
 	data()->var.position_y = y + 0.5;
-	if (data()->map[x][y] == 'N')
+	if (data()->map[x][y] == 'W')
 		set_values(0, -1, 0.66, 0);
-	else if (data()->map[x][y] == 'S')
-		set_values(0, 1, -0.66, 0);
 	else if (data()->map[x][y] == 'E')
+		set_values(0, 1, -0.66, 0);
+	else if (data()->map[x][y] == 'N')
 		set_values(1, 0, 0, 0.66);
-	else if (data()->map[x][y] == 'W')
+	else if (data()->map[x][y] == 'S')
 		set_values(-1, 0, 0, -0.66);
 }
 

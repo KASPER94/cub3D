@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/28 12:02:03 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:31:19 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <X11/keysym.h>
 # include <sys/time.h>
 
-# define WIDTH 1900 // screen width
-# define HEIGHT 1000 // screen height
+# define WIDTH 950 // screen width
+# define HEIGHT 500 // screen height
 # define TILE_SIZE 30 // tile size
 # define FOV 60 // field of view
 # define ROTATION_SPEED 0.30 // rotation speed
