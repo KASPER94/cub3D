@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures_render.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:42:03 by skapersk          #+#    #+#             */
-/*   Updated: 2024/08/28 11:43:36 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:21:12 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,30 @@ void	coor_text(void)
 		data()->var.texture_x = TEXTURE_WIDTH - data()->var.texture_x - 1;
 }
 
+int	get_texture_nb(t_type_xpm texture_number)
+{
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		if (data()->img2[i].type == texture_number)
+			return (i);
+		i++;
+	}
+	return (0);
+}
+
 void	render_texture(int x)
 {
 	int		y;
 	int		clr;
 	t_img	tex;
+	int		i;
 
 	y = 0;
-	tex = data()->img2[data()->var.texture_number];
+	i = get_texture_nb(data()->var.texture_number);
+	tex = data()->img2[i];
 	my_floor(x);
 	my_cell(x);
 	data()->var.step = 1.0 * TEXTURE_HEIGHT / data()->var.line_height;

@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/28 15:31:19 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:13:29 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,6 @@ typedef struct s_coordinate
 	t_bool	visited;
 }	t_coordinate;
 
-typedef struct s_img
-{
-	void	*pointer_to_img;
-	void	*addr;
-	int		bpp;
-	int		line_len;
-	int		endian;
-	int		width;
-	int		height;
-}	t_img;
-
 typedef enum e_type_xpm
 {
 	E_NO,
@@ -86,6 +75,19 @@ typedef enum e_type_xpm
 	E_WE,
 	E_EA
 }	t_type_xpm;
+
+
+typedef struct s_img
+{
+	void		*pointer_to_img;
+	void		*addr;
+	int			bpp;
+	int			line_len;
+	int			endian;
+	int			width;
+	int			height;
+	t_type_xpm	type;
+}	t_img;
 
 typedef struct s_xpm
 {

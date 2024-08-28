@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_display.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:22:05 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/28 10:58:11 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:22:08 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ void	set_texture(void)
 	if (data()->var.side == 1)
 	{
 		if (data()->var.step_y == -1)
-			data()->var.texture_number = 1;
+			data()->var.texture_number = E_WE;
 		else
-			data()->var.texture_number = 3;
+			data()->var.texture_number = E_EA;
 	}
 	else
 	{
 		if (data()->var.step_x == -1)
-			data()->var.texture_number = 2;
+			data()->var.texture_number = E_SO;
 		else
-			data()->var.texture_number = 0;
+			data()->var.texture_number = E_NO;
 	}
 }
 

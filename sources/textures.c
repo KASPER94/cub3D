@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:41:46 by skapersk          #+#    #+#             */
-/*   Updated: 2024/08/23 09:25:48 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:13:08 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	init_textures(void)
 		if (!addr)
 			return (1);
 		data()->img2[i].addr = addr;
+		data()->img2[i].type = current->type;
 		current = current->next;
 		i++;
 	}
