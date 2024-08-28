@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:20:33 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/23 12:19:10 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/28 12:04:10 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	check_point(char **map, t_coordinate p, t_coordinate *start)
 	char	value;
 
 	value = map[p.x][p.y];
-	if (value == 'W' || value == 'S'|| value == 'E'|| value == 'N')
+	if (value == 'W' || value == 'S' || value == 'E' || value == 'N')
 	{
 		if (start->x != -1)
 		{
@@ -77,7 +77,7 @@ int	check_map(void)
 	if (start.x == -1)
 		return (1);
 	init_vectors(start.x, start.y);
-	data()->map[start.x][start.y] = '0';
+	data()->map[start.x][start.y] = 0;
 	if (path_checker(start))
 		return (1);
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/23 13:26:11 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/28 11:58:39 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ long	get_time(void)
 void	handle_time(void)
 {
 	data()->var.frame_time = ((double)get_time() / 1000.0)
-		- data()->var.old_time;
+	- data()->var.old_time;
 	data()->var.old_time = get_time() / 1000.0;
 }
 
@@ -51,77 +51,23 @@ int	start_the_game(void)
 	return (0);
 }
 
-// int	mouse_event(int x, int y, void *param)
-// {
-// 	// double	*add_x;
-// 	// if (data()->mouse)
-// 	// 	return (0);
-// 	// data()->mouse = 1;
-// 	// data()->mouse_pan_x =  (double)(x - WIDTH / 2) / (WIDTH / 2);
-// 	// // data()->mouse_pan_x = x;
-// 	// printf("y = %d\n", y);
-// 	// data()->mouse_pan_y = (HEIGHT / 2) / (double)(y - HEIGHT / 2) * 0.0001;
-// 	// mlx_mouse_move(data()->mlx, data()->win, WIDTH / 2, HEIGHT / 2);
-// 	// mlx_mouse_move(data()->mlx, data()->win, WIDTH, 0);
-// 	// (void)param;
-// 	// (void)x;
-// 	// add_x = (double *)param;
-// 	// if (*add_x)
-// 	// 	return (0);
-// 	if (data()->mouse)
-// 		return (0);
-// 	data()->mouse = 1;
-// 	data()->mouse_pan_x = (double)(x - WIDTH / 2) / (WIDTH / 2);
-// 	// *add_x =  (double)(x - WIDTH / 2) / (WIDTH / 2);
-// 	// // data()->mouse_pan_x = x;
-// 	printf("x = %d\nPan x = %f\n", x, data()->mouse_pan_x );
-// 	(void)y;
-// 	// data->mouse_pan_x = (HEIGHT / 2) / (double)(y - HEIGHT / 2) * 0.0001;
-// 	// mlx_mouse_move(data()->mlx, data()->win, WIDTH / 2, HEIGHT / 2);
-// 	// // mlx_mouse_move(data()->mlx, data()->win, WIDTH, 0);
-// 	// (void)y;
-// 	(void)param;
-// 	return (0);
-// }
-
 int	mouse_event(int x, int y, void *param)
 {
 	t_cub	*data;
 
 	data = param;
 	data->mouse_pan_x = (x -(WIDTH / 2.0)) / (WIDTH / 2.0)
-		* M_PI  * data->var.frame_time * (MOUSE_SENSI * 10);
+		* M_PI * data->var.frame_time * (MOUSE_SENSI * 10);
 	(void)param;
 	(void)y;
 	return (0);
-}
-
-int	clean_exit(void)
-{
-	destroy_map();
-	destroy_xpm();
-	destroy_imgs();
-	if (data()->win && data()->mlx)
-	{
-		mlx_destroy_window(data()->mlx, data()->win);
-		data()->win = NULL;
-	}
-	if (data()->mlx)
-	{
-		mlx_destroy_display(data()->mlx);
-		free(data()->mlx);
-		data()->mlx = NULL;
-	}
-	destroy_colors();
-	exit(0);
 }
 
 int	main(int ac, char **av)
 {
 	if (ac != 2)
 		return (err("Error, Map isn't correct\n"), 1);
-	if (init())
-		return (1);
+	init();
 	if (parser(av[1]))
 		return (clean_exit(), 1);
 	if (init_win())

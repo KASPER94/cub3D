@@ -6,12 +6,11 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:19:03 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/27 14:51:11 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/08/28 11:55:44 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
-
 
 void	set_color(void)
 {

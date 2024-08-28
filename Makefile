@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+         #
+#    By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/12 16:23:30 by peanut            #+#    #+#              #
-#    Updated: 2024/08/21 14:26:47 by cdeville         ###   ########.fr        #
+#    Updated: 2024/08/28 12:03:34 by skapersk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,10 +41,13 @@ SRC =	check_map.c \
 		movements.c \
 		movements_rot.c \
 		parse_get_info.c \
+		parse_get_map_utils.c \
 		parse_get_map.c \
 		parse.c \
 		path_checker_utils.c \
 		path_checker.c \
+		raycast_loop.c \
+		textures_render.c \
 		raycasting.c \
 		set_display.c \
 		textures.c \
@@ -100,8 +103,8 @@ fclean: clean
 
 re: fclean all
 
-norminette:
+norme:
 	@echo "\e[0;32m\nChecking .c norme:\n\e[0m"
-	norminette ./src
+	norminette ./sources
 	@echo "\e[0;32m\nChecking .h norme:\n\e[0m"
-	norminette ./include
+	norminette ./includes

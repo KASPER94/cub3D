@@ -6,7 +6,7 @@
 /*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/27 14:32:29 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/08/28 12:02:03 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,14 +134,16 @@ typedef struct s_var
 	double	old_time;
 	double	rot_speed;
 	double	test;
+	double	step;
 	double	wall;
+	double	texture_position;
 	int		hit;
 	int		map_x;
 	int		map_y;
-	int 	step_x;
-	int 	step_y;
+	int		step_x;
+	int		step_y;
 	int		side;
-	int 	line_height;
+	int		line_height;
 	int		draw_start;
 	int		draw_end;
 	int		texture_number;
@@ -152,7 +154,7 @@ typedef struct s_var
 	double	run;
 }	t_var;
 
-typedef struct	s_test_color
+typedef struct s_test_color
 {
 	t_rgb	blue;
 	t_rgb	red;
@@ -199,24 +201,24 @@ typedef struct s_cub
 	double			mouse_pan_y;
 }	t_cub;
 
-int		raycast_loop(void);
-void	init_vectors(int x, int y);
-t_cub	*data(void);
-void	set_color(void);
-void	player_move_forward(void);
-void	player_move_backward(void);
-void	player_rot_right(void);
-void	player_move_left(void);
-void	player_move_right(void);
-int		init_textures(void);
-void	player_rot_left(void);
+int				raycast_loop(void);
+void			init_vectors(int x, int y);
+t_cub			*data(void);
+void			set_color(void);
+void			player_move_left(void);
+void			player_move_forward(void);
+void			player_move_backward(void);
+void			player_rot_left(void);
+void			player_rot_right(void);
+void			player_move_right(void);
+int				init_textures(void);
 
 // main.c
 
-int		fill_rgb(char *line, char id);
-int		ft_arr_len(char **array);
-char	**ft_realloc(char **map, int len);
-int		clean_exit(void);
+int				fill_rgb(char *line, char id);
+int				ft_arr_len(char **array);
+char			**ft_realloc(char **map, int len);
+int				clean_exit(void);
 
 // check_map.c
 
@@ -225,99 +227,118 @@ t_coordinate	init_coordinate(int x, int y);
 
 // clean.c
 
-void	destroy_xpm(void);
-void	destroy_map(void);
-void	destroy_imgs(void);
-void	destroy_colors(void);
-
+void			destroy_xpm(void);
+void			destroy_map(void);
+void			destroy_imgs(void);
+void			destroy_colors(void);
+int				clean_exit(void);
 
 // color_utils.c
 
-int		check_colors(char **colors);
+int				check_colors(char **colors);
 
 // color.c
 
-int		fill_rgb(char *line, char id);
-t_rgb	*get_color(char *line);
-int		check_len(char **tmp);
+int				fill_rgb(char *line, char id);
+t_rgb			*get_color(char *line);
+int				check_len(char **tmp);
 
 // draw.c
 
-void	set_color(void);
-void	mlx_place_pixel(int x, int y, int color);
-void	draw_wall(int x);
-void	my_floor(int x);
-void	my_cell(int x);
+void			set_color(void);
+void			mlx_place_pixel(int x, int y, int color);
+void			draw_wall(int x);
+void			my_floor(int x);
+void			my_cell(int x);
 
 // error.c
 
-int		err(char *str);
+int				err(char *str);
 
 // events.c
 
-int		key_press(int keycode);
-int		key_release(int keycode);
-void	hooks(void);
+int				key_press(int keycode);
+int				key_release(int keycode);
+void			hooks(void);
 
 // init.c
 
-int		init(void);
-int		init_win(void);
-void	init_data(void);
-t_cub	*data(void);
+int				init(void);
+int				init_win(void);
+void			init_data(void);
+t_cub			*data(void);
 
 // movements_rot.c
 
-void	player_rot_left(void);
-void	player_rot_right(void);
+void			player_rot_left(void);
+void			player_rot_right(void);
 
 // mouvements.c
 
 // parse_get_info.c
 
-int		get_info(int fd);
-int		split_len(char **split);
-t_bool	line_is_empty(char *line);
-void	destroy_xpm(void);
+int				get_info(int fd);
+int				split_len(char **split);
+t_bool			line_is_empty(char *line);
+void			destroy_xpm(void);
+
+//parse_get_map_utils.c
+
+int				check_end(int fd);
+void			reverse_map(void);
 
 //parse_get_map.c
 
-int		get_map(int fd);
+int				get_map(int fd);
 
 // parse.c
 
-int		parser(char *filename);
-int		check_format(char *filename, char *format);
+int				parser(char *filename);
+int				check_format(char *filename, char *format);
 
 // path_checker_utils.c
 
-t_bool	not_surrounded(t_coordinate p, char	**map);
-t_bool	has_been_visited(t_coordinate p, t_list *visited);
+t_bool			not_surrounded(t_coordinate p, char	**map);
+t_bool			has_been_visited(t_coordinate p, t_list *visited);
 
 
 // path_checker.c
 
-int		path_checker(t_coordinate start);
+int				path_checker(t_coordinate start);
+
+// raycast_loop.c
+
+void			find_lowest_and_high_pix(void);
+void			coor_text(void);
+void			render_texture(int x);
+
+// raycasting.c
+
+void			init_vectors(int x, int y);
+void			find_ray_and_dir(int x, int w);
+void			dda_algo(void);
+void			dist_project_camera(void);
+void			set_height_wall(void);
 
 // set_display.c
 
-void	set_texture(void);
-void	set_values(double direction_x,
-			double direction_y, double pla_x, double pla_y);
-void	set_box(void);
-void	set_len_ray(void);
-void	set_step_and_ini_side_dist(void);
+void			set_texture(void);
+void			set_values(double direction_x,
+					double direction_y, double pla_x, double pla_y);
+void			set_box(void);
+void			set_len_ray(void);
+void			set_step_and_ini_side_dist(void);
 
 // utils.c
 
-char	**ft_realloc(char **map, int len);
-int		ft_arr_len(char **array);
-int		split_len(char **split);
-t_bool	line_is_empty(char *line);
-t_bool	is_space(int c);
+char			**ft_realloc(char **map, int len);
+int				ft_arr_len(char **array);
+int				split_len(char **split);
+t_bool			line_is_empty(char *line);
+t_bool			is_space(int c);
 
 // xpm.c
 
-int		fill_xpm(char *path, t_type_xpm type);
+int				fill_xpm(char *path, t_type_xpm type);
 
 #endif

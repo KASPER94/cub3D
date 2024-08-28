@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:28:55 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/22 15:41:18 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/28 11:56:43 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	check_colors(char **colors)
 		return (0);
 	while (*colors)
 	{
-		// a refaire
 		if (is_int(*colors) == FALSE)
 			return (0);
 		colors++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:06:12 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/22 15:01:38 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/28 11:58:48 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,24 @@ void	destroy_colors(void)
 		free(data()->rgb.f);
 		data()->rgb.f = NULL;
 	}
+}
+
+int	clean_exit(void)
+{
+	destroy_map();
+	destroy_xpm();
+	destroy_imgs();
+	if (data()->win && data()->mlx)
+	{
+		mlx_destroy_window(data()->mlx, data()->win);
+		data()->win = NULL;
+	}
+	if (data()->mlx)
+	{
+		mlx_destroy_display(data()->mlx);
+		free(data()->mlx);
+		data()->mlx = NULL;
+	}
+	destroy_colors();
+	exit(0);
 }
