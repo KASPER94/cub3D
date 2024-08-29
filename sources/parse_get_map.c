@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_get_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:14:16 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/28 12:00:38 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/08/29 18:28:07 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,5 @@ int	get_map(int fd)
 		line = get_next_line(fd);
 	}
 	data()->height = i;
-	return (reverse_map(), check_end(fd));
+	return (check_end(fd));
 }

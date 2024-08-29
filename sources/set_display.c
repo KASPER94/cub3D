@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:22:05 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/28 16:22:08 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/29 18:50:00 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ void	set_texture(void)
 	if (data()->var.side == 1)
 	{
 		if (data()->var.step_y == -1)
-			data()->var.texture_number = E_WE;
-		else
 			data()->var.texture_number = E_EA;
+		else
+			data()->var.texture_number = E_WE;
 	}
 	else
 	{
 		if (data()->var.step_x == -1)
-			data()->var.texture_number = E_SO;
-		else
 			data()->var.texture_number = E_NO;
+		else
+			data()->var.texture_number = E_SO;
 	}
 }
 

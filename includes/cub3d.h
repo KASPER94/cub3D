@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/29 11:36:13 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/29 12:27:30 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,7 +299,7 @@ int				check_format(char *filename, char *format);
 // path_checker_utils.c
 
 t_bool			not_surrounded(t_coordinate p, char	**map);
-t_bool			has_been_visited(t_coordinate p, t_list *visited);
+t_bool			has_been_visited(t_coordinate p, char **visited);
 
 
 // path_checker.c
