@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 11:26:44 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/28 12:04:33 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/08/29 11:51:59 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,42 @@ t_bool	out_of_range(int number)
 	return (FALSE);
 }
 
-t_rgb	*get_color(char *word)
+char	*join_colors(char **split)
+{
+	char	*str;
+	char	*tmp;
+	int		i;
+
+	i = 1;
+	str = ft_strdup(split[0]);
+	if (str == NULL)
+		return (NULL);
+	while (split[i])
+	{
+		tmp = str;
+		str = ft_strjoin(str, split[i]);
+		free(tmp);
+		if (str == NULL)
+			return (NULL);
+		i++;
+	}
+	return (str);
+}
+
+t_rgb	*get_color(char **split)
 {
 	char	**colors;
+	char	*str;
 	t_rgb	*value;
 
 	value = (t_rgb *)malloc(sizeof(t_rgb));
 	if (!value)
 		return (NULL);
-	colors = ft_split(word, ',');
+	str = join_colors(split);
+	if (str == NULL)
+		return (NULL);
+	colors = ft_split(str, ',');
+	free(str);
 	if (!colors)
 		return (NULL);
 	if (!check_colors(colors))
@@ -42,17 +69,17 @@ t_rgb	*get_color(char *word)
 	return (value);
 }
 
-int	fill_rgb(char *line, char id)
+int	fill_rgb(char **split, char id)
 {
 	if (id == 'c')
 	{
-		data()->rgb.c = get_color(line);
+		data()->rgb.c = get_color(split);
 		if (data()->rgb.c == NULL)
 			return (1);
 	}
 	else
 	{
-		data()->rgb.f = get_color(line);
+		data()->rgb.f = get_color(split);
 		if (data()->rgb.f == NULL)
 			return (1);
 	}

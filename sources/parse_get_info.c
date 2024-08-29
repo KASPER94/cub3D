@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:13:26 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/22 13:37:16 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/29 11:22:52 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	check_order(char **split)
 	else if (!ft_strncmp(split[0], "EA", ft_strlen("EA") + 1) && i[3] == 0)
 		return (++(i[3]), fill_xpm(split[1], E_EA) || 0);
 	else if (!ft_strncmp(split[0], "C", ft_strlen("C") + 1) && i[4] == 0)
-		return (++(i[4]), fill_rgb(split[1], 'c'));
+		return (++(i[4]), fill_rgb(&split[1], 'c'));
 	else if (!ft_strncmp(split[0], "F", ft_strlen("F") + 1) && i[5] == 0)
-		return (++(i[5]), fill_rgb(split[1], 'f'));
+		return (++(i[5]), fill_rgb(&split[1], 'f'));
 	return (1);
 }
 
@@ -44,7 +44,7 @@ char	**split_and_check_line(char *line)
 	if (split == NULL)
 		return (perror("split"), free(tmp), NULL);
 	free(tmp);
-	if (split_len(split) != 2)
+	if (split_len(split) < 2)
 		return (free_split(split), NULL);
 	return (split);
 }

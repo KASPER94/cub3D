@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/28 16:13:29 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/29 11:36:13 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ int				init_textures(void);
 
 // main.c
 
-int				fill_rgb(char *line, char id);
+int				fill_rgb(char **split, char id);
 int				ft_arr_len(char **array);
 char			**ft_realloc(char **map, int len);
 int				clean_exit(void);
@@ -241,8 +241,6 @@ int				check_colors(char **colors);
 
 // color.c
 
-int				fill_rgb(char *line, char id);
-t_rgb			*get_color(char *line);
 int				check_len(char **tmp);
 
 // draw.c
