@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/29 12:27:30 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/30 11:05:57 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,13 @@ int				fill_rgb(char **split, char id);
 int				ft_arr_len(char **array);
 char			**ft_realloc(char **map, int len);
 int				clean_exit(void);
+
+// check_around.c
+
+t_bool			check_right(t_coordinate p, char	**map);
+t_bool			check_left(t_coordinate p, char	**map);
+t_bool			check_under(t_coordinate p, char	**map);
+t_bool			check_top(t_coordinate p, char	**map);
 
 // check_map.c
 

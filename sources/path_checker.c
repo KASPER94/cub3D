@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 13:16:29 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/29 18:52:36 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/30 11:00:58 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int	add_to_list(t_coordinate p, t_list **list, char **visited)
 	content = (t_coordinate *)malloc(sizeof(t_coordinate));
 	if (content == NULL)
 		return (perror("malloc"), 1);
-	content->x = p.x;
-	content->y = p.y;
+	*content = init_coordinate(p.x, p.y);
 	if (*list == NULL)
 	{
 		*list = ft_lstnew(content);
@@ -42,8 +41,7 @@ int	add_to_list(t_coordinate p, t_list **list, char **visited)
 			return (free(content), 1);
 		tmp = (*list)->next;
 		(*list)->next = new;
-		if (tmp)
-			new->next = tmp;
+		new->next = tmp;
 	}
 	return (0);
 }

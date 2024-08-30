@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+         #
+#    By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/12 16:23:30 by peanut            #+#    #+#              #
-#    Updated: 2024/08/28 12:03:34 by skapersk         ###   ########.fr        #
+#    Updated: 2024/08/30 11:03:58 by cdeville         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,9 @@ LIBFT_PATH= $(LIBFT_DIR)
 LBFT= $(LIBFT_PATH)$(LIBFT_NAME)
 
 SRC_DIR = ./sources/
-SRC =	check_map.c \
+
+SRC =	check_around.c \
+		check_map.c \
 		clean.c \
 		color_utils.c \
 		color.c \
