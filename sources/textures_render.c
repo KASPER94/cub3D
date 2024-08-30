@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures_render.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:42:03 by skapersk          #+#    #+#             */
-/*   Updated: 2024/08/28 16:21:12 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/30 11:55:56 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	coor_text(void)
 		+ data()->var.perp_wall_dist * data()->var.ray_dir_x;
 	data()->var.wall -= floor(data()->var.wall);
 	data()->var.texture_x = (int)(data()->var.wall * (double)TEXTURE_WIDTH);
-	if (data()->var.side == 0 && data()->var.ray_dir_x > 0)
+	if (data()->var.side == 0 && data()->var.ray_dir_x < 0)
 		data()->var.texture_x = TEXTURE_WIDTH - data()->var.texture_x - 1;
-	if (data()->var.side == 1 && data()->var.ray_dir_y < 0)
+	if (data()->var.side == 1 && data()->var.ray_dir_y > 0)
 		data()->var.texture_x = TEXTURE_WIDTH - data()->var.texture_x - 1;
 }
 
