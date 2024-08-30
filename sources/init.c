@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:46:25 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/28 12:09:16 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/08/30 11:34:30 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,28 @@ int	init_win(void)
 	return (0);
 }
 
+int check_macro(void)
+{
+	if (WIDTH <= 0 || HEIGHT <= 0)
+		return (err("Screen dimensions need to be positive\n"));
+	if (FOV > 180 || FOV < 10)
+		return (err("FOV needs to be inferior to 180 and superior to 10\n"));
+	if (ROTATION_SPEED < 0.01 || ROTATION_SPEED > 10)
+		return (err("ROTATION_SPEED needs to be inferior "
+			"to 10 and superior to 0.01\n"));
+	if (PLAYER_SPEED < 1 || PLAYER_SPEED > 10)
+		return (err("PLAYER_SPEED needs to "
+			"be inferior to 10 and superior to 1\n"));
+	if (MOUSE_SENSI < 0.2 || MOUSE_SENSI > 10)
+		return (err("MOUSE_SENSI needs to be inferior "
+			"to 10 and superior to 0.2\n"));
+	return (0);
+}
+
 int	init(void)
 {
+	if (check_macro())
+		return (1);
 	set_color();
 	data()->key.esc = 0;
 	data()->key.w = 0;

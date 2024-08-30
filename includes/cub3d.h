@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/30 11:05:57 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/30 11:18:26 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@
 # define RIGHT 					65363
 # define ESC 		65307
 
-
 typedef struct s_player
 {
 	int		p_x;
@@ -75,7 +74,6 @@ typedef enum e_type_xpm
 	E_WE,
 	E_EA
 }	t_type_xpm;
-
 
 typedef struct s_img
 {
@@ -307,7 +305,6 @@ int				check_format(char *filename, char *format);
 
 t_bool			not_surrounded(t_coordinate p, char	**map);
 t_bool			has_been_visited(t_coordinate p, char **visited);
-
 
 // path_checker.c
 

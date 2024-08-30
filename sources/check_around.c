@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 11:03:11 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/30 11:03:23 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/08/30 11:18:54 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_bool	check_left(t_coordinate p, char	**map)
 		return (TRUE);
 	return (FALSE);
 }
-
 
 t_bool	check_top(t_coordinate p, char	**map)
 {
