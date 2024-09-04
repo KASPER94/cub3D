@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/30 11:34:46 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:49:14 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ int	start_the_game(void)
 	raycast_loop();
 	handle_time();
 	hooks();
-	data()->var.move_speed = data()->var.frame_time * 2.5 * data()->var.run;
-	data()->var.rot_speed = data()->var.frame_time * 2.5;
+	data()->var.move_speed = data()->var.frame_time * PLAYER_SPEED
+	* data()->var.run;
+	data()->var.rot_speed = data()->var.frame_time * 2.5 * ROTATION_SPEED;
 	mlx_put_image_to_window(data()->mlx, data()->win, img, 0, 0);
 	mlx_destroy_image(data()->mlx, data()->img.pointer_to_img);
 	return (0);

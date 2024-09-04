@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:33:01 by skapersk          #+#    #+#             */
-/*   Updated: 2024/08/29 18:48:31 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:33:20 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,19 @@
 
 void	init_vectors(int x, int y)
 {
+	double	plane;
+
+	plane = tan((double)FOV * (M_PI / 180.0) / 2.0);
 	data()->var.position_x = x + 0.5;
 	data()->var.position_y = y + 0.5;
 	if (data()->map[x][y] == 'E')
-		set_values(0, -1, 0.66, 0);
+		set_values(0, -1, plane, 0);
 	else if (data()->map[x][y] == 'W')
-		set_values(0, 1, -0.66, 0);
+		set_values(0, 1, -plane, 0);
 	else if (data()->map[x][y] == 'S')
-		set_values(1, 0, 0, 0.66);
+		set_values(1, 0, 0, plane);
 	else if (data()->map[x][y] == 'N')
-		set_values(-1, 0, 0, -0.66);
+		set_values(-1, 0, 0, -plane);
 }
 
 void	find_ray_and_dir(int x, int w)

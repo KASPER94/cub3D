@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:53:17 by peanut            #+#    #+#             */
-/*   Updated: 2024/08/30 11:18:26 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:47:01 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@
 # include <X11/keysym.h>
 # include <sys/time.h>
 
+# define _USE_MATH_DEFINES
+
 # define WIDTH 950 // screen width
 # define HEIGHT 500 // screen height
-# define TILE_SIZE 30 // tile size
-# define FOV 60 // field of view
-# define ROTATION_SPEED 0.30 // rotation speed
-# define PLAYER_SPEED 4 // player speed
+# define FOV 66 // field of view
+# define ROTATION_SPEED 1.0 // rotation speed
+# define PLAYER_SPEED 2.5 // player speed
 # define MOUSE_SENSI 2.5 // mouse sensitivity
 
 # define PRESS		2
