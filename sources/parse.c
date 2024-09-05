@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:06:46 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/22 14:58:29 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:41:12 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,17 @@ int	parser(char *filename)
 	int	fd;
 
 	if (check_format(filename, "cub"))
-		return (err("Error, wrong file format\n"));
+		return (err("wrong file format\n"));
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		return (perror("Error, cannot open the map\n"), 1);
+		return (perror("cannot open the map\n"), 1);
 	if (get_info(fd))
-		return (read_all(fd), close(fd), err("Error, wrong information\n"));
+		return (read_all(fd), close(fd), err("wrong information\n"));
 	if (get_map(fd))
 		return (read_all(fd),
-			close(fd), err("Error, wrong map\n"));
+			close(fd), err("wrong map\n"));
 	if (check_map())
 		return (read_all(fd), close(fd),
-			err("Error, the map is not well formated !\n"));
+			err("the map is not well formated !\n"));
 	return (close(fd), 0);
 }

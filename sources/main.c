@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/09/04 16:49:14 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:40:42 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	mouse_event(int x, int y, void *param)
 int	main(int ac, char **av)
 {
 	if (ac != 2)
-		return (err("Error, Map isn't correct\n"), 1);
+		return (err("Map isn't correct\n"), 1);
 	if (init())
 		return (1);
 	if (parser(av[1]))

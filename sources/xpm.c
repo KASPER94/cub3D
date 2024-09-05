@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xpm.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:39:05 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/21 17:27:21 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:41:40 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ char	*get_path(char *path)
 	char	*dup;
 
 	if (check_format(path, "xpm"))
-		return (err("Error, not xpm file\n"), NULL);
+		return (err("not xpm file\n"), NULL);
 	test = open(path, O_RDONLY);
 	if (test == -1)
-		return (err("Error, cannot access to the xpm file\n"), NULL);
+		return (err("cannot access to the xpm file\n"), NULL);
 	close (test);
 	dup = ft_strdup(path);
 	if (dup == NULL)

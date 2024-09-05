@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 13:28:01 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/08 13:31:56 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:55:16 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	err(char *str)
 
 	if (i)
 		return (1);
+	write(2, "Error\n", 6);
 	while (*str)
 		write(2, str++, 1);
 	i++;
