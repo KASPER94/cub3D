@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 16:00:58 by peanut            #+#    #+#             */
-/*   Updated: 2024/09/05 15:40:42 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:30:26 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	main(int ac, char **av)
 		return (clean_exit(), 1);
 	if (init_textures())
 		return (clean_exit(), 1);
-	mlx_mouse_hide(data()->mlx, data()->win);
 	mlx_loop_hook(data()->mlx, start_the_game, NULL);
 	mlx_hook(data()->win, 6, (1L << 6), &mouse_event, (data()));
 	mlx_hook(data()->win, PRESS, (1L << 0), &key_press, NULL);
