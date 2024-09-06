@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movements_rot.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 11:20:19 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/27 14:36:12 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/09/06 18:17:22 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	reset_mouse(void)
 		(double)WIDTH / 2.0, (double)HEIGHT / 2.0);
 }
 
-void	player_rot_left(void)
+void	player_rot_right(void)
 {
 	double	old_dirx;
 	double	old_planex;
@@ -28,7 +28,7 @@ void	player_rot_left(void)
 	old_planex = data()->var.plane_x;
 	if (data()->mouse_pan_x)
 	{
-		rotation_value = data()->mouse_pan_x;
+		rotation_value = -data()->mouse_pan_x;
 		reset_mouse();
 		data()->mouse_pan_x = 0;
 	}
@@ -44,7 +44,7 @@ void	player_rot_left(void)
 	+ data()->var.plane_y * cos(rotation_value);
 }
 
-void	player_rot_right(void)
+void	player_rot_left(void)
 {
 	double	old_diry;
 	double	old_planey;
@@ -54,7 +54,7 @@ void	player_rot_right(void)
 	old_planey = data()->var.plane_y;
 	if (data()->mouse_pan_x)
 	{
-		rotation_value = -data()->mouse_pan_x;
+		rotation_value = data()->mouse_pan_x;
 		reset_mouse();
 		data()->mouse_pan_x = 0;
 	}

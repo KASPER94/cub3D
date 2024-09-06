@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:33:01 by skapersk          #+#    #+#             */
-/*   Updated: 2024/09/04 16:33:20 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/09/06 18:13:06 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	init_vectors(int x, int y)
 	plane = tan((double)FOV * (M_PI / 180.0) / 2.0);
 	data()->var.position_x = x + 0.5;
 	data()->var.position_y = y + 0.5;
-	if (data()->map[x][y] == 'E')
+	if (data()->map[x][y] == 'W')
 		set_values(0, -1, plane, 0);
-	else if (data()->map[x][y] == 'W')
+	else if (data()->map[x][y] == 'E')
 		set_values(0, 1, -plane, 0);
 	else if (data()->map[x][y] == 'S')
 		set_values(1, 0, 0, plane);

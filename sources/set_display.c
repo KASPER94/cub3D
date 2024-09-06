@@ -6,7 +6,7 @@
 /*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:22:05 by cdeville          #+#    #+#             */
-/*   Updated: 2024/08/29 18:50:00 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/09/06 18:12:50 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	set_texture(void)
 	if (data()->var.side == 1)
 	{
 		if (data()->var.step_y == -1)
-			data()->var.texture_number = E_EA;
-		else
 			data()->var.texture_number = E_WE;
+		else
+			data()->var.texture_number = E_EA;
 	}
 	else
 	{
@@ -35,8 +35,8 @@ void	set_values(double direction_x,
 {
 	data()->var.dir_x = direction_x;
 	data()->var.dir_y = direction_y;
-	data()->var.plane_x = pla_x;
-	data()->var.plane_y = pla_y;
+	data()->var.plane_x = -pla_x;
+	data()->var.plane_y = -pla_y;
 }
 
 void	set_box(void)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movements.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 23:50:56 by skapersk          #+#    #+#             */
-/*   Updated: 2024/08/27 14:33:53 by skapersk         ###   ########.fr       */
+/*   Updated: 2024/09/06 16:39:26 by cdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	player_move_backward(void)
 		data()->var.position_y -= data()->var.dir_y * data()->var.move_speed;
 }
 
-void	player_move_right(void)
+void	player_move_left(void)
 {
 	int	new_x;
 	int	new_y;
@@ -57,7 +57,7 @@ void	player_move_right(void)
 		data()->var.position_y += data()->var.dir_x * data()->var.move_speed;
 }
 
-void	player_move_left(void)
+void	player_move_right(void)
 {
 	int	new_x;
 	int	new_y;
