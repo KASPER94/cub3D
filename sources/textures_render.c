@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures_render.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdeville <cdeville@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skapersk <skapersk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:42:03 by skapersk          #+#    #+#             */
-/*   Updated: 2024/09/06 18:39:50 by cdeville         ###   ########.fr       */
+/*   Updated: 2024/09/06 22:39:20 by skapersk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ void	coor_text(void)
 		+ data()->var.perp_wall_dist * data()->var.ray_dir_x;
 	data()->var.wall -= floor(data()->var.wall);
 	data()->var.texture_x = (int)(data()->var.wall * (double)TEXTURE_WIDTH);
-	if (data()->var.side == 0 && data()->var.ray_dir_x > TEXTURE_WIDTH)
-		data()->var.texture_x = data()->var.texture_x + 1;
-	if (data()->var.side == 1 && data()->var.ray_dir_y < TEXTURE_WIDTH)
-		data()->var.texture_x = data()->var.texture_x + 1;
-
+	if (data()->var.side == 0 && data()->var.ray_dir_x > 0)
+		data()->var.texture_x = TEXTURE_WIDTH - data()->var.texture_x - 1;
+	else if (data()->var.side == 1 && data()->var.ray_dir_y < 0)
+		data()->var.texture_x = TEXTURE_WIDTH - data()->var.texture_x - 1;
 }
+
 
 int	get_texture_nb(t_type_xpm texture_number)
 {
@@ -98,7 +98,6 @@ void	render_texture(int x)
 	t_img	tex;
 	int		i;
 
-	y = 0;
 	i = get_texture_nb(data()->var.texture_number);
 	tex = data()->img2[i];
 	my_floor(x);
@@ -113,14 +112,18 @@ void	render_texture(int x)
 		data()->var.texture_y = (int)(data()->var.texture_position)
 		& (tex.height - 1);
 		data()->var.texture_position += data()->var.step;
-		if (data()->var.texture_number == E_NO || data()->var.texture_number == E_WE)
+
+		// Correction des inversions pour Est et Ouest, et correction du pixel manquant
+		// if (data()->var.texture_number == E_NO || data()->var.texture_number == E_SO)
 			clr = (*(int *)(tex.addr  + (4 * tex.width * data()->var.texture_y)
 					+ 4 * data()->var.texture_x));
-		else
-			clr = (*(int *)(tex.addr + (4 * tex.width * data()->var.texture_y)
-					+ 4 * (tex.width - data()->var.texture_x)));
+		// else
+		// 	clr = (*(int *)(tex.addr + (4 * tex.width * data()->var.texture_y)
+		// 			+ 4 * (tex.width - data()->var.texture_x - 1)));
+
 		mlx_place_pixel(x, y, clr);
 		y++;
 	}
 }
+
 	// if (data()->var.side == 1)
